@@ -1,6 +1,7 @@
 import csv
 import io
 import secrets
+import re
 import time
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
@@ -31,6 +32,9 @@ def create_app(store, runtime, run_worker=True):
 
     @app.middleware("http")
     async def local_access(request: Request, call_next):
+        annotation = request.method == 'PUT' and re.fullmatch(r'/api/investigation/groups/[0-9]+/review',request.url.path)
+        if request.method not in ('GET', 'HEAD') and runtime.state.get('review_only') and not annotation:
+            return JSONResponse({'detail':'Review-only mode: investigation and all background work are stopped.'},403)
         if request.method not in ("GET", "HEAD") and request.headers.get("x-catwatch-token") != token:
             return JSONResponse({"detail": "Reload the local dashboard before making changes"}, 403)
         origin = request.headers.get("origin")
@@ -56,7 +60,7 @@ def create_app(store, runtime, run_worker=True):
 
     @app.get("/static/{name}")
     def static(name: str):
-        if name not in ("app.js", "style.css"):
+        if name not in ("app.js", "style.css", "investigation.js"):
             raise HTTPException(404)
         return FileResponse(Path(__file__).parent / "static" / name)
 
@@ -85,7 +89,124 @@ def create_app(store, runtime, run_worker=True):
 
     @app.get("/api/detections")
     def detections():
-        return {"detections": runtime.detections, "stamp": runtime.state["last_frame"]}
+        return {"detections": runtime.detections, "stamp": runtime.state.get('detection_stamp',runtime.state["last_frame"])}
+
+    @app.get('/api/investigation')
+    def investigation():
+        return {'session':store.investigation(), 'health':health()}
+
+    @app.post('/api/investigation')
+    def start_investigation(body: dict = Body(default={})):
+        return store.start_investigation(body)
+
+    @app.post('/api/investigation/stop')
+    def stop_investigation():
+        return store.stop_investigation()
+
+    @app.patch('/api/investigation')
+    def configure_investigation(body: dict = Body(...)):
+        return store.configure_investigation(body)
+
+    @app.get('/api/investigation/groups')
+    def motion_groups(cat: str='all', confidence: float=.4, area: str='all', review: str='all',
+                      model: str='all', analysis: str='all', disagreement: bool=False,
+                      start: float | None=None, end: float | None=None,
+                      min_duration: float=0., max_duration: float | None=None,
+                      offset: int=0, limit: int=24):
+        return store.motion_group_list(cat=cat,confidence=confidence,area=area,review=review,
+            model=model,analysis=analysis,disagreement=disagreement,start=start,end=end,
+            min_duration=min_duration,max_duration=max_duration,offset=offset,limit=limit)
+
+    @app.get('/api/investigation/groups/{gid}')
+    def group_detail(gid: int):
+        return store.motion_group_detail(gid)
+
+    @app.put('/api/investigation/groups/{gid}/review')
+    def group_review(gid: int, body: dict=Body(...)):
+        from .investigation_review import ReviewConflict
+        try:
+            return store.review_group(gid,body)
+        except ReviewConflict as exc:
+            raise HTTPException(409,str(exc)) from exc
+
+    @app.get('/api/investigation/groups/{gid}/thumbnail')
+    def group_thumbnail(gid: int, model: str='all'):
+        if model not in ('all','yolo11n/640','yolo11m/640','yolo11m/1280'):
+            raise ValueError('Invalid model')
+        import cv2
+        from .analysis import evidence_lease, sampled_frames
+        with store.db() as db:
+            chunks=[dict(r) for r in db.execute('SELECT * FROM motions WHERE group_id=? ORDER BY start',(gid,))]
+        if not chunks:
+            raise KeyError(gid)
+        analysis=store.saved_cat_analysis()
+        samples=[s for m in chunks for s in analysis.get(m['id'],{}).get('samples',[]) if model=='all' or s['model']==model]
+        best=max(samples,key=lambda s:max(d['confidence'] for d in s['detections']),default=None)
+        stamp=best['stamp'] if best else chunks[0]['start']
+        with evidence_lease(runtime,stamp,stamp+.5) as segments:
+            frames=sampled_frames(store.root,segments,stamp,stamp+.5,1)
+            try:
+                _,frame=next(frames)
+                frame=cv2.resize(frame,(320,max(1,round(frame.shape[0]*320/frame.shape[1]))))
+                ok,jpeg=cv2.imencode('.jpg',frame)
+                if ok:
+                    return Response(jpeg.tobytes(),media_type='image/jpeg')
+            except StopIteration:
+                pass
+            finally:
+                frames.close()
+        raise HTTPException(410,'Evidence expired or unavailable')
+
+    def motion_evidence(motion):
+        from .analysis import covers
+        clips = store.evidence(motion['start'],motion['end'])
+        return {**motion,'clips':clips,'evidence':'available' if covers(clips,motion['start']-10,motion['end']+10) else 'partial' if clips else 'expired'}
+
+    @app.get('/api/investigation/motions')
+    def motions(limit: int = 50, before: int | None = None):
+        items = store.motions(limit,before)
+        return {'motions':[motion_evidence(m) for m in items], 'next_before':items[-1]['id'] if len(items)==limit else None}
+
+    @app.get('/api/investigation/motions/{mid}')
+    def motion(mid: int):
+        return {**motion_evidence(store.motion(mid)),'jobs':store.jobs(mid)}
+
+    @app.post('/api/investigation/motions/{mid}/analyze')
+    def analyze_motion(mid: int):
+        store.enqueue_analysis(mid,True)
+        return {'jobs':store.jobs(mid)}
+
+    @app.get('/api/investigation/motions/{mid}/thumbnail')
+    def thumbnail(mid: int):
+        import cv2
+        from .analysis import evidence_lease, sampled_frames
+        motion = store.motion(mid)
+        with evidence_lease(runtime,motion['start'],motion['end']) as segments:
+            frames = sampled_frames(store.root,segments,motion['start'],motion['end'],1)
+            try:
+                _,frame = next(frames)
+                frame = cv2.resize(frame,(320,max(1,round(frame.shape[0]*320/frame.shape[1]))))
+                ok,jpeg = cv2.imencode('.jpg',frame)
+                if ok:
+                    return Response(jpeg.tobytes(),media_type='image/jpeg')
+            except StopIteration:
+                pass
+            finally:
+                frames.close()
+        raise HTTPException(410,'Evidence expired')
+
+    @app.get('/api/investigation/observations')
+    def observations(start: float, end: float, limit: int = 200, after: int = 0):
+        items = store.observations(start,end,limit,after)
+        return {'observations':items,'next_after':items[-1]['id'] if len(items)==limit else None}
+
+    @app.get('/api/investigation/jobs')
+    def jobs(limit: int = 50, before: int | None = None):
+        return {'jobs':store.jobs(limit=limit,before=before)}
+
+    @app.get('/api/investigation/report')
+    def investigation_report(session_id: int | None = None):
+        return store.investigation_report(session_id)
 
     def decorate(event):
         clips = store.evidence(event["start"], event["end"])

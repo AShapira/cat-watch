@@ -1,0 +1,3 @@
+interface:
+  display_name: "Run cat-watch"
+  short_description: "Start cat-watch and open the internal browser"

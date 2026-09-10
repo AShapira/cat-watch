@@ -62,6 +62,19 @@ Monitoring starts manually. After a reboot, start Podman Desktop's machine and
 run Start again. A stale container can be removed with Stop, which preserves
 Windows data. No scheduled startup is installed.
 
+## Motion investigation
+
+The **Investigation** screen provides a separate 24-hour full-view motion trial.
+It retains original-quality movement clips regardless of cat recognition,
+compares small and larger detectors, and can queue local NVIDIA Cosmos video
+descriptions. See [setup, operation, and acceptance](docs/investigation.md).
+Saved footage can be reviewed as motion groups with cat/confidence, area, model,
+and review-status filters. The player overlays saved cat detections and area
+assignment points; manual labels and notes keep their own history. This works
+without running Cosmos or recording, including in review-only mode.
+Model suggestions do not establish verified behavior. The optional model files
+and temporary inputs count within the same application storage cap.
+
 ## Data and decisions
 
 - Main-stream video is copied into approximately five-second MP4 segments,

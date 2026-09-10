@@ -1,0 +1,9 @@
+{
+  "model": "nvidia/Cosmos3-Edge",
+  "revision": "a9d944e2c6a1bf9f48b92ad16348e70c5f1836ba",
+  "image": "docker.io/vllm/vllm-openai@sha256:1605bf6ae5c0681dc0e263471cf031736c6fe49e921a638c16bf55e371abbfc9",
+  "served_model": "cat-watch-cosmos-edge",
+  "port": 8766,
+  "gpu_memory_utilization": 0.55,
+  "max_model_len": 8192
+}

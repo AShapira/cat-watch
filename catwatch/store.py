@@ -6,13 +6,15 @@ from contextlib import contextmanager
 from pathlib import Path
 
 from .core import AREAS, BEHAVIORS
+from .investigation import InvestigationStore
+from .investigation_review import InvestigationReviewStore
 
 DEFAULTS = {"storage_cap_gb": 50, "enter_seconds": 2.0, "leave_seconds": 5.0,
             "sample_fps": 2, "confidence": 0.4, "timezone": "Asia/Jerusalem",
             "pre_seconds": 10, "post_seconds": 10, "polygons": {}}
 
 
-class Store:
+class Store(InvestigationStore, InvestigationReviewStore):
     def __init__(self, root):
         self.root = Path(root)
         self.root.mkdir(parents=True, exist_ok=True)
@@ -29,6 +31,8 @@ class Store:
                 CREATE TABLE IF NOT EXISTS coverage (id INTEGER PRIMARY KEY, start REAL, end REAL);
             ''')
             db.execute("INSERT OR IGNORE INTO settings VALUES (1,?)", (json.dumps(DEFAULTS),))
+        self.init_investigation()
+        self.init_motion_review()
 
     @contextmanager
     def db(self):
@@ -115,6 +119,7 @@ class Store:
             db.execute("UPDATE events SET original=?,effective=? WHERE id=?", (json.dumps(original), json.dumps(effective), event_id))
 
     def recover(self):
+        self.recover_investigation()
         for event in self.events():
             if event["open"]:
                 self.close_visit(event["id"], event["end"], True)
@@ -165,6 +170,10 @@ class Store:
     def add_segment(self, path, start, end, size):
         with self.db() as db:
             db.execute("INSERT OR IGNORE INTO segments(path,start,end,size) VALUES (?,?,?,?)", (path, start, end, size))
+
+    def segment_id(self, path):
+        with self.db() as db:
+            return db.execute('SELECT id FROM segments WHERE path=?',(path,)).fetchone()[0]
 
     def split(self, event_id, stamp):
         with self.db():

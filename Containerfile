@@ -13,6 +13,10 @@ RUN mkdir /opt/models && cd /opt/models \
     && echo '0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1  yolo11n.pt' | sha256sum -c - \
     && sha256sum yolo11n.pt > SHA256SUMS \
     && pip freeze > /opt/python-lock.txt
+RUN cd /opt/models \
+    && python -c "from ultralytics import YOLO; YOLO('yolo11m.pt')" \
+    && echo 'd5ffc1a674953a08e11a8d21e022781b1b23a19b730afc309290bd9fb5305b95  yolo11m.pt' | sha256sum -c - \
+    && sha256sum yolo11m.pt >> SHA256SUMS
 COPY catwatch ./catwatch
 USER 1000:1000
 CMD ["python", "-m", "catwatch"]

@@ -37,9 +37,11 @@ class Retention:
             config = self.store.config()
             cap = int(config["storage_cap_gb"] * 1_000_000_000)
             segments = self.store.segments()
-            events = [e for e in self.store.events() if not e["rejected"]]
+            events = [e for e in self.store.events() if not e["rejected"]] + self.store.investigation_intervals()
             # Keep enough rolling history for entry debounce, exit debounce and padding.
-            cutoff = now - max(30, config["enter_seconds"] + config["leave_seconds"] + 20)
+            investigation = self.store.investigation()
+            investigating = investigation and now < investigation['end']+120
+            cutoff = now - max(120 if investigating else 30, config["enter_seconds"] + config["leave_seconds"] + 20)
             protected = set()
             for segment in segments:
                 matches = not segment["retained"] and any(e["start"] - 10 <= segment["end"] and e["end"] + 10 >= segment["start"] for e in events)

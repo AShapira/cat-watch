@@ -37,6 +37,17 @@ def main():
     root = Path(os.environ.get("CATWATCH_DATA", "/data"))
     if not (root / ".cat-watch-data").is_file():
         raise RuntimeError("Data ownership marker missing; start through PowerShell")
+    if '--review-only' in sys.argv:
+        import uvicorn
+        from .web import create_app
+        store = Store(root)
+        runtime = Runtime(store)
+        runtime.state.update(review_only=True, camera='stopped', detector='stopped',
+            motion_analysis='stopped', video_description='stopped', detector_comparison='stopped',
+            message='Review only: recording, analysis and automatic deletion are stopped')
+        uvicorn.run(create_app(store, runtime, run_worker=False), host='127.0.0.1',
+                    port=8765, access_log=False, log_level='warning')
+        return
     # Credentials arrive via podman exec stdin into this UID-restricted local socket.
     with socket.socket(socket.AF_UNIX) as server:
         server.bind(SOCKET)

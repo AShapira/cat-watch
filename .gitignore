@@ -20,3 +20,4 @@ outputs/
 camera.json
 foundation.json
 *.credential.*
+!tests/fixtures/synthetic-review.mp4
