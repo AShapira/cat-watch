@@ -57,7 +57,8 @@ do {
             $catHealth | ConvertTo-Json -Depth 5
             throw 'Detector initialization failed; dashboard is available for diagnosis.'
         }
-        if ($catHealth.camera -eq 'connected' -and $catHealth.detector -eq 'ready') {
+        if (($catHealth.camera -eq 'connected' -and $catHealth.detector -eq 'ready') -or ($catHealth.preparation -and $catHealth.camera -eq 'preview')) {
+            Start-Process powershell.exe -WindowStyle Hidden -ArgumentList @('-NoProfile','-ExecutionPolicy','Bypass','-File',('"'+(Join-Path $catRepository 'scripts\analysis-controller.ps1')+'"'),'-DataRoot',('"'+$DataRoot+'"')) | Out-Null
             Write-Output 'Dashboard: http://127.0.0.1:8765'
             $catHealth | ConvertTo-Json -Depth 5
             return

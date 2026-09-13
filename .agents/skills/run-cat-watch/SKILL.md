@@ -54,16 +54,13 @@ not confirmed visible. If the tool is unavailable, provide the dashboard link
 and state that the internal tab could not be opened. Do not launch an external
 browser with `Start-Process`, `cmd /c start`, or `xdg-open` unless requested.
 
-Finish with the dashboard link and concise live status. Monitoring readiness
+Finish with the dashboard link and concise live status. Active investigation readiness
 requires `camera: connected` and `detector: ready`; also check `calibrated`, frame
 age, and `storage.recording_allowed`. If uncalibrated, direct the user to
 Camera & settings to draw the three areas. Do not silently modify calibration.
 
 ## Investigation descriptions
 
-When the verified Cosmos model marker exists at the configured app data root
-(`models/Cosmos3-Edge/.cat-watch-revision`), also invoke the project's
-`scripts/cosmos.ps1 -Action Start`. This reuses or resumes the pinned local
-reasoner container. Check its Status; capture readiness is independent of video
-description readiness. Do not download models merely to launch the app. Preserve
-an existing investigation's deadline; launching must never start a fresh trial.
+The approved workflow defers heavy analysis until capture ends. Do not start Cosmos merely to open the app. The Windows analysis controller checks available VRAM once, starts or reuses the pinned project model when admitted, and unloads only services it started. Insufficient VRAM leaves work queued until explicit Retry analysis.
+
+When no investigation is active, camera `preview` with `preparation: true` is the expected ready state; no detector or recording should be running. Require the user to draw or confirm the fresh calibration before a new investigation. Never start an investigation merely to obtain a preview.

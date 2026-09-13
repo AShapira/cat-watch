@@ -26,8 +26,7 @@ def test_corrections_preserve_observations(store):
     assert changed["original"]["behavior"]=="unknown"
     assert changed["end"]==112 and changed["reviewed"]
     assert len(changed["history"])==1
-    with pytest.raises(ValueError):
-        store.correct(eid,{"behavior":"drinking_observed"})
+    assert store.correct(eid,{"behavior":"drinking_observed"})["behavior"]=="drinking_observed"
 
 
 def test_merge_split_do_not_double_count(store):

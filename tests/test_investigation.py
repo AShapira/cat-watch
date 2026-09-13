@@ -1,3 +1,4 @@
+from calibration_helpers import start as begin, prepare, permit
 import json
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -17,7 +18,7 @@ from catwatch.web import create_app
 
 def test_review_only_preserves_records_and_rejects_mutations(tmp_path):
     store=Store(tmp_path)
-    store.start_investigation()
+    begin(store,)
     store.stop_investigation()
     runtime=Runtime(store)
     runtime.state['review_only']=True
@@ -65,41 +66,41 @@ def source_segment(store, index, start, end, size=100):
     return store.root/path
 
 
-def test_deadline_restart_stop_and_additive_migration(tmp_path):
+def test_deadline_restart_stop_requires_new_calibration(tmp_path):
     store=Store(tmp_path)
     event=store.open_visit('water_fountain',10,11)
     store.configure({'confidence':.5})
-    session=store.start_investigation(now=100)
-    assert session['deadline']==86500
+    session=begin(store,now=100)
+    assert session['deadline']==28900
     restored=Store(tmp_path)
     restored.recover()
-    assert restored.investigation()['deadline']==86500
+    assert restored.investigation()['deadline']==28900
     assert restored.event(event)['interrupted']
     assert restored.config()['confidence']==.5
     restored.stop_investigation(now=200)
     assert restored.investigation()['end']==200
     with pytest.raises(ValueError):
         restored.start_investigation(now=205)
-    assert restored.start_investigation(now=211)['id']!=session['id']
+    assert begin(restored,now=211)['id']!=session['id']
 
 
 def test_motion_debounce_merging_splitting_and_deadline(tmp_path):
     store=Store(tmp_path)
-    session=store.start_investigation(now=100)
+    session=begin(store,now=100)
     tracker=MotionTracker(store,session)
     tracker.observe(101,.01)
     tracker.observe(101.1,0)
     assert not store.motions()
     for stamp in [102,102.1,102.2,103,105,110]:
         tracker.observe(stamp,.01)
-    tracker.observe(125,0)
-    tracker.observe(126,.01)
+    tracker.observe(115,0)
+    tracker.observe(116,.01)
     assert len(store.motions())==1
     tracker.observe(147,0)
     motion=store.motions()[0]
-    assert (motion['start'],motion['end'],motion['open'])==(102,126,0)
+    assert (motion['start'],motion['end'],motion['open'])==(102,116,0)
     tracker.observe(150,.01)
-    tracker.observe(150.3,.01)
+    tracker.observe(150.6,.01)
     tracker.observe(210.5,.01)
     assert len(store.motions())==3
     latest=store.motions()[0]
@@ -132,7 +133,7 @@ def test_static_timestamp_motion_and_lighting():
 
 def test_motion_retention_without_cat_and_expiry(tmp_path):
     store=Store(tmp_path)
-    session=store.start_investigation(now=100)
+    session=begin(store,now=100)
     before=source_segment(store,0,290,295)
     during=source_segment(store,1,301,306)
     after=source_segment(store,2,310,315)
@@ -153,19 +154,22 @@ def test_motion_retention_without_cat_and_expiry(tmp_path):
 
 def test_jobs_recovery_claim_and_no_duplicates(tmp_path):
     store=Store(tmp_path)
-    session=store.start_investigation(now=100)
+    session=begin(store,now=100)
     mid=store.open_motion(session['id'],101,.01)
     store.update_motion(mid,110,.01)
     store.close_motion(mid)
-    store.queue_completed_motions(now=119)
+    store.queue_completed_motions(now=114)
     assert not store.jobs()
-    store.queue_completed_motions(now=121)
-    store.queue_completed_motions(now=121)
+    store.queue_completed_motions(now=115)
+    store.queue_completed_motions(now=115)
     assert len(store.jobs())==2
+    permit(store,'video_description')
     with ThreadPoolExecutor(2) as pool:
         claims=list(pool.map(lambda _:store.claim_job('video_description'),range(2)))
     assert sum(j is not None for j in claims)==1
     store.recover_investigation()
+    assert store.claim_job('video_description') is None
+    permit(store,'video_description')
     job=store.claim_job('video_description')
     store.finish_job(job['id'],{'windows':[{'text':'A person moves.'}]})
     store.enqueue_analysis(mid,True)
@@ -179,10 +183,11 @@ def test_api_controls_validation_and_evidence(tmp_path):
         headers={'x-catwatch-token':client.get('/api/session').json()['token']}
         assert client.post('/api/investigation',json={}).status_code==403
         assert client.post('/api/investigation',json={'masks':[[.5,0,.1,1]]},headers=headers).status_code==400
-        response=client.post('/api/investigation',json={},headers=headers)
+        draft=prepare(store)
+        response=client.post('/api/investigation',json={'calibration_id':draft['id']},headers=headers)
         assert response.status_code==200
         assert client.post('/api/investigation',json={},headers=headers).status_code==400
-        assert client.patch('/api/investigation',json=dict(MOTION_DEFAULTS,masks=[]),headers=headers).status_code==200
+        assert client.patch('/api/investigation',json=dict(MOTION_DEFAULTS,masks=[]),headers=headers).status_code==400
         session=response.json()
         stamp=time.time()
         mid=store.open_motion(session['id'],stamp,.01)
@@ -201,7 +206,7 @@ def test_api_controls_validation_and_evidence(tmp_path):
 def test_motion_worker_records_without_gpu(tmp_path):
     store=Store(tmp_path)
     start=time.time()
-    store.start_investigation(now=start-1)
+    begin(store,now=start-1)
     runtime=Runtime(store)
     path=runtime.media/('b'*32+'-000000.mp4')
     writer=cv2.VideoWriter(str(path),cv2.VideoWriter_fourcc(*'mp4v'),15,(960,540))
@@ -223,8 +228,8 @@ def test_motion_worker_records_without_gpu(tmp_path):
     worker.join(timeout=5)
     assert not worker.is_alive()
     assert store.motions() and not store.events()
-    assert runtime.state['motion_frames']==75
-    assert runtime.state['detector']=='loading'
+    assert runtime.state['motion_frames']==25
+    assert runtime.state['detector']=='stopped' and runtime.frame_queue.qsize()>0
     assert runtime.frame and runtime.retention.leases[sid]==0
 
 

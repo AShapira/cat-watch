@@ -32,7 +32,8 @@ def create_app(store, runtime, run_worker=True):
 
     @app.middleware("http")
     async def local_access(request: Request, call_next):
-        annotation = request.method == 'PUT' and re.fullmatch(r'/api/investigation/groups/[0-9]+/review',request.url.path)
+        annotation = request.method == 'PUT' and (re.fullmatch(r'/api/investigation/groups/[0-9]+/review',request.url.path)
+                       or request.url.path == '/api/investigation/area-settings')
         if request.method not in ('GET', 'HEAD') and runtime.state.get('review_only') and not annotation:
             return JSONResponse({'detail':'Review-only mode: investigation and all background work are stopped.'},403)
         if request.method not in ("GET", "HEAD") and request.headers.get("x-catwatch-token") != token:
@@ -70,7 +71,7 @@ def create_app(store, runtime, run_worker=True):
 
     @app.get("/api/health")
     def health():
-        return {**runtime.state, "storage": runtime.retention.last, "now": time.time(),
+        return {**runtime.state, "calibrated":bool(store.config()["polygons"]), "storage": runtime.retention.last, "now": time.time(),
                 "frame_age_seconds": None if runtime.state["last_frame"] is None else round(time.time()-runtime.state["last_frame"],1)}
 
     @app.get("/api/config")
@@ -91,13 +92,60 @@ def create_app(store, runtime, run_worker=True):
     def detections():
         return {"detections": runtime.detections, "stamp": runtime.state.get('detection_stamp',runtime.state["last_frame"])}
 
+    @app.post('/api/calibration/preview')
+    def enable_preview():
+        store.require_setup()
+        runtime.preview_enabled = True
+        return {'preview':True}
+
+    @app.post('/api/calibration/prepare')
+    def prepare_calibration():
+        source = runtime.state.get('source') or {}
+        return store.prepare(runtime.frame,runtime.state['last_frame'],source.get('width'),source.get('height'))
+
+    @app.get('/api/calibration')
+    def calibration():
+        return store.preparation()
+
+    @app.get('/api/calibration/image')
+    def calibration_image():
+        prepared = store.preparation()
+        if not prepared:
+            raise HTTPException(404,'Prepare a camera image first')
+        return FileResponse(store.root/prepared['reference_image'],media_type='image/jpeg')
+
+    @app.post('/api/calibration/confirm')
+    def confirm_calibration(body: dict=Body(...)):
+        return store.confirm_calibration(body)
+
+    @app.get('/api/analysis')
+    def analysis_status():
+        return dict(store.analysis_status(),capture_drained=runtime.analysis_ready())
+
+    @app.post('/api/analysis/retry')
+    def retry_analysis(body: dict=Body(default={})):
+        if set(body)-{'session_id'} or ('session_id' in body and type(body['session_id']) is not int):
+            raise ValueError('Supply an investigation ID')
+        if not runtime.analysis_ready():
+            raise ValueError('Capture queues and live GPU inference must finish first')
+        return store.request_analysis(body.get('session_id'))
+
+    @app.put('/api/analysis/control')
+    def control_analysis(body: dict=Body(...)):
+        if not runtime.analysis_ready():
+            raise ValueError('Capture queues and live GPU inference must finish first')
+        return store.control_analysis(body)
+
     @app.get('/api/investigation')
     def investigation():
-        return {'session':store.investigation(), 'health':health()}
+        return {'session':store.investigation(), 'sessions':store.sessions(), 'health':health(),
+                'preparation':store.preparation(),'analysis':store.analysis_status()}
 
     @app.post('/api/investigation')
     def start_investigation(body: dict = Body(default={})):
-        return store.start_investigation(body)
+        result = store.start_investigation(body)
+        runtime.preview_enabled = False
+        return result
 
     @app.post('/api/investigation/stop')
     def stop_investigation():
@@ -112,10 +160,20 @@ def create_app(store, runtime, run_worker=True):
                       model: str='all', analysis: str='all', disagreement: bool=False,
                       start: float | None=None, end: float | None=None,
                       min_duration: float=0., max_duration: float | None=None,
-                      offset: int=0, limit: int=24):
+                      offset: int=0, limit: int=24, session_id: int | None=None, motion_area: str='all'):
         return store.motion_group_list(cat=cat,confidence=confidence,area=area,review=review,
             model=model,analysis=analysis,disagreement=disagreement,start=start,end=end,
-            min_duration=min_duration,max_duration=max_duration,offset=offset,limit=limit)
+            min_duration=min_duration,max_duration=max_duration,offset=offset,limit=limit,session_id=session_id,motion_area=motion_area)
+
+    @app.get('/api/investigation/area-settings')
+    def area_settings():
+        return {'area_overlap':store.config()['area_overlap']}
+
+    @app.put('/api/investigation/area-settings')
+    def update_area_settings(body: dict=Body(...)):
+        if set(body) != {'area_overlap'}:
+            raise ValueError('Only area overlap thresholds can be changed here')
+        return {'area_overlap':store.configure(body)['area_overlap']}
 
     @app.get('/api/investigation/groups/{gid}')
     def group_detail(gid: int):
@@ -131,7 +189,8 @@ def create_app(store, runtime, run_worker=True):
 
     @app.get('/api/investigation/groups/{gid}/thumbnail')
     def group_thumbnail(gid: int, model: str='all'):
-        if model not in ('all','yolo11n/640','yolo11m/640','yolo11m/1280'):
+        from .investigation_review import MODELS
+        if model not in ('all',*MODELS):
             raise ValueError('Invalid model')
         import cv2
         from .analysis import evidence_lease, sampled_frames
@@ -160,7 +219,7 @@ def create_app(store, runtime, run_worker=True):
     def motion_evidence(motion):
         from .analysis import covers
         clips = store.evidence(motion['start'],motion['end'])
-        return {**motion,'clips':clips,'evidence':'available' if covers(clips,motion['start']-10,motion['end']+10) else 'partial' if clips else 'expired'}
+        return {**motion,'clips':clips,'evidence':'available' if covers(clips,motion['start']-5,motion['end']+5) else 'partial' if clips else 'expired'}
 
     @app.get('/api/investigation/motions')
     def motions(limit: int = 50, before: int | None = None):

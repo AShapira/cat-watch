@@ -1,3 +1,4 @@
+from calibration_helpers import start as begin, prepare, permit
 import json
 
 import pytest
@@ -9,7 +10,7 @@ from catwatch.web import create_app
 
 
 def add_motion(store, start, peak=.01, group=None):
-    session=store.investigation() or store.start_investigation(now=1)
+    session=store.investigation() or begin(store,now=1)
     mid=store.open_motion(session['id'],start,peak,group)
     store.update_motion(mid,start+5,peak)
     store.close_motion(mid,peak==0)
@@ -65,17 +66,16 @@ def test_missing_and_failed_comparisons_are_not_negative_evidence(store):
     assert gap['peak_unknown'] and gap['id']==missing
 
 
-def test_current_area_assignment_and_cache_invalidation(store):
+def test_snapshot_area_assignment_and_analysis_cache_invalidation(store):
     mid=add_motion(store,100)
     jid=comparison(store,mid,[('yolo11n/640',.8,[.1,.1,.3,.3])])
     store.configure({'polygons':{'eating_pad':[[0,0],[.5,0],[.5,.5],[0,.5]], 'water_fountain':[[.6,.6],[.7,.6],[.7,.7]], 'litter_box':[[.8,.8],[.9,.8],[.9,.9]]}})
     assert store.motion_group_list(area='eating_pad')['total']==1
     detail=store.motion_group_detail(mid)
-    assert detail['samples'][0]['detections'][0]['point']==[.2,.3]
-    assert detail['samples'][0]['detections'][0]['area']=='eating_pad'
+    assert detail['samples'][0]['detections'][0]['areas']==['eating_pad']
     store.configure({'polygons':{'eating_pad':[[.6,0],[.7,0],[.7,.1]], 'water_fountain':[[.6,.6],[.7,.6],[.7,.7]], 'litter_box':[[.8,.8],[.9,.8],[.9,.9]]}})
-    assert store.motion_group_list(area='outside')['total']==1
-    assert store.motion_group_list(area='eating_pad')['total']==0
+    assert store.motion_group_list(area='outside')['total']==0
+    assert store.motion_group_list(area='eating_pad')['total']==1
     with store.db() as db:
         db.execute('UPDATE analysis_jobs SET updated=2,result=? WHERE id=?',
                    (json.dumps({'observations':[{'stamp':101,'model':'yolo11n','imgsz':640,'detections':[]}]}),jid))
@@ -93,7 +93,7 @@ def test_review_labels_allowed_without_enabling_workers_and_preserve_audit(store
     with TestClient(app) as client:
         token=client.get('/api/session').json()['token'];headers={'x-catwatch-token':token}
         path=f'/api/investigation/groups/{mid}/review'
-        body={'status':'cat_confirmed','areas':['eating_pad'],'notes':'Cat visible beside food','version':0}
+        body={'status':'cat_confirmed','areas':['eating_pad'],'behaviors':[],'notes':'Cat visible beside food','version':0}
         assert client.put(path,json=body).status_code==403
         assert client.put(path,json=body,headers={**headers,'origin':'https://elsewhere.test'}).status_code==403
         saved=client.put(path,json=body,headers=headers)
@@ -122,8 +122,8 @@ def test_review_and_filter_validation(store):
         headers={'x-catwatch-token':client.get('/api/session').json()['token']}
         for query in ['confidence=nan','limit=0','cat=fish','min_duration=-1','max_duration=1&min_duration=2','start=200&end=100','model=unknown']:
             assert client.get('/api/investigation/groups?'+query).status_code==400
-        base={'status':'no_cat','areas':[],'notes':'','version':0}
-        for patch in [{'areas':['eating_pad']},{'notes':'x'*2001},{'status':'eating'},{'version':True},{'extra':'field'}]:
+        base={'status':'no_cat','areas':[],'behaviors':[],'notes':'','version':0}
+        for patch in [{'areas':['eating_pad']},{'behaviors':[],'notes':'x'*2001},{'status':'eating'},{'version':True},{'extra':'field'}]:
             assert client.put(f'/api/investigation/groups/{mid}/review',json={**base,**patch},headers=headers).status_code==400
         assert client.put('/api/investigation/groups/999/review',json=base,headers=headers).status_code==404
         assert store.group_review(mid)['version']==0

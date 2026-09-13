@@ -1,4 +1,5 @@
 import json
+import math
 import sqlite3
 import threading
 import time
@@ -7,14 +8,16 @@ from pathlib import Path
 
 from .core import AREAS, BEHAVIORS
 from .investigation import InvestigationStore
+from .analysis_control import AnalysisControlStore
 from .investigation_review import InvestigationReviewStore
 
 DEFAULTS = {"storage_cap_gb": 50, "enter_seconds": 2.0, "leave_seconds": 5.0,
             "sample_fps": 2, "confidence": 0.4, "timezone": "Asia/Jerusalem",
-            "pre_seconds": 10, "post_seconds": 10, "polygons": {}}
+            "pre_seconds": 5, "post_seconds": 5, "polygons": {},
+            "area_overlap": {area:.2 for area in AREAS}}
 
 
-class Store(InvestigationStore, InvestigationReviewStore):
+class Store(InvestigationStore, InvestigationReviewStore, AnalysisControlStore):
     def __init__(self, root):
         self.root = Path(root)
         self.root.mkdir(parents=True, exist_ok=True)
@@ -55,13 +58,20 @@ class Store(InvestigationStore, InvestigationReviewStore):
 
     def config(self):
         with self.db() as db:
-            return json.loads(db.execute("SELECT body FROM settings WHERE id=1").fetchone()[0])
+            saved = json.loads(db.execute("SELECT body FROM settings WHERE id=1").fetchone()[0])
+        return saved
 
     def configure(self, updates):
+        self.require_setup()
         config = self.config()
         if set(updates) - set(DEFAULTS):
             raise ValueError("Unknown configuration field")
         config.update(updates)
+        thresholds = config['area_overlap']
+        if (not isinstance(thresholds,dict) or set(thresholds)!=set(AREAS) or
+                any(isinstance(v,bool) or not isinstance(v,(int,float)) or not .01<=v<=1
+                    for v in thresholds.values())):
+            raise ValueError('Supply an overlap threshold from 1% to 100% for each area')
         for key, low, high in (("storage_cap_gb", .05, 10000), ("enter_seconds", .5, 30),
                                ("leave_seconds", 1, 60), ("confidence", .1, .95)):
             if not isinstance(config[key], (float, int)) or not low <= config[key] <= high:
@@ -76,13 +86,15 @@ class Store(InvestigationStore, InvestigationReviewStore):
             if not isinstance(polygon, list) or not 3 <= len(polygon) <= 20:
                 raise ValueError("An area needs 3 to 20 points")
             for point in polygon:
-                if not isinstance(point, list) or len(point) != 2 or any(not isinstance(v, (int, float)) or not 0 <= v <= 1 for v in point):
+                if not isinstance(point, list) or len(point) != 2 or any(isinstance(v,bool) or not isinstance(v, (int, float)) or not math.isfinite(v) or not 0 <= v <= 1 for v in point):
                     raise ValueError("Points must be normalized coordinates")
             area = abs(sum(polygon[i-1][0]*p[1]-p[0]*polygon[i-1][1] for i,p in enumerate(polygon))) / 2
             if area < .0001:
                 raise ValueError("Area is too small")
         with self.db() as db:
             db.execute("UPDATE settings SET body=? WHERE id=1", (json.dumps(config),))
+            if updates:
+                db.execute("UPDATE preparation SET body=json_set(body,'$.confirmed',json('false')) WHERE id=1")
         return config
 
     def events(self):
@@ -152,9 +164,6 @@ class Store(InvestigationStore, InvestigationReviewStore):
             raise ValueError("Invalid event time")
         if not 0 <= body["start"] < body["end"] <= time.time() + 60:
             raise ValueError("Start must precede end, without future times")
-        matching = {"eating_observed": "eating_pad", "drinking_observed": "water_fountain", "litter_box_behavior_observed": "litter_box"}
-        if body["behavior"] in matching and body["area"] != matching[body["behavior"]]:
-            raise ValueError("Observed behavior must match the area")
 
     def add_manual(self, changes, action="add"):
         body = {"area": "eating_pad", "behavior": "unknown", "rejected": False, **changes,
@@ -205,8 +214,9 @@ class Store(InvestigationStore, InvestigationReviewStore):
         with self.db() as db:
             return [dict(r) for r in db.execute("SELECT * FROM segments ORDER BY start")]
 
-    def evidence(self, start, end, padding=10):
-        return [s for s in self.segments() if s["start"] <= end + padding and s["end"] >= start - padding and (self.root / s["path"]).is_file()]
+    def evidence(self, start, end, padding=5):
+        return [dict(s,play_start=max(s["start"],start-padding),play_end=min(s["end"],end+padding))
+                for s in self.segments() if s["start"] < end + padding and s["end"] > start - padding and (self.root / s["path"]).is_file()]
 
     def add_coverage(self, start, end):
         if end <= start:
