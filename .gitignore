@@ -6,6 +6,7 @@ __pycache__/
 data/
 models/
 outputs/
+output/
 *.pt
 *.onnx
 *.sqlite*
@@ -20,3 +21,4 @@ outputs/
 camera.json
 foundation.json
 *.credential.*
+!tests/fixtures/synthetic-review.mp4

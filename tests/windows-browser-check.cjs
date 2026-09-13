@@ -22,10 +22,10 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     return response.result.value;
   };
   for(let i=0;i<30;i++){
-    if(await evaluate("document.querySelectorAll('.card').length===3"))break;
+    if(await evaluate("document.querySelectorAll('#cards .card').length===3"))break;
     await sleep(500);
   }
-  if(!await evaluate("document.querySelectorAll('.card').length===3"))throw Error('Dashboard did not render');
+  if(!await evaluate("document.querySelectorAll('#cards .card').length===3"))throw Error('Dashboard did not render');
   await evaluate("document.querySelector('[data-tab=setup]').click()");
   await sleep(6000);
   const media=await evaluate(`(async()=>{

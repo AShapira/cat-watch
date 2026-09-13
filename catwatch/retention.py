@@ -21,7 +21,9 @@ class Retention:
         path = self.store.root / segment["path"]
         if path.parent != self.store.root / "media" or not MEDIA_NAME.fullmatch(path.name) or path.is_symlink():
             raise ValueError("Refusing to remove an unowned media path")
-        if self.leases.get(segment["id"], 0):
+        with self.store.db() as db:
+            pinned = db.execute('SELECT 1 FROM protected_segments WHERE segment_id=?',(segment['id'],)).fetchone()
+        if pinned or self.leases.get(segment["id"], 0):
             return False
         try:
             path.unlink(missing_ok=True)
@@ -37,12 +39,20 @@ class Retention:
             config = self.store.config()
             cap = int(config["storage_cap_gb"] * 1_000_000_000)
             segments = self.store.segments()
-            events = [e for e in self.store.events() if not e["rejected"]]
+            events = [e for e in self.store.events() if not e["rejected"]] + self.store.investigation_intervals()
             # Keep enough rolling history for entry debounce, exit debounce and padding.
-            cutoff = now - max(30, config["enter_seconds"] + config["leave_seconds"] + 20)
-            protected = set()
+            investigation = self.store.investigation()
+            investigating = investigation and now < investigation['end']+120
+            cutoff = now - max(120 if investigating else 30, config["enter_seconds"] + config["leave_seconds"] + 10)
+            with self.store.db() as db:
+                protected = {r[0] for r in db.execute('SELECT segment_id FROM protected_segments')}
+                deferred_intervals = [dict(r) for r in db.execute("SELECT m.start,m.end FROM motions m JOIN investigations i ON m.session_id=i.id WHERE json_extract(i.settings,'$.analysis_mode')='deferred'")]
             for segment in segments:
-                matches = not segment["retained"] and any(e["start"] - 10 <= segment["end"] and e["end"] + 10 >= segment["start"] for e in events)
+                if segment['id'] not in protected and any(e['start']-5<=segment['end'] and e['end']+5>=segment['start'] for e in deferred_intervals):
+                    with self.store.db() as db:
+                        db.execute("INSERT OR IGNORE INTO protected_segments VALUES (?,'deferred investigation evidence')",(segment['id'],))
+                    protected.add(segment['id'])
+                matches = not segment["retained"] and any(e["start"] - 5 <= segment["end"] and e["end"] + 5 >= segment["start"] for e in events)
                 if matches:
                     with self.store.db() as db:
                         db.execute("UPDATE segments SET retained=1 WHERE id=?", (segment["id"],))
@@ -62,5 +72,5 @@ class Retention:
                     free = shutil.disk_usage(self.store.root).free
             ok = used + self.reserve <= cap and free >= self.disk_floor + self.reserve
             self.last = {"used_bytes": used, "cap_bytes": cap, "reserve_bytes": self.reserve,
-                         "free_bytes": free, "recording_allowed": ok}
+                         "free_bytes": free, "recording_allowed": ok, "protected_segments":len(protected)}
             return ok

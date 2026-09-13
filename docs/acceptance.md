@@ -1,82 +1,36 @@
-# Acceptance record
+# Fresh investigation validation — 12 September 2026
 
-## Automated checks
+The user saved the new areas and confirmed calibration before application testing began. The historical archive was verified separately before the earlier destructive reset.
 
-RHEL tests cover visit debounce, stationary presence, pass-bys, transitions,
-interruptions/recovery, ambiguous polygons, midnight/DST reporting, original
-observation preservation, transactional split/merge, quota expiry, playback
-protection, disk exhaustion, unowned-file preservation, local-origin controls,
-reviewed behavior counts, CSV generation, and HTTP range playback.
+## Results
 
-### Verified on 2026-09-09
+- 67 Python tests pass: multi-area matching, independent presence, unique groups, human behavior/history/conflicts, immutable calibration snapshots, required fresh confirmation, Broad/Focused motion, configurable durations, restart recovery, five-second evidence windows/grouping/readiness, deferred admission and failure recovery.
+- Both isolated Playwright suites pass: area drawing and confirmation, confirmation surviving reload, capture controls and locking, review filters and overlays, behavior labels, historical thresholds, mobile layout, and no JavaScript errors.
+- Native Windows PowerShell controller checks pass using the real scheduler with engine/network boundaries replaced: low/unavailable memory, ready-service reuse, explicit retry, startup failure, sequential stages, exact ownership matching, and preservation of pre-existing services.
+- A controlled Windows Podman run used a separate temporary database and the user's polygons. Its API duration was 15 minutes; only the isolated test deadline was shortened to 45 seconds. The container restarted during capture and preserved that deadline. Eight full-frame camera segments contained 37.07 seconds of footage; the restart accounts for the capture gap. Fifteen detector frames were analyzed after restart. Capture stopped after the deadline plus five seconds, queues drained, and the live detector was released.
+- A bounded two-second interval from that real recording completed the packaged detector comparisons, including the three area crops. Cosmos descriptions remained queued: the actual admission check required 9,991 MiB while 5,580 MiB was free. No unrelated GPU service was stopped. Actual Cosmos startup and unload were not exercised in this run because memory admission correctly rejected startup; those branches were exercised through the native controller boundary tests.
+- Final Windows Edge acceptance passes against the deployed app: calibration confirmed, original calibration ID unchanged, Broad / eight hours selected, Start enabled, camera preview active, detector unloaded, and no investigation started.
+- The production database passes SQLite integrity checking and has zero investigations, motions, visits, segments, and analysis jobs. One Windows analysis controller is running, idle until capture completes.
+- All ten standalone historical highlight files were checksum-verified again. Original investigations and their full archives remain removed.
 
-- RHEL: **16 tests passed**; JavaScript syntax checks passed. One test-library
-  deprecation warning remains (Starlette's AnyIO portal type alias).
-- Isolated Chromium UI smoke: drawing and saving three polygons, reviewing an
-  event, and updating its report passed with no JavaScript errors. Synthetic
-  events used a temporary test database, never the live camera database.
-- Windows `podman.exe` build passed on `podman-machine-default-root`.
-  Image `localhost/cat-watch:0.1.0`:
-  `859abf9686739ee812562218ffbd85ddf8c69a89a94d545c207f8396f76f3304`.
-- Real YOLO model inference passed on **NVIDIA GeForce RTX 5080**, including a
-  separate `--network=none` GPU check. The running app reports detector ready.
-- Existing encrypted credentials successfully authenticated the camera. Live
-  capture produced bounded main-stream MP4 segments and fresh preview frames.
-- Native **Windows Edge 152.0.4191.66**, in an isolated temporary profile, rendered
-  the dashboard and decoded/played a **1280 x 720** evidence segment. Its measured
-  duration was 5.475456 seconds; playback advanced beyond 1.5 seconds. The test
-  browser and its temporary profile were removed after verification.
-- Both Windows and the Podman machine reported a listener only on
-  **127.0.0.1:8765**. No router or firewall settings changed. This is host binding
-  evidence; no separate physical LAN device was used for an external probe.
-- The app data folder inherited the restricted Windows ACL: no unexpected allow
-  identities beyond the Windows user, administrators, and SYSTEM.
-- Manual Stop/Start passed with Windows data preserved and subsequent GPU/camera
-  readiness. Native rolling-file expiry kept unconfigured preview storage bounded;
-  forced quota/disk-exhaustion cases were tested with temporary RHEL data.
+## Evidence and reproduction
 
-The timestamp implementation was corrected during native acceptance: segmentation
-uses relative camera PTS, anchored to the first completed file's modification
-time. Epoch PTS directly supplied to FFmpeg caused invalid initial boundaries.
+Generated acceptance records and screenshots are in `outputs/fresh-refactor/` (not committed). `windows-capture-acceptance.json` records the isolated native capture; `windows-setup-check.json` records final production readiness.
 
-### Pending
+Run from the repository root:
 
-The live deployment is waiting for the user to draw and save the three actual
-areas. Area calibration, the 30-visit labeled accuracy sample, and the 24-hour
-activity trial are **not complete**. No measured cat-detection accuracy is claimed.
+```bash
+.venv/bin/python -m pytest -q
+.venv/bin/python tests/browser_smoke.py
+.venv/bin/python tests/browser_investigation_review.py
+```
 
-The inspected live view shows a covered litter box. A cat hidden inside may cease
-to be detectable: v1 measures visible area presence, not guaranteed time inside
-the enclosure. Include entry, hidden occupancy, and exit in litter-area calibration;
-do not interpret an early automatic end as proof that the cat left the box.
+Native Windows controller boundary checks: `tests/controller-acceptance.ps1`. The explicit short live-camera check is `tests/windows-fresh-acceptance.ps1`; it temporarily uses the app's port, isolates its database, and restores the idle production preview and saved calibration afterward. `tests/windows-setup-check.cjs` performs read-only checks in a separate headless Edge profile.
 
-## Camera calibration (requires local review)
+The deployed image is `localhost/cat-watch:0.3.0`, SHA-256 `309a931ffac2b276ea0053e541f7b910f03824d03ea0c22c2c8364de9eefb135`.
 
-1. In Camera & settings, draw each of the three standing areas, then save them.
-   Check the yellow detection marker against the boundaries while the cat moves.
-2. Gather at least ten independently reviewed visits per area, including pass-bys,
-   stationary visits, boundary movement, and both day/night lighting. Keep the
-   labels and clips in Windows application storage, outside Git.
-3. For a fixed review period, independently list expected visits and their times;
-   compare these against the automatic **original** observations, before edits.
-   Match visits one-to-one by area and temporal overlap. Count unmatched expected
-   visits as false negatives and unmatched automatic visits as false positives.
-4. Record precision = TP/(TP+FP), recall = TP/(TP+FN), and median absolute start/end
-   boundary error for matched visits. Targets: precision and recall >=90%, median
-   boundary error <=3 seconds. Results must include sample size and lighting.
-   If thresholds or areas are tuned, measure again on a separate sample.
-5. Behavior labels are a review workflow; no automatic behavior accuracy is claimed.
+These checks validate the workflow, not cat-behavior accuracy. Actual cat appearances in the newly positioned areas still need review during the next investigation. The full eight-hour investigation has deliberately not been started.
 
-## 24-hour trial
+## 0.3.0 source release validation — 13 September 2026
 
-After calibration, record the start time and keep Windows powered on with the
-Podman machine and app running. At the end, export the report and record:
-
-- elapsed period, coverage and all gaps, with reasons where known;
-- visit counts per area, review corrections, and playable evidence samples;
-- data usage, configured cap and whether capture ever paused;
-- day/night samples and the calibration metrics above.
-
-A trial with unconfigured areas is not an activity-monitoring trial. The trial is
-complete only after 24 elapsed hours and review of these results. Manual stop,
-Windows restart, or camera outage must be reported as gaps, not silently omitted.
+The release checkout passed all 67 Python tests, both isolated Playwright suites, the native Windows controller boundary tests, and JavaScript syntax checks. Live camera, GPU inference, and deployment acceptance were not repeated for this source release; the deployment observations above are the 12 September checkpoint. No GitHub Actions workflows are configured.

@@ -12,7 +12,7 @@ $env:PATHEXT = [Environment]::GetEnvironmentVariable('PATHEXT','Machine')
 $OutputEncoding = New-Object System.Text.UTF8Encoding($false)
 $Podman = Join-Path $env:LOCALAPPDATA 'Programs\Podman\podman.exe'
 if (!(Test-Path $Podman)) { $Podman = (Get-Command podman.exe -ErrorAction Stop).Source }
-$Image = 'localhost/cat-watch:0.1.0'
+$Image = 'localhost/cat-watch:0.3.0'
 $Container = 'cat-watch'
 $AppData = Join-Path $DataRoot 'cat-watch'
 $SourceRoot = Split-Path $PSScriptRoot -Parent
@@ -86,10 +86,11 @@ switch ($Action) {
             $health = $null
             try { $health = Invoke-RestMethod 'http://127.0.0.1:8765/api/health' -TimeoutSec 2 } catch { }
             if ($health -and $health.detector -eq 'failed') { throw 'Detector initialization failed. Use Check and Logs.' }
-            if ($health -and $health.detector -eq 'ready' -and $health.camera -eq 'connected') { $ready=$true; break }
+            if ($health -and (($health.detector -eq 'ready' -and $health.camera -eq 'connected') -or ($health.preparation -and $health.camera -eq 'preview'))) { $ready=$true; break }
             Start-Sleep -Seconds 2
         }
         if (!$ready) { throw 'Windows camera/GPU readiness check failed. Inspect Status and Logs; deployment is not accepted.' }
+        Start-Process powershell.exe -WindowStyle Hidden -ArgumentList @('-NoProfile','-ExecutionPolicy','Bypass','-File',('"'+(Join-Path $PSScriptRoot 'analysis-controller.ps1')+'"'),'-DataRoot',('"'+$DataRoot+'"')) | Out-Null
         Write-Output 'Dashboard: http://127.0.0.1:8765'
         $health | ConvertTo-Json -Depth 5
     }
