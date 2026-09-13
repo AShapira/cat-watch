@@ -79,7 +79,9 @@ class Runtime:
         import torch
         from ultralytics import YOLO, settings
         settings.update({"sync": False})
-        weights = Path("/opt/models/yolo11n.pt")
+        session = self.store.investigation()
+        self.detector_model_name = session['settings'].get('detector_model','yolo11n') if session else 'yolo11n'
+        weights = Path('/opt/models/'+self.detector_model_name+'.pt')
         if not weights.is_file():
             raise RuntimeError("Packaged model missing; rebuild the image")
         if not torch.cuda.is_available():
@@ -149,8 +151,9 @@ class Runtime:
             return
         # Recover only exact generated leftovers. Unregistered segments are incomplete evidence.
         known = {s["path"] for s in self.store.segments()}
+        recovering_capture = bool(self.store.investigation() and self.store.investigation()['active'])
         for path in self.media.iterdir():
-            if MEDIA_NAME.fullmatch(path.name) and str(path.relative_to(self.store.root)) not in known and not path.is_symlink():
+            if recovering_capture and MEDIA_NAME.fullmatch(path.name) and str(path.relative_to(self.store.root)) not in known and not path.is_symlink():
                 path.unlink(missing_ok=True)
         while not self.stop.is_set():
             session = self.store.investigation()
@@ -403,19 +406,20 @@ class Runtime:
             self.tracker = VisitTracker(self.store, config["enter_seconds"], config["leave_seconds"])
         self.state["calibrated"] = bool(config["polygons"])
         started = time.monotonic()
+        from .regions import predict_regions
+        settings = investigation['settings']
+        crop_boxes = []
         with self.gpu_lock:
-            results = self.model.predict(frame, conf=.1, device=0, imgsz=640, verbose=False)[0]
+            if settings.get('detector_model') == 'yolo11m':
+                raw,crop_boxes = predict_regions(self.model,frame,config['polygons'],settings['crop_context'])
+            else:
+                results = self.model.predict(frame, conf=.1, device=0, imgsz=640, verbose=False)[0]
+                height,width = frame.shape[:2]
+                raw = [{'box':[box[0]/width,box[1]/height,box[2]/width,box[3]/height],
+                        'confidence':confidence,'class_id':int(cls),'label':results.names[int(cls)]}
+                       for box,confidence,cls in zip(results.boxes.xyxy.cpu().tolist(),results.boxes.conf.cpu().tolist(),results.boxes.cls.cpu().tolist())]
         inference_seconds = time.monotonic()-started
-        height,width = frame.shape[:2]
-        self.detections = []
-        for box,confidence,cls in zip(results.boxes.xyxy.cpu().tolist(),results.boxes.conf.cpu().tolist(),results.boxes.cls.cpu().tolist()):
-            a,b,c,d = box
-            normalized = [a/width,b/height,c/width,d/height]
-            assigned = box_assignment(config['polygons'],normalized,config['area_overlap'])
-            self.detections.append({'box':normalized, 'confidence':confidence,
-                                    'class_id':int(cls),'label':results.names[int(cls)],
-                                    'overlaps':assigned['overlaps'],'areas':assigned['areas'],
-                                    'location':assigned['location']})
+        self.detections = [dict(d,**box_assignment(config['polygons'],d['box'],config['area_overlap'])) for d in raw]
         persist_started = time.monotonic()
         with self.store.db():
             cats = [d for d in self.detections if d['class_id']==15 and d['confidence']>=config['confidence']]
@@ -442,7 +446,7 @@ class Runtime:
             investigation = self.store.investigation()
             if investigation and investigation['start'] <= stamp <= investigation['end']:
                 self.store.observation(stamp,'detection',{'detections':self.detections,'reason':reason,
-                    'model':'yolo11n','imgsz':640,'threshold':config['confidence'],
+                    'model':settings.get('detector_model','yolo11n'),'imgsz':640,'input_scope':'area_crops' if crop_boxes else 'full_frame','crop_regions':crop_boxes,'threshold':config['confidence'],
                     'area_assignment':'box_overlap','area_overlap':config['area_overlap'],
                     'entry_progress':{area:{'seconds':p.last-p.first,'event_id':p.event_id} for area,p in self.tracker.states.items()}},investigation['id'])
             dropped = self.state['dropped_detection_frames']

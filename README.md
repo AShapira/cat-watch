@@ -4,9 +4,9 @@ Local Tapo camera investigations with motion capture, overlapping cat-presence a
 
 ## Start
 
-From native Windows PowerShell, run `scripts/cat-watch.ps1 -Action Build` after source changes, then `scripts/cat-watch.ps1 -Action Start` when no application container exists. The project run helper reuses an existing deployment. The default image is `localhost/cat-watch:0.3.0`.
+From native Windows PowerShell, run `scripts/cat-watch.ps1 -Action Build` after source changes, then `scripts/cat-watch.ps1 -Action Start` when no application container exists. The project run helper reuses an existing deployment. The default image is `localhost/cat-watch:0.4.0`.
 
-Open http://127.0.0.1:8765/#setup and draw the three areas on a fresh image. Setup provides preview without recording or heavy analysis. Confirm areas and masks before starting an investigation. Defaults are Broad capture, eight hours, and five-second pre/post-roll.
+Open http://127.0.0.1:8765/#setup and draw the three areas on a fresh image. Setup provides preview without recording or heavy analysis. Confirm areas and masks before starting an investigation. Defaults are Focused capture with a 20% buffer per side, eight hours, and five-second pre/post-roll. Native-resolution area crops feed YOLO11m; shared Qwen3.5-9B descriptions run after capture.
 
 Use `scripts/review-cat-watch.ps1` to view a stopped deployment's existing data without starting background work. The review-only mode cannot prepare a live camera image.
 
@@ -14,7 +14,7 @@ See [the investigation workflow](docs/investigation.md) and [validation checkpoi
 
 ## Version compatibility
 
-Version `0.3.0` requires a fresh application database; it does not migrate databases from `0.1.0` or `0.2.0-investigation`. Preserve older databases and media separately with their matching application version before using a fresh data directory.
+Version `0.4.0` preserves completed `0.3.0` investigations and their original Cosmos jobs; new investigations use Qwen settings frozen at start. The earlier version `0.3.0` requires a fresh application database; it does not migrate databases from `0.1.0` or `0.2.0-investigation`. Preserve older databases and media separately with their matching application version before using a fresh data directory.
 
 ## License
 

@@ -8,6 +8,7 @@ $catTestRoot=Join-Path $DataRoot ('acceptance-fresh-'+(Get-Date -Format 'yyyyMMd
 $catSaved=Invoke-RestMethod 'http://127.0.0.1:8765/api/calibration'
 $catOriginalHealth=Invoke-RestMethod 'http://127.0.0.1:8765/api/health'
 if(!$catSaved.confirmed -or !$catOriginalHealth.preparation){throw 'Expected saved calibration and idle preview'}
+$catSharedBefore=Invoke-RestMethod 'http://127.0.0.1:11434/api/ps'
 $catSavedJson=$catSaved|ConvertTo-Json -Depth 15 -Compress
 New-Item -ItemType Directory $catTestRoot|Out-Null
 'cat-watch-v1'|Set-Content (Join-Path $catTestRoot '.cat-watch-data') -Encoding ASCII
@@ -42,7 +43,8 @@ function Invoke-TestPython([string]$Code){
 $catStopped=$false
 try {
  # Stop only this project's admission controller while the isolated app owns its port.
- Get-CimInstance Win32_Process -Filter "Name='powershell.exe'"|Where-Object {$_.CommandLine -match '[\\/]analysis-controller\.ps1' -and $_.ProcessId -ne $PID}|ForEach-Object {Stop-Process -Id $_.ProcessId}
+ $catControllerPath=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\scripts\analysis-controller.ps1'))
+ Get-CimInstance Win32_Process -Filter "Name='powershell.exe'"|Where-Object {$_.CommandLine -like ('*'+$catControllerPath+'*') -and $_.ProcessId -ne $PID}|ForEach-Object {Stop-Process -Id $_.ProcessId}
  Invoke-Podman @('--connection',$Connection,'stop','cat-watch')|Out-Null;$catStopped=$true
  $existing=Invoke-Podman @('--connection',$Connection,'ps','-a','--filter',"name=^$catTestName$",'--format','{{.Names}}')
  if($existing){
@@ -55,7 +57,7 @@ try {
  $preview=Wait-TestPreview
  $draft=Invoke-TestApi '/api/calibration/prepare' @{}
  $null=Invoke-TestApi '/api/calibration/confirm' @{id=$draft.id;polygons=$catSaved.config.polygons;masks=$catSaved.masks}
- $session=Invoke-TestApi '/api/investigation' @{calibration_id=$draft.id;duration_seconds=900;motion_scope='full_frame';analysis_mode='deferred';masks=$catSaved.masks}
+ $session=Invoke-TestApi '/api/investigation' @{calibration_id=$draft.id;duration_seconds=900;motion_scope='areas';motion_buffer=.2;crop_context=.5;analysis_mode='deferred';masks=$catSaved.masks}
  # Shorten only the isolated acceptance deadline: production API minimum remains 15 minutes.
  $deadline=Invoke-TestPython @'
 import time
@@ -109,7 +111,9 @@ print(json.dumps({'segments':len(segments),'seconds':sum(x['end']-x['start'] for
   Start-Sleep -Seconds 1
  }
  $jobs=Invoke-RestMethod 'http://127.0.0.1:8765/api/investigation/jobs'
- $receipt=@{preview=$preview;before_restart=$before;capture_end=$endHealth;deadline=[double]$deadline;evidence=($evidence|ConvertFrom-Json);gpu=$gpu;analysis=$state;jobs=$jobs;isolated_data=$catTestRoot;production_calibration_unchanged=$true}
+ $catSharedAfter=Invoke-RestMethod 'http://127.0.0.1:11434/api/ps'
+ if(@($catSharedAfter.models | Where-Object name -eq 'qwen3.5:9b').Count -ne 1){throw 'Shared Qwen no longer loaded'}
+ $receipt=@{shared_before=$catSharedBefore;shared_after=$catSharedAfter;preview=$preview;before_restart=$before;capture_end=$endHealth;deadline=[double]$deadline;evidence=($evidence|ConvertFrom-Json);gpu=$gpu;analysis=$state;jobs=$jobs;isolated_data=$catTestRoot;production_calibration_unchanged=$true}
  $receipt|ConvertTo-Json -Depth 18|Set-Content (Join-Path $catTestRoot 'acceptance.json') -Encoding UTF8
  @{isolated_data=$catTestRoot;segments=$receipt.evidence.segments;recorded_seconds=$receipt.evidence.seconds;frames_analyzed=$endHealth.frames_analyzed;analysis=$state.phase;message=$state.message;jobs=@($jobs.jobs|Select-Object kind,status)}|ConvertTo-Json -Depth 5
 } finally {
@@ -117,8 +121,10 @@ print(json.dumps({'segments':len(segments),'seconds':sum(x['end']-x['start'] for
  if($catStopped){
   Invoke-Podman @('--connection',$Connection,'start','cat-watch')|Out-Null
   Send-CatCredential 'cat-watch'
+  for($i=0;$i -lt 30;$i++){try{$null=Invoke-TestApi '/api/calibration/preview' @{};break}catch{Start-Sleep -Seconds 1}}
   $null=Wait-TestPreview
   $after=Invoke-RestMethod 'http://127.0.0.1:8765/api/calibration'
   if(($after|ConvertTo-Json -Depth 15 -Compress) -ne $catSavedJson){throw 'Production calibration changed unexpectedly'}
+  Start-Process powershell.exe -WindowStyle Hidden -ArgumentList @('-NoProfile','-ExecutionPolicy','Bypass','-File',('"'+(Join-Path $PSScriptRoot '..\scripts\analysis-controller.ps1')+'"'),'-DataRoot',('"'+$DataRoot+'"')) | Out-Null
  }
 }

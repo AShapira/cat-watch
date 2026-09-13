@@ -57,6 +57,16 @@ def main():
                 expect(page.locator('#motionReview')).to_be_visible()
                 expect(page.locator('#reanalyzeMotion')).to_be_disabled()
                 page.wait_for_function("() => document.getElementById('motionVideo').currentTime >= .95")
+                expect(page.locator('#areaResolution')).to_contain_text('original source pixels')
+                expect(page.locator('#saveAreaSnapshot')).to_be_enabled()
+                page.locator('#areaZoom').select_option('zoom2')
+                expect(page.locator('#areaViewport')).to_have_class('area-viewport zoom2')
+                with page.expect_download() as downloaded:
+                    page.locator('#saveAreaSnapshot').click()
+                import cv2
+                img=cv2.imread(downloaded.value.path())
+                assert img.shape[1]==int(page.locator('#areaCanvas').get_attribute('width'))
+                assert img.shape[0]==int(page.locator('#areaCanvas').get_attribute('height'))
                 expect(page.locator('#overlayNote')).to_contain_text('Eating pad')
                 expect(page.locator('#overlayNote')).to_contain_text('33% overlap')
                 assert page.locator('#motionOverlay').evaluate('(c)=>c.width>0 && c.height>0')

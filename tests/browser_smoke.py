@@ -70,7 +70,10 @@ def main():
                 expect(page.locator('#report')).to_contain_text('eating observed: 1')
                 page.get_by_role('button',name='Investigation',exact=True).click()
                 expect(page.locator('#investHours')).to_have_value('8')
-                expect(page.locator('#motionScope')).to_have_value('full_frame')
+                expect(page.locator('#motionScope')).to_have_value('areas')
+                expect(page.locator('#motionBuffer')).to_have_value('20')
+                expect(page.locator('#cropContext')).to_have_value('50')
+                assert page.evaluate('Object.keys(bufferedOutlines).length')==3
                 page.locator('#investHours').fill('0.25')
                 page.locator('#motionScope').select_option('areas')
                 page.locator('#investStart').click()

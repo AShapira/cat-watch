@@ -27,6 +27,16 @@ function Test-CatCosmos {
         return ($null -ne $reply.choices)
     } catch { return $false }
 }
+function Test-CatSharedModel($Settings) {
+    # Same shared service, reached through Windows loopback. Never unload it.
+    $model=$Settings.description_model
+    $loaded=Invoke-RestMethod 'http://127.0.0.1:11434/api/ps' -TimeoutSec 5
+    if(@($loaded.models | Where-Object name -eq $model).Count -eq 1) {return}
+    $body=@{model=$model;stream=$false}|ConvertTo-Json
+    Invoke-RestMethod 'http://127.0.0.1:11434/api/generate' -Method Post -ContentType 'application/json' -Body $body -TimeoutSec $Settings.description_timeout | Out-Null
+    $loaded=Invoke-RestMethod 'http://127.0.0.1:11434/api/ps' -TimeoutSec 5
+    if(@($loaded.models | Where-Object name -eq $model).Count -ne 1) {throw 'Shared Qwen model did not become ready; use Retry analysis'}
+}
 function Save-CatControl($State,[string]$Phase,$Kind,[string]$Message,$Owner,$Checked,$Skipped) {
     return Invoke-CatApi '/api/analysis/control' 'PUT' @{session_id=$State.session_id;attempt=$State.attempt;phase=$Phase;allowed_kind=$Kind;message=$Message;owner=$Owner;checked_kinds=@($Checked);skipped=@($Skipped)}
 }
@@ -72,7 +82,9 @@ function Invoke-CatAnalysisStep($state) {
             if($state.pending.$kind -eq 0) {continue}
             try {
                 if($kind -eq 'video_description') {
-                    if(!(Test-CatCosmos)) {
+                    if($state.description_settings.description_provider -eq 'ollama') {
+                        Test-CatSharedModel $state.description_settings
+                    } elseif(!(Test-CatCosmos)) {
                         $gpu=Get-CatGpu
                         $required=$gpu.total*[double]$catLock.gpu_memory_utilization+1024
                         if($gpu.free -lt $required) {throw "Cosmos needs $([math]::Ceiling($required)) MiB available; $($gpu.free) MiB is free"}

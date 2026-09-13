@@ -22,7 +22,7 @@ class AnalysisControlStore:
             row = db.execute('SELECT body FROM analysis_control WHERE session_id=?',(session['id'],)).fetchone()
             body = json.loads(row[0])
             pending = {kind:db.execute("SELECT count(*) FROM analysis_jobs j JOIN motions m ON m.id=j.motion_id WHERE m.session_id=? AND j.kind=? AND j.status='queued'",(session['id'],kind)).fetchone()[0] for kind in KINDS}
-        return dict(body,session_id=session['id'],capture_end=session['end']+5,pending=pending)
+        return dict(body,session_id=session['id'],capture_end=session['end']+5,pending=pending,description_settings={k:v for k,v in session['settings'].items() if k.startswith('description_')})
 
     def update_analysis(self, updates, attempt=None, session_id=None):
         with self.db() as db:
@@ -34,6 +34,7 @@ class AnalysisControlStore:
             state.update(updates)
             sid = state.pop('session_id')
             state.pop('pending',None)
+            state.pop('description_settings',None)
             state.pop('capture_end',None)
             db.execute('UPDATE analysis_control SET body=? WHERE session_id=?',(json.dumps(state),sid))
         return self.analysis_status(sid)
@@ -48,7 +49,7 @@ class AnalysisControlStore:
             if current['phase'] in ACTIVE or current.get('owner'):
                 raise ValueError('An analysis attempt or owned service cleanup is already active')
             return self.update_analysis({'attempt':state['attempt']+1,'phase':'checking',
-                'allowed_kind':None,'checked_kinds':[],'skipped':[],
+                'allowed_kind':None,'checked_kinds':[],'skipped':[],'retry':{},
                 'message':'Checking GPU availability once'},session_id=state['session_id'])
 
     def control_analysis(self, body):

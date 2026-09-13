@@ -90,13 +90,13 @@ def test_deferred_jobs_and_capture_deadline(tmp_path):
 def test_live_candidates_available_before_comparison(tmp_path):
     store,session=setup_cycle(tmp_path)
     mid=store.open_motion(session['id'],100,.01);store.update_motion(mid,105,.01);store.close_motion(mid)
-    store.observation(102,'detection',{'detections':[{'label':'cat','confidence':.8,'box':[.1,.2,.3,.4]}]},session['id'])
+    store.observation(102,'detection',{'model':'yolo11m','imgsz':640,'input_scope':'area_crops','detections':[{'label':'cat','confidence':.8,'box':[.1,.2,.3,.4]}]},session['id'])
     # Use current stamps: diagnostics outside the retention horizon may be removed.
     with store.db() as db:
-        db.execute('INSERT INTO observations(session_id,stamp,kind,body) VALUES (?,?,?,?)',(session['id'],102,'detection',json.dumps({'detections':[{'label':'cat','confidence':.8,'box':[.1,.2,.3,.4]}]})))
+        db.execute('INSERT INTO observations(session_id,stamp,kind,body) VALUES (?,?,?,?)',(session['id'],102,'detection',json.dumps({'model':'yolo11m','imgsz':640,'input_scope':'area_crops','detections':[{'label':'cat','confidence':.8,'box':[.1,.2,.3,.4]}]})))
     result=store.motion_group_list(cat='detected',session_id=session['id'])
     assert result['total']==1 and not result['groups'][0]['analysis_complete']
-    assert result['groups'][0]['models']==['yolo11n/640/live']
+    assert result['groups'][0]['models']==['yolo11m/640/live/area_crops']
     assert store.motion_group_list(cat='not_detected')['total']==0
 
 
@@ -169,7 +169,13 @@ def test_detection_persists_coverage_and_gap_audit_with_visits(tmp_path):
     class Model:
         def predict(self,frame,**kwargs):
             return [SimpleNamespace(names={15:'cat'},boxes=SimpleNamespace(xyxy=Tensor([[10,20,30,40]]),conf=Tensor([.8]),cls=Tensor([15])))]
-    runtime=Runtime(store);runtime.model=Model();runtime.state['dropped_detection_frames']=2
+    class CropModel:
+        calls=0
+        def predict(self,frame,**kwargs):
+            self.calls+=1
+            present=self.calls%2==1
+            return [SimpleNamespace(names={15:'cat'},boxes=SimpleNamespace(xyxy=Tensor([[10,10,30,30]] if present else []),conf=Tensor([.8] if present else []),cls=Tensor([15] if present else [])))]
+    runtime=Runtime(store);runtime.model=CropModel();runtime.state['dropped_detection_frames']=2
     for offset in range(6):runtime.detect(np.zeros((100,100,3),np.uint8),now-5+offset*.5)
     assert len(store.events())==1
     assert store.events()[0]['area']=='eating_pad'

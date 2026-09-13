@@ -8,8 +8,11 @@ PADDING = 5
 
 
 MOTION_DEFAULTS = {"motion_fraction": .0005, "motion_seconds": .5,
-                   "masks": [[0, 0, .38, .065]], "motion_scope":"full_frame",
-                   "motion_fps":5, "analysis_mode":"deferred", "crop_comparison":True, "duration_seconds":28800}
+                   "masks": [[0, 0, .38, .065]], "motion_scope":"areas",
+                   "motion_fps":5, "analysis_mode":"deferred", "crop_comparison":True, "duration_seconds":28800,
+                   "motion_buffer":.2, "crop_context":.5, "detector_model":"yolo11m",
+                   "description_provider":"ollama", "description_model":"qwen3.5:9b",
+                   "description_url":"http://host.containers.internal:11434", "description_timeout":180}
 
 
 class InvestigationStore:
@@ -144,10 +147,14 @@ class InvestigationStore:
             raise ValueError('Duration must be 15 minutes to 24 hours in 15-minute steps')
         if set(settings) != set(MOTION_DEFAULTS):
             raise ValueError('Unsupported investigation setting')
-        for key, low, high in [('motion_fraction', .00001, .5), ('motion_seconds', .05, 5)]:
+        for key, low, high in [('motion_buffer',0,1),('crop_context',0,1),('description_timeout',30,600),('motion_fraction', .00001, .5), ('motion_seconds', .05, 5)]:
             value = settings[key]
             if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or not low <= value <= high:
                 raise ValueError('Invalid '+key)
+        if settings['detector_model'] != 'yolo11m' or settings['description_provider'] != 'ollama' or settings['description_model'] != 'qwen3.5:9b':
+            raise ValueError('New investigations use YOLO11m and shared Qwen3.5-9B')
+        if settings['description_url'] not in ('http://host.containers.internal:11434','http://127.0.0.1:11434'):
+            raise ValueError('Use the local shared Ollama service')
         if settings['motion_scope'] not in ('full_frame','areas') or settings['analysis_mode'] not in ('live','deferred'):
             raise ValueError('Invalid motion scope or analysis mode')
         if isinstance(settings['motion_fps'],bool) or not isinstance(settings['motion_fps'],(int,float)) or not 2<=settings['motion_fps']<=10:
@@ -274,7 +281,8 @@ class InvestigationStore:
                 if body.get('phase') in ('checking','processing','stage_complete'):
                     body.update(phase='blocked',allowed_kind=None,message='Application restarted; retry analysis explicitly')
                     db.execute('UPDATE analysis_control SET body=? WHERE session_id=?',(json.dumps(body),row['session_id']))
-        if previous is not None:
+        session = self.investigation()
+        if previous is not None and session and session['active']:
             now = time.time()
             self.observation(now,'capture_gap',{'reason':'application restarted','start':previous,'end':now})
 

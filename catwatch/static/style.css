@@ -15,3 +15,4 @@
 #groupReviewForm>label{display:flex;flex-direction:column;align-items:stretch}#groupReviewNotes{font:inherit;width:100%;padding:10px;border:1px solid #bccab8;border-radius:6px;resize:vertical}
 #groupReviewSaved{color:#205833}#overlayNote{font-size:14px;min-height:1.6em}
 @media(max-width:700px){.filter-panel .settings>label{width:100%}.filter-panel select{max-width:100%}#motionReview .heading{align-items:flex-start;flex-direction:column}}
+.area-viewport{overflow:auto;max-height:65vh;background:#18211e;border-radius:8px}.area-viewport canvas{display:block;max-width:none;height:auto}.area-viewport.fit canvas{max-width:100%}.area-viewport.zoom2 canvas{zoom:2}.area-viewport.zoom4 canvas{zoom:4}

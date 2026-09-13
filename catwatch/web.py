@@ -160,10 +160,36 @@ def create_app(store, runtime, run_worker=True):
                       model: str='all', analysis: str='all', disagreement: bool=False,
                       start: float | None=None, end: float | None=None,
                       min_duration: float=0., max_duration: float | None=None,
-                      offset: int=0, limit: int=24, session_id: int | None=None, motion_area: str='all'):
+                      offset: int=0, limit: int=24, session_id: int | None=None, motion_area: str='all', presence: str='all'):
         return store.motion_group_list(cat=cat,confidence=confidence,area=area,review=review,
             model=model,analysis=analysis,disagreement=disagreement,start=start,end=end,
-            min_duration=min_duration,max_duration=max_duration,offset=offset,limit=limit,session_id=session_id,motion_area=motion_area)
+            min_duration=min_duration,max_duration=max_duration,offset=offset,limit=limit,session_id=session_id,motion_area=motion_area,presence=presence)
+
+    @app.post('/api/investigation/preview-regions')
+    def preview_regions(body: dict=Body(...)):
+        import math
+        import cv2
+        from .regions import region_masks
+        from .core import AREAS
+        from .investigation import MOTION_DEFAULTS
+        polygons=body.get('polygons',{})
+        if not isinstance(polygons,dict) or set(polygons)-set(AREAS):
+            raise ValueError('Invalid areas')
+        for points in polygons.values():
+            if (not isinstance(points,list) or len(points)>20 or any(not isinstance(p,list) or len(p)!=2 or
+                any(isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) or not 0<=v<=1 for v in p) for p in points)):
+                raise ValueError('Invalid polygon coordinates')
+        settings=dict(MOTION_DEFAULTS,motion_buffer=body.get('motion_buffer',.2),masks=body.get('masks',[]))
+        store.validate_motion_settings(settings)
+        prepared=store.preparation()
+        ratio=prepared['height']/prepared['width'] if prepared else 9/16
+        width,height=960,max(1,round(960*ratio))
+        masks=region_masks(polygons,width,height,settings['motion_buffer'],settings['masks'])
+        outlines={}
+        for area,mask in masks.items():
+            contours,_=cv2.findContours(mask,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_SIMPLE)
+            outlines[area]=[[[float(x)/width,float(y)/height] for x,y in contour[:,0]] for contour in contours]
+        return {'outlines':outlines,'motion_buffer':settings['motion_buffer']}
 
     @app.get('/api/investigation/area-settings')
     def area_settings():
@@ -190,7 +216,7 @@ def create_app(store, runtime, run_worker=True):
     @app.get('/api/investigation/groups/{gid}/thumbnail')
     def group_thumbnail(gid: int, model: str='all'):
         from .investigation_review import MODELS
-        if model not in ('all',*MODELS):
+        if len(model)>128:
             raise ValueError('Invalid model')
         import cv2
         from .analysis import evidence_lease, sampled_frames
