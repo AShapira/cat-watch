@@ -42,9 +42,11 @@ class InvestigationStore:
                 CREATE TABLE IF NOT EXISTS preparation (id INTEGER PRIMARY KEY, body TEXT NOT NULL);
                 CREATE TABLE IF NOT EXISTS analysis_control (session_id INTEGER PRIMARY KEY,
                     body TEXT NOT NULL);
-                PRAGMA user_version=4;
+
             ''')
 
+            if db.execute('PRAGMA user_version').fetchone()[0] == 0:
+                db.execute('PRAGMA user_version=4')
 
     def sessions(self):
         with self.db() as db:

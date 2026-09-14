@@ -34,8 +34,8 @@ def test_reviewed_behavior_only_and_export(client):
     assert fountain['behaviors']['drinking_observed']==0
     token=client.get('/api/session').json()['token']
     r=client.patch(f'/api/events/{eid}',json={'behavior':'drinking_observed'},headers={'x-catwatch-token':token})
-    assert r.status_code==200
-    assert r.json()['evidence']=='expired'
+    assert r.status_code==410
+    assert client.store.event(eid)["behavior"] == "unknown"
     assert 'drinking_observed' in client.get('/api/reports.csv?start=90&end=120').text
     assert client.get('/api/events?limit=-1').status_code==400
 

@@ -12,7 +12,7 @@ $env:PATHEXT = [Environment]::GetEnvironmentVariable('PATHEXT','Machine')
 $OutputEncoding = New-Object System.Text.UTF8Encoding($false)
 $Podman = Join-Path $env:LOCALAPPDATA 'Programs\Podman\podman.exe'
 if (!(Test-Path $Podman)) { $Podman = (Get-Command podman.exe -ErrorAction Stop).Source }
-$Image = 'localhost/cat-watch:0.4.0'
+$Image = 'localhost/cat-watch:0.5.0'
 $Container = 'cat-watch'
 $AppData = Join-Path $DataRoot 'cat-watch'
 $SourceRoot = Split-Path $PSScriptRoot -Parent
@@ -39,6 +39,7 @@ function Assert-Machine {
     Invoke-Podman @('--connection',$Connection,'info','--format','{{.Host.Hostname}}') | Out-Null
 }
 
+. (Join-Path $PSScriptRoot 'labeling-mounts.ps1')
 Assert-Machine
 switch ($Action) {
     'Check' {
@@ -72,7 +73,8 @@ switch ($Action) {
         $camera = Get-Content (Join-Path $DataRoot 'camera.json') -Raw | ConvertFrom-Json
         $credential = Import-Clixml $CredentialFile
         $inputJson = @{ ip=$camera.ip; username=$credential.UserName; password=$credential.GetNetworkCredential().Password } | ConvertTo-Json -Compress
-        Invoke-Podman @('--connection',$Connection,'run','-d','--name',$Container,'--label','app=cat-watch','--network=host','--device','nvidia.com/gpu=all','--cap-drop=all','--security-opt=no-new-privileges','--log-driver=k8s-file','--log-opt=max-size=2mb','--health-cmd','python -m catwatch --health','--health-interval','30s','--health-start-period','120s','--mount',"type=bind,source=$AppData,target=/data",$Image) | Out-Null
+        $labelingMounts=@(Get-LabelingMounts)
+        Invoke-Podman (@('--connection',$Connection,'run','-d','--name',$Container,'--label','app=cat-watch','--network=host','--device','nvidia.com/gpu=all','--cap-drop=all','--security-opt=no-new-privileges','--log-driver=k8s-file','--log-opt=max-size=2mb','--health-cmd','python -m catwatch --health','--health-interval','30s','--health-start-period','120s','--mount',"type=bind,source=$AppData,target=/data") + $labelingMounts + @($Image)) | Out-Null
         # Transfer through exec stdin to a UID-restricted Unix socket, never CLI metadata.
         $previous = $ErrorActionPreference
         $ErrorActionPreference = 'Continue'

@@ -18,29 +18,46 @@ from .core import AREAS, BEHAVIORS, report
 
 def create_app(store, runtime, run_worker=True):
     token = secrets.token_urlsafe(32)
+    from .labeling.service import LabelingService
+    labeling = LabelingService.from_environment(store, runtime)
 
     @asynccontextmanager
     async def lifespan(app):
         if run_worker:
             runtime.start()
+        labeling.start()
         yield
+        labeling.shutdown()
         if run_worker:
             runtime.shutdown()
 
     app = FastAPI(title="cat-watch", docs_url=None, redoc_url=None, lifespan=lifespan)
+    app.state.labeling = labeling
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost", "testserver"])
 
     @app.middleware("http")
     async def local_access(request: Request, call_next):
-        annotation = request.method == 'PUT' and (re.fullmatch(r'/api/investigation/groups/[0-9]+/review',request.url.path)
-                       or request.url.path == '/api/investigation/area-settings')
+        annotation = (request.method == 'POST' and (request.url.path in (
+            '/api/labeling/webhook', '/api/labeling/reconcile', '/api/datasets/exports')
+            or re.fullmatch(r'/api/labeling/investigations/[0-9]+/export', request.url.path))) or (request.method == 'PUT' and request.url.path == '/api/investigation/area-settings')
+        webhook = request.url.path == '/api/labeling/webhook' and request.method == 'POST'
+        if webhook:
+            config = labeling.config
+            if not config:
+                return JSONResponse({'detail': 'Labeling is disabled'}, 403)
+            expected = Path(config['webhook_secret_file']).read_text().strip()
+            if not expected or not secrets.compare_digest(request.headers.get('x-catwatch-labeling-token', ''), expected):
+                return JSONResponse({'detail': 'Invalid labeling webhook credential'}, 403)
         if request.method not in ('GET', 'HEAD') and runtime.state.get('review_only') and not annotation:
-            return JSONResponse({'detail':'Review-only mode: investigation and all background work are stopped.'},403)
-        if request.method not in ("GET", "HEAD") and request.headers.get("x-catwatch-token") != token:
+            return JSONResponse({'detail':'Review-only mode: investigation and model workers are stopped.'},403)
+        if request.method not in ("GET", "HEAD") and not webhook and request.headers.get("x-catwatch-token") != token:
             return JSONResponse({"detail": "Reload the local dashboard before making changes"}, 403)
         origin = request.headers.get("origin")
         if origin and origin not in ("http://127.0.0.1:8765", "http://localhost:8765"):
             return JSONResponse({"detail": "Local dashboard requests only"}, 403)
+        legacy = (request.method == 'PUT' and re.fullmatch(r'/api/investigation/groups/[0-9]+/review', request.url.path)) or (request.method not in ('GET','HEAD') and (request.url.path == '/api/events' or request.url.path == '/api/merge' or re.fullmatch(r'/api/events/[0-9]+(?:/split)?', request.url.path)))
+        if legacy:
+            return JSONResponse({'detail': 'Human annotations are edited in Label Studio'}, 410)
         response = await call_next(request)
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Cache-Control"] = "no-store"
@@ -61,9 +78,80 @@ def create_app(store, runtime, run_worker=True):
 
     @app.get("/static/{name}")
     def static(name: str):
-        if name not in ("app.js", "style.css", "investigation.js"):
+        if name not in ("app.js", "style.css", "investigation.js", "labeling.js"):
             raise HTTPException(404)
         return FileResponse(Path(__file__).parent / "static" / name)
+
+
+    @app.get('/api/labeling/status')
+    def labeling_status():
+        return labeling.status()
+
+    @app.get('/api/labeling/tasks')
+    def labeling_tasks(group_id: int | None = None, offset: int = 0, limit: int = 100):
+        if offset < 0 or not 1 <= limit <= 200:
+            raise ValueError('Invalid task pagination')
+        rows = labeling.public_tasks(group_id)
+        return {'tasks': rows[offset:offset+limit], 'total': len(rows)}
+
+    @app.post('/api/labeling/investigations/{sid}/export', status_code=202)
+    def labeling_export(sid: int):
+        return labeling.queue(sid)
+
+    @app.post('/api/labeling/reconcile', status_code=202)
+    def labeling_reconcile():
+        labeling.retry()
+        return {'queued': True}
+
+    @app.post('/api/labeling/webhook', status_code=202)
+    async def labeling_webhook(request: Request):
+        data = bytearray()
+        async for chunk in request.stream():
+            data.extend(chunk)
+            if len(data) > 1_000_000:
+                raise HTTPException(413, 'Webhook payload too large')
+        import json
+        try:
+            payload = json.loads(data)
+            if not isinstance(payload, dict):
+                raise ValueError('Expected a webhook object')
+        except (ValueError, UnicodeDecodeError):
+            raise HTTPException(400, 'Invalid webhook JSON')
+        labeling.webhook(payload)
+        return {'queued': True}
+
+    @app.post('/api/datasets/exports', status_code=202)
+    def dataset_export():
+        return labeling.request_snapshot()
+
+    @app.get('/api/datasets/exports/{ident}')
+    def dataset_status(ident: str):
+        return labeling.snapshot_status(ident)
+
+    @app.get('/api/datasets/exports/{ident}/files/{name}')
+    def dataset_file(ident: str, name: str):
+        row = labeling.snapshot_status(ident)
+        if row['state'] != 'complete' or name not in ('manifest.json','clips.jsonl','intervals.jsonl','annotations.jsonl','taxonomy.json','guide.md'):
+            raise HTTPException(404, 'Completed export file not found')
+        return FileResponse(labeling.corpus.path(row['path']+'/'+name), filename=name)
+
+    def activity_bounds(start, end):
+        import math
+        if (start is None) != (end is None) or (start is not None and (not math.isfinite(start) or not math.isfinite(end) or start >= end)):
+            raise ValueError('Supply a finite start before end')
+
+    @app.get('/api/activities')
+    def activities(start: float | None = None, end: float | None = None, offset: int = 0, limit: int = 100):
+        activity_bounds(start, end)
+        if offset < 0 or not 1 <= limit <= 200:
+            raise ValueError('Invalid activity pagination')
+        rows = labeling.db.activities(start, end)
+        return {'intervals': rows[offset:offset+limit], 'total': len(rows)}
+
+    @app.get('/api/activity-reports')
+    def activity_reports(start: float | None = None, end: float | None = None):
+        activity_bounds(start, end)
+        return labeling.db.report(start, end)
 
     @app.get("/api/session")
     def session():
@@ -294,6 +382,7 @@ def create_app(store, runtime, run_worker=True):
         return store.investigation_report(session_id)
 
     def decorate(event):
+        event = dict(event, behavior='unknown', reviewed=False)
         clips = store.evidence(event["start"], event["end"])
         core = [s for s in clips if s["start"] < event["end"] and s["end"] > event["start"]]
         complete = bool(core)
@@ -375,7 +464,7 @@ def create_app(store, runtime, run_worker=True):
             raise ValueError("Supply both start and end")
         if start >= end or end-start > 366*86400:
             raise ValueError("Choose an interval of up to one year")
-        return report(store.events(), store.coverage(), start, end)
+        return report([dict(e, behavior='unknown', reviewed=False) for e in store.events()], store.coverage(), start, end)
 
     @app.get("/api/reports")
     def reports(start: float | None = None, end: float | None = None, days: int = 7):

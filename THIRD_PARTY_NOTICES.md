@@ -29,3 +29,7 @@ records installed Python versions, and `/opt/models/SHA256SUMS` records its mode
 checksum. Consult installed package metadata and upstream licenses before
 redistributing a built container. This source publication does not publish a
 prebuilt container image or model-weight archive.
+
+## Label Studio
+
+Optional local annotation service: HumanSignal Label Studio Community Edition 1.23.0, Apache License 2.0. The official image is digest-pinned in scripts/label-studio.lock.json. Upstream: https://github.com/HumanSignal/label-studio. It runs separately; project code uses its documented API and standard labeling controls.

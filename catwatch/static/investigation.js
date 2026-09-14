@@ -8,7 +8,7 @@ const selected=$('filterSession').value,sessionParam=new URLSearchParams(locatio
 $('filterSession').replaceChildren(node('option','All sessions'));$('filterSession').options[0].value='all';
 for(const session of data.sessions){const o=node('option',`Session ${session.id} · ${date(session.start)}`);o.value=String(session.id);$('filterSession').append(o);}
 $('filterSession').value=sessionFiltersLoaded?selected:(sessionParam&&[...$('filterSession').options].some(o=>o.value===sessionParam)?sessionParam:(sessionParam==='all'?'all':String(s?.id||'all')));sessionFiltersLoaded=true;
-if(h.review_only)$('motionRetentionNote').textContent='Review-only mode: recording, model workers and automatic deletion are stopped. You can filter saved evidence and save human review labels.';$('investStatus').textContent=s?`${s.active?'Investigation active':'Investigation ended'} · ${date(s.start)} → ${date(s.end)}${s.active?' · '+duration(Math.max(0,s.end-Date.now()/1000))+' remaining':''}`:'No investigation started.';$('investStart').disabled=Boolean(h.review_only||!data.preparation?.confirmed||(s&&Date.now()/1000<s.end+5));$('investStop').disabled=Boolean(h.review_only)||!s?.active;if(s?.active&&!motionSettingsLoaded){motionMasks=structuredClone(s.settings.masks);$('motionFraction').value=s.settings.motion_fraction*100;$('motionSeconds').value=s.settings.motion_seconds;$('motionScope').value=s.settings.motion_scope;$('motionFps').value=s.settings.motion_fps;$('analysisMode').value=s.settings.analysis_mode;$('cropComparison').checked=s.settings.crop_comparison;$('investHours').value=s.settings.duration_seconds/3600;$('motionBuffer').value=(s.settings.motion_buffer??0)*100;$('cropContext').value=(s.settings.crop_context??.5)*100;$('descriptionTimeout').value=s.settings.description_timeout??180;motionSettingsLoaded=true;}
+if(h.review_only)$('motionRetentionNote').textContent='Review-only mode: recording, model workers and automatic deletion are stopped. Label Studio handles human annotations; synchronization and queued dataset exports remain available.';$('investStatus').textContent=s?`${s.active?'Investigation active':'Investigation ended'} · ${date(s.start)} → ${date(s.end)}${s.active?' · '+duration(Math.max(0,s.end-Date.now()/1000))+' remaining':''}`:'No investigation started.';$('investStart').disabled=Boolean(h.review_only||!data.preparation?.confirmed||(s&&Date.now()/1000<s.end+5));$('investStop').disabled=Boolean(h.review_only)||!s?.active;if(s?.active&&!motionSettingsLoaded){motionMasks=structuredClone(s.settings.masks);$('motionFraction').value=s.settings.motion_fraction*100;$('motionSeconds').value=s.settings.motion_seconds;$('motionScope').value=s.settings.motion_scope;$('motionFps').value=s.settings.motion_fps;$('analysisMode').value=s.settings.analysis_mode;$('cropComparison').checked=s.settings.crop_comparison;$('investHours').value=s.settings.duration_seconds/3600;$('motionBuffer').value=(s.settings.motion_buffer??0)*100;$('cropContext').value=(s.settings.crop_context??.5)*100;$('descriptionTimeout').value=s.settings.description_timeout??180;motionSettingsLoaded=true;}
 $('analysisStatus').textContent=data.analysis?.message||'Heavy analysis starts only after capture and a successful GPU check.';
 $('retryAnalysis').disabled=!s||Date.now()/1000<s.end+5||['checking','processing','stage_complete'].includes(data.analysis?.phase)||Boolean(h.review_only);
 for(const id of ['motionBuffer','cropContext','descriptionTimeout','motionScope','investHours','motionFraction','motionSeconds','motionFps','analysisMode','cropComparison','clearMasks','resetMasks','saveOverlap'])$(id).disabled=Boolean(s&&Date.now()/1000<s.end+5);
@@ -22,7 +22,7 @@ const overlapFields={eating_pad:'overlapEating',water_fountain:'overlapWater',li
 function overlapLabel(d){return d.areas.length?d.areas.map(a=>`${areaName(a)} · ${Math.round(d.overlaps[a]*100)}% overlap`).join(' + '):areaName(d.location);}
 const areaName=a=>names[a]||{outside:'Outside all areas',overlap:'Overlapping areas',unknown:'Area uncertain'}[a]||a;
 function groupFilters(){
-  const p=new URLSearchParams({presence:$('filterPresence').value,motion_area:$('filterMotionArea').value,cat:$('filterCat').value,confidence:$('filterConfidence').value,area:$('filterArea').value,review:$('filterReview').value,model:$('filterModel').value,analysis:$('filterAnalysis').value,min_duration:$('filterMinDuration').value||'0'});
+  const p=new URLSearchParams({presence:$('filterPresence').value,motion_area:$('filterMotionArea').value,cat:$('filterCat').value,confidence:$('filterConfidence').value,area:$('filterArea').value,model:$('filterModel').value,analysis:$('filterAnalysis').value,min_duration:$('filterMinDuration').value||'0'});
   if($('filterSession').value!=='all')p.set('session_id',$('filterSession').value);
   if($('filterDisagreement').checked)p.set('disagreement','true');
   for(const [id,key] of [['filterStart','start'],['filterEnd','end']])if($(id).value)p.set(key,String(new Date($(id).value).getTime()/1000));
@@ -32,7 +32,7 @@ function groupFilters(){
 }
 function restoreMotionFilters(){
   const p=new URLSearchParams(location.search);
-  for(const [key,id] of [['presence','filterPresence'],['motion_area','filterMotionArea'],['cat','filterCat'],['confidence','filterConfidence'],['area','filterArea'],['review','filterReview'],['model','filterModel'],['analysis','filterAnalysis'],['min_duration','filterMinDuration'],['max_duration','filterMaxDuration']]){if(!p.has(key))continue;const field=$(id);if(key==='model'&&![...field.options].some(o=>o.value===p.get(key))){const o=node('option',p.get(key));o.value=p.get(key);field.append(o);}if(field.tagName==='SELECT'&&![...field.options].some(o=>o.value===p.get(key)))continue;field.value=p.get(key);}
+  for(const [key,id] of [['presence','filterPresence'],['motion_area','filterMotionArea'],['cat','filterCat'],['confidence','filterConfidence'],['area','filterArea'],['model','filterModel'],['analysis','filterAnalysis'],['min_duration','filterMinDuration'],['max_duration','filterMaxDuration']]){if(!p.has(key))continue;const field=$(id);if(key==='model'&&![...field.options].some(o=>o.value===p.get(key))){const o=node('option',p.get(key));o.value=p.get(key);field.append(o);}if(field.tagName==='SELECT'&&![...field.options].some(o=>o.value===p.get(key)))continue;field.value=p.get(key);}
   $('filterDisagreement').checked=p.get('disagreement')==='true';
   for(const [key,id] of [['start','filterStart'],['end','filterEnd']])if(p.has(key)&&Number.isFinite(Number(p.get(key)))){const d=new Date(Number(p.get(key))*1000);if(Number.isFinite(d.getTime()))$(id).value=new Date(d-d.getTimezoneOffset()*60000).toISOString().slice(0,16);}
 }
@@ -44,7 +44,7 @@ async function loadMotions(older=false){
     const data=await api('/api/investigation/groups?'+p);lastGroupRefresh=Date.now();
     if(version!==motionLoadVersion)return;
     const savedModel=$('filterModel').value;$('filterModel').replaceChildren(...['all',...(data.models||[])].map(m=>{const o=node('option',m==='all'?'Any saved detector':m);o.value=m;return o;}));$('filterModel').value=(data.models||[]).includes(savedModel)?savedModel:'all';
-    $('areaMetrics').replaceChildren(...Object.entries(data.area_metrics).map(([a,m])=>{const c=node('div',undefined,'card');c.append(node('h3',names[a]),node('p',`${m.motion_groups} motion groups · ${m.cat_groups} cat groups`),node('small',`${m.reviewed_missed_groups} reviewed cats without a detector match`));return c;}));
+    $('areaMetrics').replaceChildren(...Object.entries(data.area_metrics).map(([a,m])=>{const c=node('div',undefined,'card');c.append(node('h3',names[a]),node('p',`${m.motion_groups} motion groups · ${m.cat_groups} cat groups`),node('small','Activity labels are reviewed in Label Studio'));return c;}));
     motionNext=data.next_offset;$('motionMore').hidden=motionNext===null;
     if(!older){$('motionEvents').replaceChildren();loadedGroupCount=0;}
     for(const g of data.groups){
@@ -54,11 +54,11 @@ async function loadMotions(older=false){
       const tags=node('div',undefined,'group-tags');
       tags.append(node('span',g.cat_detected?'Cat candidate':g.analysis_complete?'No cat above threshold':'Analysis incomplete','tag'));
       if(g.best_confidence!==null)tags.append(node('span',`Best cat score ${g.best_confidence.toFixed(2)}`,'tag'));
-      tags.append(node('span',`Human review: ${reviewNames[g.review.status]}`,'tag'));
+
       body.append(tags,node('p',`Motion: ${g.motion_areas.length?g.motion_areas.map(areaName).join(' · '):'Area not measured'}`),node('p',`Cat: ${g.areas.length?g.areas.map(areaName).join(' · '):'No area match at this threshold'}`));
       const peak=g.peak_unknown?(g.peak>0?`Peak at least ${(g.peak*100).toFixed(2)}%; some measurements unknown`:'Peak unknown — analysis gap'):`Peak ${(g.peak*100).toFixed(2)}%`;
       body.append(node('small',`${peak}${g.disagreement?' · Larger detector only':''}`));
-      const review=node('button',g.best_stamp?'Review cat evidence':'Review movement');review.onclick=()=>reviewGroup(g.id).catch(error);card.append(body,review);$('motionEvents').append(card);
+      const review=node('button',g.best_stamp?'Inspect cat evidence':'Inspect movement');review.onclick=()=>reviewGroup(g.id).catch(error);card.append(body,review);$('motionEvents').append(card);
     }
     loadedGroupCount+=data.groups.length;
     $('motionCount').textContent=`Showing ${loadedGroupCount} of ${data.total} matching groups · ${data.all_groups} total groups / ${data.all_motions} motion entries. Times: Asia/Jerusalem.`;
@@ -66,18 +66,14 @@ async function loadMotions(older=false){
   }finally{if(version===motionLoadVersion)$('motionMore').disabled=false;}
 }
 function groupReviewError(e){$('motionReviewError').hidden=false;$('motionReviewError').textContent=e.message;}
-function reviewAreaControls(){
-  const enabled=$('groupReviewStatus').value==='cat_confirmed';$('groupBehaviors').disabled=$('groupReviewStatus').value!=='cat_confirmed';$('groupReviewAreas').disabled=!enabled;
-  if(!enabled){$('groupReviewAreas').querySelectorAll('input').forEach(i=>i.checked=false);$('groupBehaviors').querySelectorAll('input').forEach(i=>i.checked=false);}
-}
-function fillGroupReview(){
-  const r=groupData.review;$('groupReviewStatus').value=r.status;$('groupReviewNotes').value=r.notes;
-  $('groupReviewAreas').querySelectorAll('input').forEach(i=>i.checked=r.areas.includes(i.value));$('groupBehaviors').querySelectorAll('input').forEach(i=>i.checked=r.behaviors.includes(i.value));reviewAreaControls();
-  $('groupReviewHistory').replaceChildren(...groupData.history.map(h=>node('p',`${date(h.stamp)} · ${reviewNames[h.current.status]} · ${[...h.current.areas.map(areaName),...h.current.behaviors].join(', ')||'No labels'}${h.current.notes?' · '+h.current.notes:''}`)));
-  if(!groupData.history.length)$('groupReviewHistory').append(node('p','No human review saved yet.'));
+async function fillGroupReview(){
+ const gid=groupData.id;const data=await api(`/api/labeling/tasks?group_id=${gid}`);if(groupData.id!==gid)return;
+ $('groupLabeling').replaceChildren();
+ for(const t of data.tasks){const row=node('p',t.state+' ');if(t.url){const link=node('a','Review in Label Studio');link.href=t.url;link.target='_blank';link.rel='noopener';row.append(link);}if(t.error)row.append(node('span',t.error));$('groupLabeling').append(row);}
+ if(!data.tasks.length)$('groupLabeling').append(node('p','Not exported yet. Use Activity labeling after capture ends.'));
 }
 async function reviewGroup(id){
-  const version=++groupLoadVersion;$('motionReviewError').hidden=true;$('groupReviewSaved').textContent='';
+  const version=++groupLoadVersion;$('motionReviewError').hidden=true;
   const data=await api('/api/investigation/groups/'+id);if(version!==groupLoadVersion)return;
   groupData=data;fillAreaViews();motionEditing=data.motions[0].id;motionClips=data.clips;
   $('motionTitle').textContent=`Motion group #${id}`;
@@ -94,7 +90,7 @@ async function reviewGroup(id){
   for(const j of data.descriptions){$('motionDescriptions').append(node('p',`Motion #${j.motion_id}: ${j.status}${j.error?' · '+j.error:''}`));for(const w of j.windows)$('motionDescriptions').append(node('p',`${date(w.start)} — ${date(w.end)}: ${w.text}`));}
   if(!data.descriptions.length)$('motionDescriptions').append(node('p','No saved video description.'));
   $('motionDiagnostics').textContent=JSON.stringify({baseline_rejection_reasons:data.baseline_reasons,area_basis:data.area_basis,detectors:data.models,cat_sample_count:data.samples.length},null,2);
-  fillGroupReview();
+  await fillGroupReview();
   if(!$('motionReview').open)$('motionReview').showModal();
   const best=bestOverlaySample();selectMotionClip(0,best?.stamp);drawMotionOverlay();
 }
@@ -139,18 +135,6 @@ $('motionVideo').onended=()=>{const next=Number($('motionClip').value)+1;if(next
 $('overlayModel').onchange=drawMotionOverlay;$('overlayConfidence').onchange=drawMotionOverlay;$('showMotionOverlay').onchange=drawMotionOverlay;
 window.addEventListener('resize',drawMotionOverlay);
 action('jumpToCat',()=>{const sample=bestOverlaySample();if(sample)selectMotionClip(0,sample.stamp);else $('overlayNote').textContent='No cat samples meet the selected model and score.';});
-$('groupReviewStatus').onchange=reviewAreaControls;
-$('groupReviewForm').onsubmit=async e=>{
-  e.preventDefault();if(!groupData)return;const gid=groupData.id,version=groupLoadVersion;
-  $('saveGroupReview').disabled=true;$('motionReviewError').hidden=true;
-  try{
-    const body={status:$('groupReviewStatus').value,areas:[...$('groupReviewAreas').querySelectorAll('input:checked')].map(i=>i.value),behaviors:[...$('groupBehaviors').querySelectorAll('input:checked')].map(i=>i.value),notes:$('groupReviewNotes').value,version:groupData.review.version};
-    const saved=await api(`/api/investigation/groups/${gid}/review`,'PUT',body);
-    if(version!==groupLoadVersion)return;
-    groupData.review=saved;const fresh=await api('/api/investigation/groups/'+gid);
-    if(version!==groupLoadVersion)return;groupData.history=fresh.history;fillGroupReview();$('groupReviewSaved').textContent=' Review saved.';await loadMotions();
-  }catch(e){groupReviewError(e);}finally{$('saveGroupReview').disabled=false;}
-};
 $('motionFilters').onsubmit=e=>{e.preventDefault();loadMotions().catch(error);};
 action('catQuickFilter',()=>{$('filterCat').value='detected';return loadMotions();});
 action('resetMotionFilters',()=>{const session=$('filterSession').value;$('motionFilters').reset();$('filterSession').value=session;return loadMotions();});
@@ -180,7 +164,6 @@ $('overlapForm').onsubmit=async e=>{
 };
 investigationBoot().catch(error);
 
-$('groupBehaviors').onchange=e=>{if(e.target.checked){$('groupBehaviors').querySelectorAll('input').forEach(i=>{if(i!==e.target&&(i.value==='unclear'||e.target.value==='unclear'))i.checked=false;});}};
 
 $('motionVideo').addEventListener('timeupdate',()=>{if(!motionClips.length)return;const i=Number($('motionClip').value),c=motionClips[i],v=$('motionVideo');if(v.currentTime>=c.play_end-c.start-.04&&!v.paused){v.pause();if(i+1<motionClips.length){selectMotionClip(i+1);v.play().catch(()=>{});}}});
 
@@ -219,3 +202,5 @@ function drawAreaView(){
 $('areaView').onchange=drawAreaView;$('areaZoom').onchange=drawAreaView;
 $('motionVideo').addEventListener('play',()=>{function step(){if(!$('motionReview').open||$('motionVideo').paused)return;drawAreaView();requestAnimationFrame(step);}requestAnimationFrame(step);});
 action('saveAreaSnapshot',()=>{drawAreaView();if($('saveAreaSnapshot').disabled)return;const c=$('areaCanvas');c.toBlob(blob=>{if(!blob)return;const a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download=`cat-watch-group-${groupData.id}-${$('areaView').value}-${$('motionVideo').currentTime.toFixed(2)}.png`;a.click();setTimeout(()=>URL.revokeObjectURL(url),5000);},'image/png');});
+
+const linkedGroup=Number(new URLSearchParams(location.search).get('group_id'));if(linkedGroup>0)reviewGroup(linkedGroup).catch(error);
