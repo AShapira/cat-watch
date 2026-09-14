@@ -31,6 +31,20 @@ The deployed image is `localhost/cat-watch:0.3.0`, SHA-256 `309a931ffac2b276ea00
 
 These checks validate the workflow, not cat-behavior accuracy. Actual cat appearances in the newly positioned areas still need review during the next investigation. The full eight-hour investigation has deliberately not been started.
 
+## Focused capture and shared Qwen checkpoint — 13 September 2026
+
+The updated app is deployed for calibration, with Focused / 20% per-side trigger buffer / 50% analysis crop context / eight hours / deferred analysis selected. Five-second pre/post padding and original presence polygons remain in use. The short Windows camera acceptance run is pending the user's fresh calibration confirmation; no new investigation has started.
+
+- 80 Python tests pass, including native-pixel crop mapping and duplicate suppression, buffered masks and exclusions, immutable snapshots, independent overlapping presence filters and unique group counts, sustained presence without bridging evidence gaps, historical queue isolation, Qwen checkpoint reuse, bounded overload retries, and timeout recovery.
+- Both isolated Playwright suites pass, including buffer previews, capture locking, dynamic model filters, native crop playback, zoom, PNG download dimensions, human review, and mobile layout. Windows controller boundary tests pass for shared-service reuse, unavailable service, independent comparison admission, and preserving services owned by other applications.
+- A standalone request to the existing shared Qwen3.5-9B used 16 timestamped 510×489 source crops. It completed in 6.49 seconds with 4,166 input tokens and 65 output tokens. Model digest and reported VRAM use were unchanged afterward. The answer was cautious but speculated about eating or drinking; this verifies the interface, not behavior accuracy. Suggestions remain separate from human labels. This request did not consume any historical analysis job.
+- Before/after hashes of historical investigation, motion, observation, job, event, review/history, and segment records match. All 1,110 retained media paths and sizes match; 136 historical Cosmos descriptions remain queued. Media contents were not rehashed in this read-only preservation check.
+- Deployed Windows Edge checks confirm a fresh unconfirmed calibration draft, all three buffered outlines, the next-run defaults, native 2560×1440 preview, stopped detector, no capture, and Start disabled until confirmation.
+
+Evidence is under `outputs/focused-qwen/` (not committed). The dedicated Windows setup check is `tests/windows-focused-check.cjs`; it may prepare an unconfirmed draft but never saves polygons or starts capture. The short camera test remains `tests/windows-fresh-acceptance.ps1` and must only run after user confirmation.
+
+The deployed image is `localhost/cat-watch:0.4.0`, SHA-256 `092c5fd6a70ef856f65d06aad146944a2fd600315849b7ce1b9643f8e340808b`. Rollback container `cat-watch-rollback-20260913T180118Z` and SQLite backup `/data/backups/pre-investigation-20260913T180118Z.sqlite3` are retained. Live cropped-detector throughput, representative day/night accuracy review, and the complete Windows capture-to-Qwen path still require acceptance; the previous broad investigation is not evidence of those new behaviors.
+
 ## 0.3.0 source release validation — 13 September 2026
 
 The release checkout passed all 67 Python tests, both isolated Playwright suites, the native Windows controller boundary tests, and JavaScript syntax checks. Live camera, GPU inference, and deployment acceptance were not repeated for this source release; the deployment observations above are the 12 September checkpoint. No GitHub Actions workflows are configured.

@@ -6,6 +6,7 @@ from pathlib import Path
 import tempfile
 import time
 import urllib.request
+import urllib.error
 
 import cv2
 
@@ -79,14 +80,29 @@ class AnalysisWorker:
         self.models = None
 
     def run_one(self):
-        model_name = 'cat-watch-cosmos-edge'
+        control = self.store.analysis_status()
+        session = self.store.investigation(control.get('session_id'))
+        if not session or control.get('allowed_kind') != self.kind:
+            return
+        settings = session['settings']
+        shared = self.kind == 'video_description' and settings.get('description_provider') == 'ollama'
+        retry = control.get('retry',{})
+        if retry.get('next_at',0)>time.time():
+            self.runtime.state[self.kind] = 'waiting for shared model'
+            return
+        model_name = settings.get('description_model','cat-watch-cosmos-edge')
+        model_info = None
         if self.kind == 'video_description':
             try:
-                names = {m['id'] for m in local_json('/v1/models')['data']}
-                if model_name not in names:
+                if shared:
+                    from .shared_model import ready_model
+                    model_info = ready_model(settings)
+                    if model_info is None:
+                        raise ValueError('Shared model not loaded')
+                elif model_name not in {m['id'] for m in local_json('/v1/models')['data']}:
                     raise ValueError('Project model not ready')
             except Exception:
-                self.store.pause_analysis('Project Cosmos model is unavailable; retry analysis when ready')
+                self.store.pause_analysis('Waiting for shared model — Retry analysis' if shared else 'Project Cosmos model is unavailable; retry analysis when ready')
                 return
         job = self.store.claim_job(self.kind)
         if job is None:
@@ -94,17 +110,34 @@ class AnalysisWorker:
             return
         try:
             self.runtime.state[self.kind] = 'processing'
+            self.current_job = job['id']
             motion = self.store.motion(job['motion_id'])
-            with evidence_lease(self.runtime,motion['start'],motion['end']) as segments:
+            with evidence_lease(self.runtime,motion['start']-5,motion['end']+5) as segments:
                 if not segments:
                     raise ValueError('Evidence expired')
-                result = self.describe(motion,segments,model_name) if self.kind=='video_description' else self.compare(motion,segments)
+                if self.kind=='video_description' and shared:
+                    from .shared_model import describe_regions
+                    result = describe_regions(self,motion,segments,settings,model_info)
+                else:
+                    result = self.describe(motion,segments,model_name) if self.kind=='video_description' else self.compare(motion,segments)
                 result['evidence_partial'] = not covers(segments,motion['start'],motion['end'])
                 self.store.finish_job(job['id'],result)
+                if shared:
+                    self.store.update_analysis({'retry':{},'message':'Processing '+self.kind},session_id=session['id'])
             self.runtime.state[self.kind] = 'ready'
+        except urllib.error.HTTPError as exc:
+            self.store.requeue_job(job['id'])
+            tries = retry.get('attempts',0) if retry.get('job_id')==job['id'] else 0
+            if shared and exc.code in (429,503) and tries<3:
+                delay=(30,120,300)[tries]
+                self.store.update_analysis({'retry':{'job_id':job['id'],'attempts':tries+1,'next_at':time.time()+delay},
+                    'message':f'Shared model busy; retry {tries+1}/3 in {delay} seconds'},session_id=session['id'])
+                self.runtime.state[self.kind]='waiting for shared model'
+            else:
+                self.store.pause_analysis('Waiting for shared model — Retry analysis' if shared else 'Analysis failed; retry analysis')
         except Exception:
             self.store.requeue_job(job['id'])
-            self.store.pause_analysis('Analysis failed; jobs remain queued. Check GPU/model readiness and retry.')
+            self.store.pause_analysis('Waiting for shared model — Retry analysis' if shared else 'Analysis failed; jobs remain queued. Check GPU/model readiness and retry.')
             self.runtime.state[self.kind] = 'paused'
         finally:
             if self.models is not None:

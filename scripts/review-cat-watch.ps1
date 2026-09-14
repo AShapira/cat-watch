@@ -11,10 +11,11 @@ if($existing){
     $previous='cat-watch-stopped-'+[DateTime]::UtcNow.ToString('yyyyMMddTHHmmssZ')
     Invoke-Podman @('--connection',$Connection,'rename',$Container,$previous) | Out-Null
 }
-Invoke-Podman @('--connection',$Connection,'run','-d','--name',$Container,'--label','app=cat-watch',
+$labelingMounts=@(Get-LabelingMounts)
+Invoke-Podman (@('--connection',$Connection,'run','-d','--name',$Container,'--label','app=cat-watch',
     '--network=host','--cap-drop=all','--security-opt=no-new-privileges',
     '--log-driver=k8s-file','--log-opt=max-size=2mb',
-    '--mount',"type=bind,source=$AppData,target=/data",$Image,'python','-m','catwatch','--review-only') | Out-Null
+    '--mount',"type=bind,source=$AppData,target=/data") + $labelingMounts + @($Image,'python','-m','catwatch','--review-only')) | Out-Null
 for($i=0;$i -lt 30;$i++){
     try{
         $h=Invoke-RestMethod http://127.0.0.1:8765/api/health -TimeoutSec 2

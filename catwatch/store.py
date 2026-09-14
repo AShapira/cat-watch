@@ -25,6 +25,9 @@ class Store(InvestigationStore, InvestigationReviewStore, AnalysisControlStore):
         self.local = threading.local()
         self.path = self.root / "catwatch.sqlite3"
         with self.db() as db:
+            version = db.execute('PRAGMA user_version').fetchone()[0]
+            if version not in (0, 4, 5):
+                raise ValueError('Unsupported database version; use its matching application')
             db.executescript('''
                 PRAGMA journal_mode=DELETE;
                 CREATE TABLE IF NOT EXISTS settings (id INTEGER PRIMARY KEY, body TEXT NOT NULL);
@@ -36,6 +39,8 @@ class Store(InvestigationStore, InvestigationReviewStore, AnalysisControlStore):
             db.execute("INSERT OR IGNORE INTO settings VALUES (1,?)", (json.dumps(DEFAULTS),))
         self.init_investigation()
         self.init_motion_review()
+        from .labeling.storage import migrate
+        migrate(self)
 
     @contextmanager
     def db(self):

@@ -2,6 +2,7 @@
 
 Requires Playwright plus its Chromium runtime; no camera, model or containers.
 """
+import os
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -34,7 +35,7 @@ def main():
                     break
                 time.sleep(.05)
             with sync_playwright() as p:
-                browser=p.chromium.launch(headless=True)
+                browser=p.chromium.launch(headless=True, executable_path=os.environ.get("CATWATCH_TEST_CHROMIUM"))
                 page=browser.new_page(viewport={'width':1280,'height':1000})
                 # Alternate port keeps this test isolated from the live Windows app.
                 page.route('**/api/**',lambda route:route.fulfill(response=route.fetch(headers={**route.request.headers,'origin':'http://127.0.0.1:8765'})))
@@ -60,17 +61,17 @@ def main():
                 page.reload()
                 expect(page.locator('#frameNote')).to_contain_text('Areas and masks saved and confirmed')
                 assert store.preparation()['id']==calibration_id and store.preparation()['confirmed']
-                page.get_by_role('button',name='Visits & review',exact=True).click()
-                page.get_by_role('button',name='Review',exact=True).click()
-                page.locator('#behavior').select_option('eating_observed')
-                page.get_by_role('button',name='Save review',exact=True).click()
-                expect(page.locator('#review')).not_to_be_visible()
-                assert store.event(eid)['behavior']=='eating_observed'
-                page.get_by_role('button',name='Overview',exact=True).click()
-                expect(page.locator('#report')).to_contain_text('eating observed: 1')
+                page.get_by_role('button',name='Visits',exact=True).click()
+                expect(page.locator('#events')).to_contain_text('Automatic area presence')
+                page.get_by_role('button',name='Activity labeling',exact=True).click()
+                expect(page.locator('#labelingStatus')).to_contain_text('not configured')
+                assert store.event(eid)['behavior']=='unknown'
                 page.get_by_role('button',name='Investigation',exact=True).click()
                 expect(page.locator('#investHours')).to_have_value('8')
-                expect(page.locator('#motionScope')).to_have_value('full_frame')
+                expect(page.locator('#motionScope')).to_have_value('areas')
+                expect(page.locator('#motionBuffer')).to_have_value('20')
+                expect(page.locator('#cropContext')).to_have_value('50')
+                page.wait_for_function('() => Object.keys(bufferedOutlines).length===3')
                 page.locator('#investHours').fill('0.25')
                 page.locator('#motionScope').select_option('areas')
                 page.locator('#investStart').click()
@@ -82,7 +83,7 @@ def main():
                 assert not store.preparation()['confirmed']
                 page.get_by_role('button',name='Stop investigation',exact=True).click()
                 expect(page.locator('#investStatus')).to_contain_text('Investigation ended')
-                Path('outputs').mkdir(exist_ok=True)
+                Path('outputs/fresh-refactor').mkdir(parents=True,exist_ok=True)
                 page.screenshot(path='outputs/fresh-refactor/dashboard-smoke.png',full_page=True)
                 assert not errors, errors
                 browser.close()

@@ -25,7 +25,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   await sleep(1200);let shot=await call('Page.captureScreenshot',{format:'png'});fs.writeFileSync(path.join(out,'windows-cat-filter.png'),Buffer.from(shot.data,'base64'));
   await evaluate('reviewGroup(208)');
   for(let i=0;i<100;i++){if(await evaluate("document.getElementById('motionVideo').videoWidth>0 && document.getElementById('overlayNote').textContent.includes('yolo')"))break;await sleep(200);}
-  const detail=await evaluate("({title:document.getElementById('motionTitle').textContent,width:document.getElementById('motionVideo').videoWidth,seek:document.getElementById('motionVideo').currentTime,overlay:document.getElementById('overlayNote').textContent,reviewStatus:document.getElementById('groupReviewStatus').value,reanalysisDisabled:document.getElementById('reanalyzeMotion').disabled})");
+  const detail=await evaluate("({title:document.getElementById('motionTitle').textContent,width:document.getElementById('motionVideo').videoWidth,seek:document.getElementById('motionVideo').currentTime,overlay:document.getElementById('overlayNote').textContent,labeling:document.getElementById('groupLabeling').textContent,reanalysisDisabled:document.getElementById('reanalyzeMotion').disabled})");
   if(detail.width!==2560||!detail.overlay.includes('yolo')||!detail.reanalysisDisabled)throw Error(JSON.stringify(detail));
   shot=await call('Page.captureScreenshot',{format:'png'});fs.writeFileSync(path.join(out,'windows-cat-overlay.png'),Buffer.from(shot.data,'base64'));
   await evaluate("document.getElementById('closeMotion').click()");

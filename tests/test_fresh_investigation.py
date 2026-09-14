@@ -94,7 +94,7 @@ def test_behaviors_exclusive_unclear_and_conflict_history(tmp_path):
     with pytest.raises(ValueError):store.review_group(mid,{**body,'version':1,'behaviors':['unclear','eating']})
     with TestClient(create_app(store,Runtime(store),False)) as client:
         token=client.get('/api/session').json()['token']
-        assert client.put(f'/api/investigation/groups/{mid}/review',json=body,headers={'x-catwatch-token':token}).status_code==409
+        assert client.put(f'/api/investigation/groups/{mid}/review',json=body,headers={'x-catwatch-token':token}).status_code==410
     store.review_group(mid,{**body,'version':1,'behaviors':['unclear']})
     detail=store.motion_group_detail(mid)
     assert detail['history'][0]['previous']['behaviors']==['eating','drinking']

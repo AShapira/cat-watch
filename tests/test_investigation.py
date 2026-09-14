@@ -113,7 +113,7 @@ def test_motion_debounce_merging_splitting_and_deadline(tmp_path):
 
 
 def test_static_timestamp_motion_and_lighting():
-    detector=MotionDetector(dict(MOTION_DEFAULTS,masks=[[0,0,.4,.1]]))
+    detector=MotionDetector(dict(MOTION_DEFAULTS,motion_scope="full_frame",masks=[[0,0,.4,.1]]))
     image=np.full((540,960,3),80,np.uint8)
     assert detector.observe(image)==0
     for _ in range(10):

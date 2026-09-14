@@ -4,6 +4,15 @@ param([string]$DataRoot='C:\Alex\data\tapo-cat-monitor')
 $ErrorActionPreference='Stop'
 $catScript=Join-Path $PSScriptRoot 'cat-watch.ps1'
 . $catScript -Action Status -DataRoot $DataRoot
+$catHealth=Invoke-RestMethod 'http://127.0.0.1:8765/api/health' -TimeoutSec 5
+$catAnalysis=Invoke-RestMethod 'http://127.0.0.1:8765/api/analysis' -TimeoutSec 5
+if($catHealth.capture_busy -or $catHealth.live_model_loaded -or $catAnalysis.phase -in @('checking','processing','stage_complete') -or $catAnalysis.owner) {
+    throw 'Finish capture, active analysis and owned-model cleanup before deployment.'
+}
+$catController=Join-Path $PSScriptRoot 'analysis-controller.ps1'
+Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" | Where-Object {
+    $_.ProcessId -ne $PID -and $_.CommandLine -like ('*'+$catController+'*')
+} | ForEach-Object {Stop-Process -Id $_.ProcessId}
 $catStamp=[DateTime]::UtcNow.ToString('yyyyMMddTHHmmssZ')
 $catOldName='cat-watch-rollback-'+$catStamp
 Invoke-Podman @('--connection',$Connection,'image','exists',$Image) | Out-Null

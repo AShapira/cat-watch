@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "labels": {
+    "eating": "Visible feeding action involving food; proximity alone is insufficient.",
+    "drinking": "Visible drinking action supported by lapping or other clear drinking evidence.",
+    "litter_digging": "Paw movements visibly digging or rearranging litter.",
+    "litter_elimination_posture": "Visible elimination posture; does not assert successful elimination.",
+    "litter_covering": "Visible covering movements; use digging if the distinction is unclear.",
+    "sniffing_inspecting": "Inspecting without sufficient evidence of eating, drinking or litter use.",
+    "grooming": "Licking or cleaning the cat's body.",
+    "moving": "Moving without a more specific visible activity.",
+    "stationary": "Sitting, standing or resting without a more specific visible activity.",
+    "other_activity": "A clear activity outside this vocabulary; add a note.",
+    "unclear": "Activity or cat presence cannot be determined from the footage.",
+    "no_cat": "The reviewed interval clearly contains no cat."
+  },
+  "coarse_labels": {"litter_digging": "litter_activity", "litter_elimination_posture": "litter_activity", "litter_covering": "litter_activity"}
+}

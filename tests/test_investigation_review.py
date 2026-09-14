@@ -96,22 +96,16 @@ def test_review_labels_allowed_without_enabling_workers_and_preserve_audit(store
         body={'status':'cat_confirmed','areas':['eating_pad'],'behaviors':[],'notes':'Cat visible beside food','version':0}
         assert client.put(path,json=body).status_code==403
         assert client.put(path,json=body,headers={**headers,'origin':'https://elsewhere.test'}).status_code==403
-        saved=client.put(path,json=body,headers=headers)
-        assert saved.status_code==200 and saved.json()['version']==1
-        assert client.put(path,json=body,headers=headers).status_code==409
-        body.update(status='uncertain',areas=[],notes='Partly obscured',version=1)
-        assert client.put(path,json=body,headers=headers).status_code==200
+        assert client.put(path,json=body,headers=headers).status_code==403
         detail=client.get(f'/api/investigation/groups/{mid}').json()
-        assert len(detail['history'])==2
-        assert detail['history'][0]['previous']['notes']=='Cat visible beside food'
-        assert client.get('/api/investigation/groups?review=uncertain').json()['total']==1
+        assert detail['history']==[]
         for route in ['/api/investigation','/api/investigation/stop',f'/api/investigation/motions/{mid}/analyze']:
             assert client.post(route,json={},headers=headers).status_code==403
         assert client.put('/api/config',json={'confidence':.2},headers=headers).status_code==403
     assert store.motion(mid)==original
     assert not store.events()
     restored=Store(store.root)
-    assert restored.group_review(mid)['status']=='uncertain'
+    assert restored.group_review(mid)['status']=='unreviewed'
     assert restored.investigation()['stop']==200
 
 
@@ -124,8 +118,8 @@ def test_review_and_filter_validation(store):
             assert client.get('/api/investigation/groups?'+query).status_code==400
         base={'status':'no_cat','areas':[],'behaviors':[],'notes':'','version':0}
         for patch in [{'areas':['eating_pad']},{'behaviors':[],'notes':'x'*2001},{'status':'eating'},{'version':True},{'extra':'field'}]:
-            assert client.put(f'/api/investigation/groups/{mid}/review',json={**base,**patch},headers=headers).status_code==400
-        assert client.put('/api/investigation/groups/999/review',json=base,headers=headers).status_code==404
+            assert client.put(f'/api/investigation/groups/{mid}/review',json={**base,**patch},headers=headers).status_code==410
+        assert client.put('/api/investigation/groups/999/review',json=base,headers=headers).status_code==410
         assert store.group_review(mid)['version']==0
 
 

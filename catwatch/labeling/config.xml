@@ -1,0 +1,35 @@
+<View>
+  <Header value="Cat activities v1 — label visible actions, not proximity"/>
+  <Text name="context" value="$context"/>
+  <Video name="video" value="$video" frameRate="$fps" height="560" timelineHeight="160" minPlaybackSpeed="0.25"/>
+  <TimelineLabels name="activity" toName="video">
+    <Label value="eating" background="#e6a23c"/>
+    <Label value="drinking" background="#409eff"/>
+    <Label value="litter_digging" background="#9565cc"/>
+    <Label value="litter_elimination_posture" background="#bc62a5"/>
+    <Label value="litter_covering" background="#7553a5"/>
+    <Label value="sniffing_inspecting" background="#67c2aa"/>
+    <Label value="grooming" background="#80aa52"/>
+    <Label value="moving" background="#c6b04c"/>
+    <Label value="stationary" background="#91a0b0"/>
+    <Label value="other_activity" background="#c98575"/>
+    <Label value="unclear" background="#ee7777"/>
+    <Label value="no_cat" background="#999999"/>
+  </TimelineLabels>
+  <Choices name="subject" toName="video" required="true" choice="single">
+    <Choice value="single_cat"/><Choice value="no_cat"/><Choice value="uncertain_presence"/><Choice value="multiple_cats"/>
+  </Choices>
+  <Choices name="coverage" toName="video" required="true" choice="single">
+    <Choice value="fully_labeled"/><Choice value="partially_labeled"/>
+  </Choices>
+  <Choices name="quality" toName="video" choice="multiple">
+    <Choice value="occlusion"/><Choice value="blur"/><Choice value="poor_lighting"/><Choice value="truncated_activity"/>
+  </Choices>
+  <Choices name="boundary" toName="video" choice="multiple" perRegion="true">
+    <Choice value="start_outside_clip"/><Choice value="end_outside_clip"/>
+  </Choices>
+  <TextArea name="notes" toName="video" rows="3"/>
+  <Header value="Model notes — suggestions only"/>
+  <Text name="model_notes" value="$model_notes"/>
+  <HyperText name="diagnostics" value="$diagnostics" inline="true" clickableLinks="true" selectionEnabled="false"/>
+</View>

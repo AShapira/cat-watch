@@ -57,3 +57,20 @@ try {
  Assert ($stops -eq 0) 'Mismatching service identity must be preserved'
  'Controller acceptance passed: capacity, unavailable GPU, ready reuse, explicit retry, startup failure, sequential stages and ownership.'
 } finally {if(Test-Path $catOwnerFile){Remove-Item $catOwnerFile}}
+# New investigations share Qwen without Cosmos admission, ownership, or unloading.
+Reset-State
+$state | Add-Member -NotePropertyName description_settings -NotePropertyValue @{description_provider='ollama';description_model='qwen3.5:9b';description_timeout=180}
+$script:sharedCalls=0
+function Test-CatSharedModel($Settings) {$script:sharedCalls++;Assert ($Settings.description_model -eq 'qwen3.5:9b') 'Wrong shared model'}
+$script:free=100
+Invoke-CatAnalysisStep $state
+Assert ($sharedCalls -eq 1 -and $state.allowed_kind -eq 'video_description' -and $starts -eq 0 -and !$state.owner -and $gpuCalls -eq 0) 'Shared model must not require a separate Cosmos reservation'
+$state.phase='stage_complete';$state.allowed_kind=$null;$state.pending.video_description=0
+Invoke-CatAnalysisStep $state
+Assert ($state.phase -eq 'blocked' -and $stops -eq 0) 'Unavailable comparison must not unload shared Qwen'
+Reset-State
+$state | Add-Member -NotePropertyName description_settings -NotePropertyValue @{description_provider='ollama'}
+function Test-CatSharedModel($Settings) {throw 'Shared server unavailable'}
+Invoke-CatAnalysisStep $state
+Assert ($state.allowed_kind -eq 'detector_comparison' -and $starts -eq 0 -and $stops -eq 0) 'Shared startup failure should preserve jobs and allow independently admitted comparison'
+'Shared Qwen controller checks passed.'

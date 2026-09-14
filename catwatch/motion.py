@@ -19,12 +19,9 @@ class MotionDetector:
         for x1,y1,x2,y2 in self.settings['masks']:
             allowed[int(y1*height):int(y2*height),int(x1*960):int(x2*960)] = 0
         if self.region_masks is None:
-            self.region_masks = {}
-            for name,polygon in self.polygons.items():
-                mask = np.zeros(gray.shape,dtype=np.uint8)
-                points = np.round(np.array(polygon)*[960,height]).astype(np.int32)
-                cv2.fillPoly(mask,[points],1)
-                self.region_masks[name] = mask & allowed
+            from .regions import region_masks
+            self.region_masks = region_masks(self.polygons,960,height,
+                self.settings.get('motion_buffer',0),self.settings['masks'])
         foreground = self.background.apply(gray)
         if self.previous is None:
             self.previous = gray

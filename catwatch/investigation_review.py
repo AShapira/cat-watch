@@ -1,6 +1,7 @@
 """Saved detector evidence and human review, independent of recording workers."""
 import json
 import math
+import re
 import time
 from collections import defaultdict
 
@@ -80,11 +81,12 @@ class InvestigationReviewStore:
                     body = json.loads(row['body'])
                     cats = [d for d in body.get('detections',[]) if d.get('label')=='cat']
                     if cats:
-                        samples.append({'stamp':row['stamp'],'model':'yolo11n/640/live','detections':cats})
+                        model = f"{body['model']}/{body['imgsz']}/live" + ('/area_crops' if body.get('input_scope')=='area_crops' else '')
+                        samples.append({'stamp':row['stamp'],'model':model,'detections':cats})
                 if samples:
                     summary = result.setdefault(mid,{'status':'pending','samples':[],'models':[]})
                     summary['samples'].extend(samples)
-                    summary['models'].append('yolo11n/640/live')
+                    summary['models'] = sorted(set(summary['models']) | {s['model'] for s in samples})
             return result
 
     def group_review(self, gid):
@@ -128,18 +130,21 @@ class InvestigationReviewStore:
 
     def motion_group_list(self, *, cat='all', confidence=.4, area='all', review='all',
                           model='all', analysis='all', disagreement=False, start=None,
-                          end=None, min_duration=0., max_duration=None, offset=0, limit=24, session_id=None, motion_area='all'):
+                          end=None, min_duration=0., max_duration=None, offset=0, limit=24, session_id=None, motion_area='all', presence='all'):
         if motion_area not in ('all',*AREAS,'unknown') or session_id is not None and session_id<1:
             raise ValueError('Invalid session or motion area')
-        if cat not in ('all','detected','not_detected') or area not in ('all',*AREAS,'outside','overlap','unknown') or review not in ('all',*REVIEW_STATUSES) or model not in ('all',*MODELS) or analysis not in ('all','complete','incomplete','gap'):
+        if cat not in ('all','detected','not_detected') or area not in ('all',*AREAS,'outside','overlap','unknown') or review not in ('all',*REVIEW_STATUSES) or not isinstance(model,str) or len(model)>128 or (model!='all' and not re.fullmatch(r'[A-Za-z0-9_-]+/[0-9]+(?:/live(?:/area_crops)?|/crop:[a-z_]+)?',model)) or analysis not in ('all','complete','incomplete','gap'):
             raise ValueError('Invalid investigation filter')
         if not math.isfinite(confidence) or not .1<=confidence<=1 or not 1<=limit<=100 or offset<0:
             raise ValueError('Invalid confidence or page size')
         values = (start,end,min_duration,max_duration)
         if any(v is not None and not math.isfinite(v) for v in values) or min_duration<0 or (max_duration is not None and max_duration<min_duration) or (start is not None and end is not None and start>end):
             raise ValueError('Invalid time or duration range')
+        if presence not in ('all','buffered_motion','cat','sustained','brief','uncertain'):
+            raise ValueError('Invalid presence filter')
         summaries = self.saved_cat_analysis()
         with self.db() as db:
+            session_settings = {r['id']:json.loads(r['settings']) for r in db.execute('SELECT id,settings FROM investigations')}
             snapshots = {r['id']:json.loads(r['config_snapshot']) for r in db.execute('SELECT id,config_snapshot FROM investigations')}
             motions = [dict(r) for r in db.execute('SELECT * FROM motions WHERE (? IS NULL OR session_id=?) ORDER BY start,id',(session_id,session_id))]
             reviews = {r['group_id']:dict(r,areas=json.loads(r['areas']),behaviors=json.loads(r['behaviors'])) for r in db.execute('SELECT * FROM motion_group_reviews')}
@@ -171,6 +176,22 @@ class InvestigationReviewStore:
             areas = sorted({a for d in assigned for a in d['areas']})
             locations = {d['location'] for d in assigned}
             overlapping = any(len(d['areas'])>1 for d in assigned)
+            sustained = set()
+            # Union duplicate model samples but never bridge a >1.5-second evidence gap.
+            for name in AREAS:
+                stamps = sorted({sample['stamp'] for (sample,_),match in zip(detections,assigned) if name in match['areas']})
+                first = previous = None
+                for stamp in stamps:
+                    if previous is None or stamp-previous>1.5:
+                        first = stamp
+                    if stamp-first>=2:
+                        sustained.add(name)
+                    previous = stamp
+            buffered = bool(motion_areas and session_settings[chunks[0]['session_id']].get('motion_buffer') is not None)
+            if (presence=='buffered_motion' and not buffered or presence=='cat' and not found
+                or presence=='sustained' and not sustained or presence=='brief' and (not areas or sustained)
+                or presence=='uncertain' and not (differs or gap or not complete or label['status']=='uncertain')):
+                continue
             for key in AREAS:
                 metrics[key]['motion_groups'] += key in motion_areas
                 metrics[key]['cat_groups'] += key in areas
@@ -192,12 +213,12 @@ class InvestigationReviewStore:
                            'best_confidence':best[1]['confidence'] if best else None,
                            'best_stamp':best[0]['stamp'] if best else None,
                            'best_motion_id':best[0]['motion_id'] if best else chunks[0]['id'],
-                           'areas':areas,'overlapping':overlapping,'locations':sorted(locations),'models':models,'disagreement':differs,'review':label})
+                           'sustained_areas':sorted(sustained),'buffered_motion':buffered,'areas':areas,'overlapping':overlapping,'locations':sorted(locations),'models':models,'disagreement':differs,'review':label})
         output.sort(key=lambda g:(g['start'],g['id']),reverse=True)
         page = output[offset:offset+limit]
         return {'groups':page,'total':len(output),'all_groups':len(grouped),'all_motions':len(motions),
                 'next_offset':offset+limit if offset+limit<len(output) else None,
-                'confidence':confidence,'area_metrics':metrics,
+                'confidence':confidence,'area_metrics':metrics,'models':sorted({model for v in summaries.values() for model in v.get('models',[])}),
                 'area_basis':'intersection / cat box area; session calibration and overlap thresholds',
                 'detection_basis':'latest successful saved comparison per motion; failed reruns remain incomplete; not human confirmation'}
 
@@ -208,7 +229,8 @@ class InvestigationReviewStore:
         if not chunks:
             raise KeyError(gid)
         summaries = self.saved_cat_analysis()
-        config = self.investigation(chunks[0]['session_id'])['config_snapshot']
+        session = self.investigation(chunks[0]['session_id'])
+        config = session['config_snapshot']
         polygons, thresholds = config['polygons'], config['area_overlap']
         a,b = min(m['start'] for m in chunks),max(m['end'] for m in chunks)
         samples = []
@@ -229,6 +251,7 @@ class InvestigationReviewStore:
         return {'id':gid,'start':a,'end':b,'motions':chunks,'clips':self.evidence(a,b),
                 'samples':samples,'models':sorted({model for m in chunks for model in summaries.get(m['id'],{}).get('models',[])}),
                 'best_stamp':best['stamp'] if best else None,'polygons':polygons,
+                'crop_context':session['settings'].get('crop_context',.5),'calibration':config.get('calibration',{}),
                 'review':self.group_review(gid),'history':history,'descriptions':descriptions,
                 'baseline_reasons':reasons,'overlay_max_age_seconds':.35,
                 'area_overlap':thresholds,
