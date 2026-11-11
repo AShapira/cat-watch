@@ -1,0 +1,503 @@
+{
+  "checked_utc": "2026-11-09T04:42:59.229425+00:00",
+  "deployment": {
+    "image": "eef85ab0c5590d1e093694ad9d2645b2c0c07d3a8e1dd79fe1087c189be7b3d0",
+    "started": "2026-11-09T06:39:37.140187274+02:00",
+    "version": "0.6.1",
+    "running": true
+  },
+  "migration": {
+    "verified_files": 17533,
+    "verified_bytes": 8785600698,
+    "original_windows_segments": 16678,
+    "original_windows_clips": 2079,
+    "protected_migrated_segments": 16678,
+    "preserved_unregistered_media": 3
+  },
+  "health": {
+    "camera": "connected",
+    "detector": "ready",
+    "calibrated": true,
+    "last_frame": 1794199376.3063397,
+    "ambiguous_frames": 0,
+    "message": "Monitoring",
+    "gpu": "NVIDIA GeForce RTX 5080",
+    "live_model_loaded": true,
+    "preparation": false,
+    "capture_busy": true,
+    "motion_analysis": "ready",
+    "video_description": "deferred until investigation ends",
+    "detector_comparison": "idle",
+    "frames_analyzed": 332,
+    "cat_frames": 0,
+    "dropped_detection_frames": 25,
+    "capture_gaps": 0,
+    "motion_frames": 879,
+    "source": {
+      "width": 2560,
+      "height": 1440,
+      "fps": 16.32
+    },
+    "motion_lag_seconds": 2.3,
+    "motion_score": 0.0,
+    "area_motion_scores": {
+      "eating_pad": 0.0,
+      "water_fountain": 0.0,
+      "litter_box": 0.0
+    },
+    "motion_queue": 0,
+    "detector_queue": 6,
+    "detection_stamp": 1794199372.3855526,
+    "detector_lag_seconds": 6.0,
+    "detector_timing_ms": {
+      "inference": 58.7,
+      "persistence": 5.2
+    },
+    "performance": {
+      "quiet": false,
+      "display": "off",
+      "reason": "Screen off",
+      "managed": true,
+      "detector_fps": 2,
+      "training_locked": true
+    },
+    "storage": {
+      "used_bytes": 6274478423,
+      "cap_bytes": 50000000000,
+      "reserve_bytes": 64000000,
+      "free_bytes": 191397568512,
+      "recording_allowed": true,
+      "protected_segments": 16702
+    },
+    "now": 1794199378.6204054,
+    "frame_age_seconds": 2.3
+  },
+  "learning": {
+    "training": false,
+    "continuous": true,
+    "counts": {
+      "clips": 2085,
+      "suggestions": 1329,
+      "reviewed": 0
+    },
+    "heavy_worker": {
+      "message": "Local Qwen is ready; preparing behavior proposals for review.",
+      "state": "running",
+      "updated": 1794199377.4082394
+    },
+    "performance": {
+      "quiet": false,
+      "display": "off",
+      "reason": "Screen off",
+      "managed": true,
+      "detector_fps": 2,
+      "training_locked": true
+    }
+  },
+  "performance_sample": {
+    "samples": 24,
+    "ready_samples": 19,
+    "health_latency_ms_max": 211.2,
+    "ready_motion_lag_seconds_max": 1.5,
+    "ready_detector_rate_fps": 1.884,
+    "final_dropped_samples": 25,
+    "first_ready_dropped_samples": 19
+  },
+  "recording": {
+    "correction_restart_gap_seconds": 34.547,
+    "segments_after_restart": 39,
+    "internal_gaps_over_200ms": [
+      0.416927,
+      0.416927,
+      0.416927,
+      0.416862,
+      0.416927,
+      0.416797,
+      0.416927,
+      0.416927,
+      0.416732,
+      0.416732,
+      0.416927,
+      0.416797
+    ],
+    "migration_gap_seconds": 3311.156,
+    "last_windows_segment_end_utc": "2026-11-09T03:38:54.969115+00:00",
+    "first_rhel_segment_start_utc": "2026-11-09T04:34:06.124855+00:00",
+    "timestamp_comparison": {
+      "windows": {
+        "segments": 1000,
+        "over_200ms": 0,
+        "common_gaps": [
+          [
+            -0.017,
+            744
+          ],
+          [
+            -0.067,
+            255
+          ]
+        ],
+        "last_segments": [
+          {
+            "registered_duration": 6.24681,
+            "avg_frame_rate": "1382400/95951",
+            "duration": "6.246810",
+            "nb_frames": "90"
+          },
+          {
+            "registered_duration": 3.901628,
+            "avg_frame_rate": "921600/59929",
+            "duration": "3.901628",
+            "nb_frames": "60"
+          },
+          {
+            "registered_duration": 5.901563,
+            "avg_frame_rate": "19200/1259",
+            "duration": "5.901562",
+            "nb_frames": "90"
+          },
+          {
+            "registered_duration": 4.273763,
+            "avg_frame_rate": "184320/13129",
+            "duration": "4.273763",
+            "nb_frames": "60"
+          },
+          {
+            "registered_duration": 5.924609,
+            "avg_frame_rate": "230400/15167",
+            "duration": "5.924609",
+            "nb_frames": "90"
+          },
+          {
+            "registered_duration": 4.017513,
+            "avg_frame_rate": "921600/61709",
+            "duration": "4.017513",
+            "nb_frames": "60"
+          },
+          {
+            "registered_duration": 6.130859,
+            "avg_frame_rate": "46080/3139",
+            "duration": "6.130859",
+            "nb_frames": "90"
+          },
+          {
+            "registered_duration": 3.940104,
+            "avg_frame_rate": "23040/1513",
+            "duration": "3.940104",
+            "nb_frames": "60"
+          },
+          {
+            "registered_duration": 6.093229,
+            "avg_frame_rate": "172800/11699",
+            "duration": "6.093229",
+            "nb_frames": "90"
+          },
+          {
+            "registered_duration": 3.901888,
+            "avg_frame_rate": "921600/59933",
+            "duration": "3.901888",
+            "nb_frames": "60"
+          },
+          {
+            "registered_duration": 5.901302,
+            "avg_frame_rate": "345600/22661",
+            "duration": "5.901302",
+            "nb_frames": "90"
+          },
+          {
+            "registered_duration": 3.939974,
+            "avg_frame_rate": "460800/30259",
+            "duration": "3.939974",
+            "nb_frames": "60"
+          }
+        ]
+      },
+      "rhel": {
+        "segments": 1000,
+        "over_200ms": 30,
+        "common_gaps": [
+          [
+            -0.017,
+            627
+          ],
+          [
+            -0.067,
+            305
+          ],
+          [
+            -0.051,
+            30
+          ],
+          [
+            0.417,
+            26
+          ],
+          [
+            -0.05,
+            3
+          ],
+          [
+            0.033,
+            3
+          ],
+          [
+            0.329,
+            2
+          ],
+          [
+            3311.156,
+            1
+          ]
+        ],
+        "last_segments": [
+          {
+            "registered_duration": 3.583073,
+            "avg_frame_rate": "230400/13759",
+            "duration": "3.583073",
+            "nb_frames": "60"
+          },
+          {
+            "registered_duration": 5.513607,
+            "avg_frame_rate": "1382400/84689",
+            "duration": "5.513607",
+            "nb_frames": "90"
+          },
+          {
+            "registered_duration": 4.062109,
+            "avg_frame_rate": "153600/10399",
+            "duration": "4.062109",
+            "nb_frames": "60"
+          },
+          {
+            "registered_duration": 6.101628,
+            "avg_frame_rate": "1382400/93721",
+            "duration": "6.101628",
+            "nb_frames": "90"
+          },
+          {
+            "registered_duration": 4.066407,
+            "avg_frame_rate": "5120/347",
+            "duration": "4.066406",
+            "nb_frames": "60"
+          },
+          {
+            "registered_duration": 4.089909,
+            "avg_frame_rate": "921600/62821",
+            "duration": "4.089909",
+            "nb_frames": "60"
+          },
+          {
+            "registered_duration": 5.513412,
+            "avg_frame_rate": "691200/42343",
+            "duration": "5.513411",
+            "nb_frames": "90"
+          },
+          {
+            "registered_duration": 6.135481,
+            "avg_frame_rate": "1382400/94241",
+            "duration": "6.135482",
+            "nb_frames": "90"
+          },
+          {
+            "registered_duration": 4.051237,
+            "avg_frame_rate": "921600/62227",
+            "duration": "4.051237",
+            "nb_frames": "60"
+          },
+          {
+            "registered_duration": 5.525325,
+            "avg_frame_rate": "1382400/84869",
+            "duration": "5.525326",
+            "nb_frames": "90"
+          },
+          {
+            "registered_duration": 4.101367,
+            "avg_frame_rate": "307200/20999",
+            "duration": "4.101367",
+            "nb_frames": "60"
+          },
+          {
+            "registered_duration": 4.089649,
+            "avg_frame_rate": "307200/20939",
+            "duration": "4.089648",
+            "nb_frames": "60"
+          }
+        ]
+      }
+    },
+    "latest_three_segment_decode": [
+      {
+        "exit_code": 0,
+        "null_muxer_diagnostics": "[null @ 0x60904fddf6c0] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 16 >= 16\n    Last message repeated 6 times\n[null @ 0x60904fddf6c0] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 31 >= 31\n    Last message repeated 5 times\n[null @ 0x60904fddf6c0] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 32 >= 32\n[null @ 0x60904fddf6c0] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 55 >= 55\n[null @ 0x60904fddf6c0] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 59 >= 59\n    Last message repeated 5 times"
+      },
+      {
+        "exit_code": 0,
+        "null_muxer_diagnostics": "[null @ 0x6472ffd1d080] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 10 >= 10\n[null @ 0x6472ffd1d080] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 13 >= 13\n[null @ 0x6472ffd1d080] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 15 >= 15\n    Last message repeated 7 times\n[null @ 0x6472ffd1d080] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 26 >= 26\n[null @ 0x6472ffd1d080] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 29 >= 29\n    Last message repeated 6 times\n[null @ 0x6472ffd1d080] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 44 >= 44\n    Last message repeated 5 times\n[null @ 0x6472ffd1d080] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 59 >= 59\n    Last message repeated 5 times\n[null @ 0x6472ffd1d080] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 74 >= 74\n    Last message repeated 5 times\n[null @ 0x6472ffd1d080] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 89 >= 89\n    Last message repeated 3 times"
+      },
+      {
+        "exit_code": 0,
+        "null_muxer_diagnostics": "[null @ 0x5f6baad82f00] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 15 >= 15\n    Last message repeated 5 times\n[null @ 0x5f6baad82f00] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 26 >= 26\n[null @ 0x5f6baad82f00] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 29 >= 29\n[null @ 0x5f6baad82f00] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 37 >= 37\n[null @ 0x5f6baad82f00] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 43 >= 43\n    Last message repeated 4 times\n[null @ 0x5f6baad82f00] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 44 >= 44\n[null @ 0x5f6baad82f00] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 53 >= 53\n[null @ 0x5f6baad82f00] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 59 >= 59\n    Last message repeated 5 times"
+      }
+    ],
+    "timestamp_findings": "The final 1,000 retained Windows segments have no boundary gaps above 200 ms. RHEL has repeated approximately 417 ms boundary discontinuities. Both old and new MP4 packets contain approximately 484 ms timestamp steps followed by near-zero steps. The last 12 old and 12 new segments each contain complete 60- or 90-frame groups. This suggests timestamp irregularity rather than demonstrated frame loss, but does not establish continuous wall-time coverage; the cause is unconfirmed.",
+    "latest_three_opencv_decode": [
+      {
+        "expected_frames": 60,
+        "decoded_frames": 60,
+        "complete": true
+      },
+      {
+        "expected_frames": 90,
+        "decoded_frames": 90,
+        "complete": true
+      },
+      {
+        "expected_frames": 90,
+        "decoded_frames": 90,
+        "complete": true
+      }
+    ],
+    "decode_note": "FFmpeg null-output inspection exited successfully but reported non-monotonic output DTS at its default output time base. Independent OpenCV decoding counted every expected frame without stderr; this verifies decodability, not correct wall-time timing."
+  },
+  "limits": {
+    "CpuQuota": 300000,
+    "CpuPeriod": 100000,
+    "CpuShares": 256,
+    "Memory": 6442450944,
+    "MemorySwap": 6442450944,
+    "PidsLimit": 256
+  },
+  "disk_expansion": {
+    "before_bytes": 1099511627776,
+    "status": "complete",
+    "utc": "2026-11-09T04:17:10.4573052Z",
+    "path": "C:\\WSL\\RHEL10\\ext4.vhdx",
+    "after_bytes": 1288490188800
+  },
+  "limitations": [
+    "Screen-on/off notifications and admission were observed natively; final sustained monitoring sample was screen-off.",
+    "No measured comparison of mouse freezes during the user's normal work.",
+    "Detector coverage is sampled; raw recording and motion analysis are independent.",
+    "No training, new cloud dispatch or human review was performed by this migration.",
+    "The zero runtime capture-gap counter does not account for migration/restart downtime or packet/segment timestamp discontinuities; see recording fields."
+  ],
+  "final_checked_utc": "2026-11-09T04:49:26.327603+00:00",
+  "final_health": {
+    "camera": "connected",
+    "detector": "ready",
+    "calibrated": true,
+    "last_frame": 1794199763.776639,
+    "ambiguous_frames": 0,
+    "message": "Monitoring",
+    "gpu": "NVIDIA GeForce RTX 5080",
+    "live_model_loaded": true,
+    "preparation": false,
+    "capture_busy": true,
+    "motion_analysis": "ready",
+    "video_description": "deferred until investigation ends",
+    "detector_comparison": "idle",
+    "frames_analyzed": 1057,
+    "cat_frames": 0,
+    "dropped_detection_frames": 25,
+    "capture_gaps": 0,
+    "motion_frames": 2675,
+    "source": {
+      "width": 2560,
+      "height": 1440,
+      "fps": 16.32
+    },
+    "motion_lag_seconds": 1.0,
+    "motion_score": 0.0,
+    "area_motion_scores": {
+      "eating_pad": 0.0,
+      "water_fountain": 0.0,
+      "litter_box": 0.0
+    },
+    "motion_queue": 0,
+    "detector_queue": 9,
+    "detection_stamp": 1794199759.8559906,
+    "detector_lag_seconds": 6.1,
+    "detector_timing_ms": {
+      "inference": 67.0,
+      "persistence": 4.7
+    },
+    "performance": {
+      "quiet": false,
+      "display": "off",
+      "reason": "Screen off",
+      "managed": true,
+      "detector_fps": 2,
+      "training_locked": true
+    },
+    "storage": {
+      "used_bytes": 6301541457,
+      "cap_bytes": 50000000000,
+      "reserve_bytes": 64000000,
+      "free_bytes": 191343235072,
+      "recording_allowed": true,
+      "protected_segments": 16702
+    },
+    "now": 1794199766.309191,
+    "frame_age_seconds": 2.5
+  },
+  "final_learning": {
+    "training": false,
+    "performance": {
+      "quiet": false,
+      "display": "off",
+      "reason": "Screen off",
+      "managed": true,
+      "detector_fps": 2,
+      "training_locked": true
+    },
+    "counts": {
+      "clips": 2091,
+      "suggestions": 1362,
+      "reviewed": 0
+    }
+  },
+  "validation": {
+    "source_tests_passed": 179,
+    "source_test_warnings": "one existing Starlette/AnyIO deprecation",
+    "windows_browser": {
+      "checked_at": "2026-11-09T04:41:15.105Z",
+      "browser": "native Windows Edge",
+      "today": {
+        "title": "Cat-watch \u00b7 Care, made visible",
+        "decisions": 10,
+        "tabs": [
+          "today",
+          "decisions",
+          "timeline",
+          "learning",
+          "setup",
+          "investigation",
+          "visits",
+          "overview"
+        ],
+        "error": null
+      },
+      "learning": {
+        "trainDisabled": true,
+        "trainingToggleDisabled": true,
+        "trainingChecked": false,
+        "progressPresent": true,
+        "error": null
+      },
+      "performance": {
+        "quiet": false,
+        "display": "off",
+        "reason": "Screen off",
+        "managed": true,
+        "detector_fps": 2,
+        "training_locked": true
+      },
+      "mobile_fits": true,
+      "javascript_errors": [],
+      "private_images_inspected": false,
+      "labels_modified": false,
+      "calibration_modified": false
+    },
+    "diff_check": "passed"
+  }
+}

@@ -1,0 +1,53 @@
+{
+    "checked_at":  "2026-11-04T11:03:34.1147357Z",
+    "camera":  "connected",
+    "detector":  "ready",
+    "frames_analyzed":  219228,
+    "continuous":  true,
+    "training":  false,
+    "counts":  {
+                   "clips":  6946,
+                   "suggestions":  5536,
+                   "reviewed":  10
+               },
+    "live_image_id":  "540a4e088dd95c017766509195324f951e88e0c611048e9fd4a6fce291d5610f",
+    "live_started_at":  "2026-11-02 22:15:18.705300547 +0200 IST",
+    "review_image_id":  "f8c54caca938187e5094a218e447273c881c7340696a596b461ede62b2266316",
+    "review":  {
+                   "clips":  100,
+                   "states":  [
+                                  {
+                                      "state":  "complete",
+                                      "count":  97
+                                  },
+                                  {
+                                      "state":  "invalid",
+                                      "count":  3
+                                  }
+                              ],
+                   "totals":  {
+                                  "budget_usd":  20.0,
+                                  "inference_estimate_usd":  5.042941,
+                                  "conservative_accounted_usd":  17.76404,
+                                  "remaining_authorized_usd":  2.23596,
+                                  "unknown_or_in_flight":  0,
+                                  "cloud_requests":  100,
+                                  "note":  "Token-rate estimate, not an invoice. Conservative accounting includes a token-count allowance and highest cache-write input rates; unknown outcomes retain full reservations."
+                              },
+                   "first_clip_detail_loaded":  true,
+                   "refresh":  {
+                                   "updated":  1793789993.9347727,
+                                   "candidates":  17,
+                                   "state":  "ready"
+                               }
+               },
+    "qwen":  [
+                 {
+                     "context_length":  16384,
+                     "name":  "qwen3.5:9b",
+                     "digest":  "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+                     "size":  5763005151,
+                     "size_vram":  5763005151
+                 }
+             ]
+}

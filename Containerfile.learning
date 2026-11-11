@@ -1,0 +1,10 @@
+# Upgrade build reuses the installed CUDA detector image; the original image stays available.
+FROM localhost/cat-watch:0.4.0
+USER root
+COPY requirements-learning.txt /opt/cat-watch/
+RUN pip install --no-cache-dir -r /opt/cat-watch/requirements-learning.txt
+COPY scripts/install-learning-model.py /opt/cat-watch/install-learning-model.py
+RUN python /opt/cat-watch/install-learning-model.py && pip freeze > /opt/python-lock.txt
+COPY catwatch /opt/cat-watch/catwatch
+ENV HF_HUB_OFFLINE=1 HF_HUB_DISABLE_TELEMETRY=1 CATWATCH_VIDEOMAE=/opt/models/videomae
+USER 1000:1000

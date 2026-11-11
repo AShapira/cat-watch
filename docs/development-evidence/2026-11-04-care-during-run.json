@@ -1,0 +1,57 @@
+{
+    "checked_at":  "2026-11-04T08:23:28.9762952Z",
+    "camera":  "connected",
+    "detector":  "ready",
+    "frames_analyzed":  205614,
+    "continuous":  true,
+    "training":  false,
+    "counts":  {
+                   "clips":  6466,
+                   "suggestions":  5121,
+                   "reviewed":  10
+               },
+    "live_image_id":  "540a4e088dd95c017766509195324f951e88e0c611048e9fd4a6fce291d5610f",
+    "live_started_at":  "2026-11-02 22:15:18.705300547 +0200 IST",
+    "review_image_id":  "37c09115d0a1c7376c77ba2fa284eb9179abafc53ad0b99f98f077dce5e4710a",
+    "review":  {
+                   "clips":  100,
+                   "states":  [
+                                  {
+                                      "state":  "complete",
+                                      "count":  21
+                                  },
+                                  {
+                                      "state":  "sending",
+                                      "count":  1
+                                  },
+                                  {
+                                      "state":  "pending",
+                                      "count":  78
+                                  }
+                              ],
+                   "totals":  {
+                                  "budget_usd":  20.0,
+                                  "inference_estimate_usd":  1.228536,
+                                  "conservative_accounted_usd":  4.75091,
+                                  "remaining_authorized_usd":  15.24909,
+                                  "unknown_or_in_flight":  1,
+                                  "cloud_requests":  22,
+                                  "note":  "Token-rate estimate, not an invoice. Conservative accounting includes a token-count allowance and highest cache-write input rates; unknown outcomes retain full reservations."
+                              },
+                   "first_clip_detail_loaded":  true,
+                   "refresh":  {
+                                   "updated":  1793780159.1654315,
+                                   "candidates":  100,
+                                   "state":  "ready"
+                               }
+               },
+    "qwen":  [
+                 {
+                     "context_length":  16384,
+                     "name":  "qwen3.5:9b",
+                     "digest":  "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+                     "size":  5763005151,
+                     "size_vram":  5763005151
+                 }
+             ]
+}

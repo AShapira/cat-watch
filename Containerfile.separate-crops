@@ -1,0 +1,5 @@
+# Offline classification-only patch; camera and detector code are unchanged.
+ARG BASE_IMAGE=localhost/cat-watch:0.5.3
+FROM ${BASE_IMAGE}
+COPY catwatch/learning/crop_policy.py catwatch/learning/media.py catwatch/learning/worker.py /opt/cat-watch/catwatch/learning/
+LABEL org.opencontainers.image.version="0.5.5" cat-watch.patch="independent-classification-crops-and-fountain-override"

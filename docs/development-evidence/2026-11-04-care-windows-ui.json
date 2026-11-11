@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-11-04T04:44:07.789Z",
+  "browser": "native Windows Edge",
+  "review": {
+    "title": "Cat-watch \u00b7 Care review",
+    "stats": "0 / 100 reviewed \u00b7 0 Sol proposals ready \u00b7 Training suspended",
+    "visibleCards": 100,
+    "videoReady": 4,
+    "videoTime": 1.1544,
+    "cropWidth": 510,
+    "cropHeight": 489,
+    "message": "Sol has not supplied a usable proposal. You can label the video manually."
+  },
+  "mobile_fits": true,
+  "javascript_errors": [],
+  "private_images_inspected": false,
+  "screenshots_taken": false,
+  "labels_modified": false,
+  "record_note": "Restored from the exact earlier recorded test output after a later check reused its filename; the later receipt is stored separately."
+}

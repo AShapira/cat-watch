@@ -23,17 +23,22 @@ def create_app(store, runtime, run_worker=True):
     async def lifespan(app):
         if run_worker:
             runtime.start()
+            app.state.agent.start()
         yield
         if run_worker:
+            app.state.agent.shutdown()
             runtime.shutdown()
 
     app = FastAPI(title="cat-watch", docs_url=None, redoc_url=None, lifespan=lifespan)
+    from .learning.api import install
+    install(app, store, runtime)
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost", "testserver"])
 
     @app.middleware("http")
     async def local_access(request: Request, call_next):
         annotation = request.method == 'PUT' and (re.fullmatch(r'/api/investigation/groups/[0-9]+/review',request.url.path)
-                       or request.url.path == '/api/investigation/area-settings')
+                       or request.url.path == '/api/investigation/area-settings'
+                       or re.fullmatch(r'/api/learning/clips/[0-9a-f]{64}/decision',request.url.path))
         if request.method not in ('GET', 'HEAD') and runtime.state.get('review_only') and not annotation:
             return JSONResponse({'detail':'Review-only mode: investigation and all background work are stopped.'},403)
         if request.method not in ("GET", "HEAD") and request.headers.get("x-catwatch-token") != token:
@@ -61,7 +66,7 @@ def create_app(store, runtime, run_worker=True):
 
     @app.get("/static/{name}")
     def static(name: str):
-        if name not in ("app.js", "style.css", "investigation.js"):
+        if name not in ("app.js", "style.css", "investigation.js", "learning.js", "learning.css"):
             raise HTTPException(404)
         return FileResponse(Path(__file__).parent / "static" / name)
 
@@ -71,7 +76,8 @@ def create_app(store, runtime, run_worker=True):
 
     @app.get("/api/health")
     def health():
-        return {**runtime.state, "calibrated":bool(store.config()["polygons"]), "storage": runtime.retention.last, "now": time.time(),
+        from .performance import policy_for
+        return {**runtime.state, "performance": policy_for(runtime).status(), "calibrated":bool(store.config()["polygons"]), "storage": runtime.retention.last, "now": time.time(),
                 "frame_age_seconds": None if runtime.state["last_frame"] is None else round(time.time()-runtime.state["last_frame"],1)}
 
     @app.get("/api/config")

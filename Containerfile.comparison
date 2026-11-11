@@ -1,0 +1,5 @@
+# Separate one-shot runner. The recording container is not replaced or restarted.
+FROM localhost/cat-watch:0.5.3
+COPY catwatch/learning/comparison.py catwatch/learning/comparison_runner.py /opt/cat-watch/catwatch/learning/
+LABEL cat-watch.purpose="bounded-cloud-comparison-2026-11-03"
+CMD ["python", "-m", "catwatch.learning.comparison_runner", "report"]

@@ -1,0 +1,36 @@
+{
+    "checked_at":  "2026-11-02T09:50:05.5844244Z",
+    "session_id":  11,
+    "session_start":  1793611554.2575808,
+    "deadline":  1793699400.6949997,
+    "continuous":  true,
+    "camera":  "connected",
+    "detector":  "ready",
+    "capture_busy":  true,
+    "frames_analyzed":  123,
+    "frame_age_seconds":  4.9,
+    "detector_lag_seconds":  1.7,
+    "gpu":  "NVIDIA GeForce RTX 5080",
+    "storage":  {
+                    "used_bytes":  9870094844,
+                    "cap_bytes":  50000000000,
+                    "reserve_bytes":  64000000,
+                    "free_bytes":  495316910080,
+                    "recording_allowed":  true,
+                    "protected_segments":  1838
+                },
+    "worker":  {
+                   "message":  "Collecting evidence and preparing decisions",
+                   "state":  "running",
+                   "updated":  1793612998.6663475
+               },
+    "heavy_worker":  {
+                         "message":  "Local Qwen is unavailable. Evidence review remains available; checking again in one minute.",
+                         "state":  "waiting"
+                     },
+    "counts":  {
+                   "clips":  928,
+                   "suggestions":  0,
+                   "reviewed":  0
+               }
+}

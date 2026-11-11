@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-11-02T19:43:34.115Z",
+  "browser": "native Windows Edge",
+  "today": {
+    "title": "Cat-watch · Care, made visible",
+    "decisions": 10,
+    "tabs": [
+      "today",
+      "decisions",
+      "timeline",
+      "learning",
+      "setup",
+      "investigation",
+      "visits",
+      "overview"
+    ],
+    "error": null
+  },
+  "learning": {
+    "trainDisabled": true,
+    "progressPresent": true,
+    "error": null
+  },
+  "mobile_fits": true,
+  "javascript_errors": [],
+  "private_images_inspected": false,
+  "labels_modified": false,
+  "calibration_modified": false
+}

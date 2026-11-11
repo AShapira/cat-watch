@@ -1,0 +1,24 @@
+[Unit]
+Description=Cat-watch on RHEL Podman with display-driven quiet mode
+After=shared-qwen.service
+Wants=shared-qwen.service
+ConditionPathExists=%t/cat-watch-credentials/credentials.json
+ConditionPathExists=%h/.local/share/cat-watch/data/.migration-verified
+StartLimitIntervalSec=300
+StartLimitBurst=3
+
+[Service]
+Type=simple
+ExecStart=%h/.local/share/cat-watch/runtime/run-rhel.sh
+ExecStop=/usr/bin/podman stop --time 90 cat-watch
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=180
+TimeoutStopSec=120
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+UMask=0077
+
+[Install]
+WantedBy=default.target

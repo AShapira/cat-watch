@@ -18,5 +18,9 @@ RUN cd /opt/models \
     && echo 'd5ffc1a674953a08e11a8d21e022781b1b23a19b730afc309290bd9fb5305b95  yolo11m.pt' | sha256sum -c - \
     && sha256sum yolo11m.pt >> SHA256SUMS
 COPY catwatch ./catwatch
+COPY requirements-learning.txt scripts/install-learning-model.py ./
+RUN pip install --no-cache-dir -r requirements-learning.txt && python install-learning-model.py \
+    && pip freeze > /opt/python-lock.txt
+ENV HF_HUB_OFFLINE=1 HF_HUB_DISABLE_TELEMETRY=1 CATWATCH_VIDEOMAE=/opt/models/videomae
 USER 1000:1000
 CMD ["python", "-m", "catwatch"]

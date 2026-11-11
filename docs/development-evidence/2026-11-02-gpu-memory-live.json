@@ -1,0 +1,17 @@
+{
+    "checked_at":  "2026-11-02T20:16:39.130062+00:00",
+    "cuda_free_mib":  14953.0,
+    "host_free_before_mib":  6085.0,
+    "host_free_after_mib":  6085.0,
+    "effective_free_mib":  6085.0,
+    "training_admission_mib":  8192,
+    "capacity_gate_result":  {
+                                 "paused":  true,
+                                 "reason":  "Waiting for GPU capacity"
+                             },
+    "training_workload_started":  false,
+    "source_sha256":  {
+                          "catwatch.learning.training":  "ae73268656e02f82409e7fff381ed016af5bfe03e2fe17667d6e99daa7e04107",
+                          "catwatch.learning.worker":  "db4b34e06da1702aaab473e52c0272a846eeb424b39dd3169e0a4ed08b83192b"
+                      }
+}

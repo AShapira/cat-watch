@@ -13,7 +13,7 @@ function node(tag,text,cls){const e=document.createElement(tag);if(text!==undefi
 function action(id,fn){$(id).addEventListener('click',()=>Promise.resolve().then(fn).catch(error));}
 function selectTabFromLocation(){
   const sections=[...document.querySelectorAll('.tab')];
-  const tab=sections.find(s=>s.id===location.hash.slice(1))?.id||'overview';
+  const tab=sections.find(s=>s.id===location.hash.slice(1))?.id||'today';
   sections.forEach(s=>s.hidden=s.id!==tab);
 }
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{location.hash=b.dataset.tab;});
@@ -78,4 +78,4 @@ async function camera(refresh=false){
   }finally{cameraBusy=false;}
 }
 async function boot(){token=(await api('/api/session')).token;config=await api('/api/config');polygons=structuredClone(config.polygons);$('cap').value=config.storage_cap_gb;$('enter').value=config.enter_seconds;$('leave').value=config.leave_seconds;$('confidence').value=config.confidence;await Promise.all([health(),reports(),events()]);await camera();setInterval(()=>{health().catch(error);camera().catch(error);},5000);setInterval(()=>{if(!$('overview').hidden)reports().catch(error);if(!$('visits').hidden&&!$('review').open&&selected.size===0)events().catch(error);},30000);}
-boot().catch(error);
+const appReady=boot().catch(error);

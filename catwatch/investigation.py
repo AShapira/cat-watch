@@ -42,8 +42,10 @@ class InvestigationStore:
                 CREATE TABLE IF NOT EXISTS preparation (id INTEGER PRIMARY KEY, body TEXT NOT NULL);
                 CREATE TABLE IF NOT EXISTS analysis_control (session_id INTEGER PRIMARY KEY,
                     body TEXT NOT NULL);
-                PRAGMA user_version=4;
             ''')
+            # Never downgrade the separate Label Studio bridge's v5 schema.
+            if db.execute('PRAGMA user_version').fetchone()[0] < 4:
+                db.execute('PRAGMA user_version=4')
 
 
     def sessions(self):
@@ -220,8 +222,24 @@ class InvestigationStore:
         with self.db() as db:
             db.execute('INSERT INTO observations(session_id,stamp,kind,body) VALUES (?,?,?,?)',
                        (session_id, stamp, kind, json.dumps(body, allow_nan=False)))
-            # Diagnostics have a bounded horizon; event/job records outlive video expiry.
-            db.execute('DELETE FROM observations WHERE id IN (SELECT id FROM observations WHERE stamp<? AND (session_id IS NULL OR session_id NOT IN (SELECT session_id FROM protected_sessions)) LIMIT 1000)', (time.time()-7*86400,))
+            self.prune_observations(db)
+
+    def prune_observations(self, db):
+        # Bound rows INSPECTED, not just rows deleted. A protected archive may
+        # contain millions of old rows; scanning it on every detection stalls
+        # capture and API requests behind the shared database lock on Windows.
+        now = time.monotonic()
+        if now < getattr(self, '_observation_prune_after', 0):
+            return
+        cursor = getattr(self, '_observation_prune_cursor', 0)
+        rows = db.execute('SELECT id,stamp,session_id FROM observations WHERE id>? ORDER BY id LIMIT 1000',
+                          (cursor,)).fetchall()
+        protected = {r[0] for r in db.execute('SELECT session_id FROM protected_sessions')}
+        cutoff = time.time()-7*86400
+        expired = [(r['id'],) for r in rows if r['stamp'] < cutoff and r['session_id'] not in protected]
+        db.executemany('DELETE FROM observations WHERE id=?', expired)
+        self._observation_prune_cursor = rows[-1]['id'] if len(rows) == 1000 else 0
+        self._observation_prune_after = now+60
 
     def observations(self, start, end, limit=200, after=0):
         if not 1 <= limit <= 500 or not math.isfinite(start) or not math.isfinite(end) or start >= end or end-start > 86400:

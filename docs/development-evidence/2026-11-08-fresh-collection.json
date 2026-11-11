@@ -1,0 +1,437 @@
+{
+  "recorded_at": "2026-11-08T04:27:56.368758+00:00",
+  "scene_change": {
+    "white_backing_visually_confirmed": true,
+    "new_areas_confirmed_by_user": true,
+    "polygons_changed_by_agent": false,
+    "calibration_id": "ae3fccee868143a98d99334718d66c65",
+    "reference_sha256": "93200bf84e062681a50fe4176697a1bce0eadbe92bbf63a4d7ec350f798a349d",
+    "areas": {
+      "areas": {
+        "eating_pad": {
+          "old": {
+            "bounds_pixels": [
+              1284,
+              570,
+              1490,
+              764
+            ],
+            "frame_percent": 0.6983
+          },
+          "new": {
+            "bounds_pixels": [
+              1331,
+              556,
+              1477,
+              703
+            ],
+            "frame_percent": 0.406
+          }
+        },
+        "water_fountain": {
+          "old": {
+            "bounds_pixels": [
+              1182,
+              498,
+              1379,
+              742
+            ],
+            "frame_percent": 0.7937
+          },
+          "new": {
+            "bounds_pixels": [
+              1210,
+              443,
+              1378,
+              581
+            ],
+            "frame_percent": 0.4226
+          }
+        },
+        "litter_box": {
+          "old": {
+            "bounds_pixels": [
+              1743,
+              335,
+              1942,
+              559
+            ],
+            "frame_percent": 1.0225
+          },
+          "new": {
+            "bounds_pixels": [
+              1760,
+              387,
+              1941,
+              544
+            ],
+            "frame_percent": 0.619
+          }
+        }
+      },
+      "classification_regions": [
+        {
+          "areas": [
+            "eating_pad",
+            "water_fountain"
+          ],
+          "box": [
+            1125,
+            374,
+            1551,
+            776
+          ]
+        },
+        {
+          "areas": [
+            "litter_box"
+          ],
+          "box": [
+            1668,
+            309,
+            2032,
+            623
+          ]
+        }
+      ],
+      "scope_note": "Motion uses each polygon plus 20% buffer; context crops use 50% per side and overlapping food/fountain crops merge."
+    },
+    "classification_improvement": "Unmeasured; requires new real examples and human review"
+  },
+  "archive": {
+    "archive": "C:\\Alex\\data\\tapo-cat-monitor\\collection-archives\\20261108T042043Z-before-white-background",
+    "archive_method": "Same-volume directory moves; no old data deleted or copied into the new collection",
+    "archive_files": 32043,
+    "archive_bytes": 34817344835,
+    "prepared_files": 635,
+    "prepared_bytes": 417706643,
+    "before_counts": {
+      "clips": 14442,
+      "suggestions": 11581,
+      "reviewed": 11
+    },
+    "before_archive_counts": {
+      "investigations": 11,
+      "groups": 651,
+      "group_reviews": 17
+    },
+    "stop_requested_at": "2026-11-08T04:20:44.3711456Z",
+    "stopped_at": "2026-11-08T04:20:45.8871496Z",
+    "stop_exit_code": 0,
+    "archive_verified_at": "2026-11-08T04:22:49.4156745Z",
+    "empty_ready_at": "2026-11-08T04:22:55.6318452Z",
+    "previous_container": "cat-watch-archived-20261108t042043z",
+    "image_id": "540a4e088dd95c017766509195324f951e88e0c611048e9fd4a6fce291d5610f"
+  },
+  "archive_validation": {
+    "started_at": "2026-11-08T04:22:06.341743+00:00",
+    "completion_observed_at": "2026-11-08 04:27:56 UTC",
+    "databases": {
+      "catwatch.sqlite3": {
+        "integrity_check": [
+          "ok"
+        ]
+      },
+      "learning/agent.sqlite3": {
+        "integrity_check": [
+          "ok"
+        ]
+      }
+    },
+    "counts": {
+      "investigations": 11,
+      "segments": 17837,
+      "events": 644,
+      "motion_group_reviews": 17
+    },
+    "learning_counts": {
+      "clips": 14442,
+      "suggestions": 11581,
+      "reviewed": 11
+    },
+    "media_checks": [
+      {
+        "registered_last": true,
+        "probe_exit_code": 0,
+        "probe": {
+          "programs": [],
+          "streams": [
+            {
+              "width": 2560,
+              "height": 1440,
+              "avg_frame_rate": "921600/63463",
+              "nb_frames": "60"
+            }
+          ],
+          "format": {
+            "duration": "4.132000",
+            "size": "352089"
+          }
+        },
+        "error": null
+      },
+      {
+        "registered_last": false,
+        "probe_exit_code": 1,
+        "probe": {},
+        "error": "Metadata probe failed; media retained unchanged"
+      }
+    ]
+  },
+  "new_collection": {
+    "empty_counts": {
+      "clips": 0,
+      "suggestions": 0,
+      "reviewed": 0
+    },
+    "old_dataset_mounted": false,
+    "session_id": 1,
+    "session_start": 1794111814.3318646,
+    "monitoring_ready_at": "2026-11-08T04:23:58.6919663Z",
+    "recording_check": {
+      "segments": 30,
+      "start": 1794111815.909448,
+      "end": 1794111966.0669348,
+      "bytes": 9233687,
+      "max_internal_gap_seconds": 0.03333401679992676,
+      "all_registered_files_exist": true,
+      "last_segment_probe": {
+        "programs": [],
+        "streams": [
+          {
+            "width": 2560,
+            "height": 1440,
+            "avg_frame_rate": "102400/6377",
+            "nb_frames": "60"
+          }
+        ],
+        "format": {
+          "duration": "3.737000",
+          "size": "244453"
+        }
+      }
+    },
+    "recording_checked_at": "2026-11-08T04:26:10.638830+00:00",
+    "pause_training": true,
+    "counts": {
+      "clips": 0,
+      "datasets": 0,
+      "models": 0,
+      "cloud_batches": 0,
+      "cloud_requests": 0
+    },
+    "settings": {
+      "motion_fraction": 0.0005,
+      "motion_seconds": 0.5,
+      "masks": [
+        [
+          0,
+          0,
+          0.38,
+          0.065
+        ]
+      ],
+      "motion_scope": "areas",
+      "motion_fps": 5,
+      "analysis_mode": "live",
+      "crop_comparison": true,
+      "duration_seconds": 86400,
+      "motion_buffer": 0.2,
+      "crop_context": 0.5,
+      "detector_model": "yolo11m",
+      "description_provider": "ollama",
+      "description_model": "qwen3.5:9b",
+      "description_url": "http://host.containers.internal:11434",
+      "description_timeout": 180
+    },
+    "config_matches_user_calibration": true,
+    "local_model": {
+      "ready": true,
+      "models": [
+        {
+          "name": "qwen3.5:9b",
+          "model": "qwen3.5:9b",
+          "size": 5763005151,
+          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.7B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2319-02-18T03:35:26.579250664Z",
+          "size_vram": 5763005151,
+          "context_length": 16384
+        }
+      ]
+    },
+    "health_checkpoint": {
+      "checked_at": "2026-11-08T04:25:20.8084609Z",
+      "health": {
+        "camera": "connected",
+        "detector": "ready",
+        "calibrated": true,
+        "last_frame": 1794111915.7384675,
+        "ambiguous_frames": 0,
+        "message": "Monitoring",
+        "gpu": "NVIDIA GeForce RTX 5080",
+        "live_model_loaded": true,
+        "preparation": false,
+        "capture_busy": true,
+        "motion_analysis": "ready",
+        "video_description": "deferred until investigation ends",
+        "detector_comparison": "idle",
+        "frames_analyzed": 153,
+        "cat_frames": 0,
+        "dropped_detection_frames": 36,
+        "capture_gaps": 0,
+        "motion_frames": 447,
+        "source": {
+          "width": 2560,
+          "height": 1440,
+          "fps": 15.9
+        },
+        "motion_lag_seconds": 1.0,
+        "motion_score": 0.0,
+        "area_motion_scores": {
+          "eating_pad": 0.0,
+          "water_fountain": 0.0,
+          "litter_box": 0.0
+        },
+        "motion_queue": 0,
+        "detector_queue": 3,
+        "detection_stamp": 1794111915.7384675,
+        "detector_lag_seconds": 1.2,
+        "detector_timing_ms": {
+          "inference": 16.6,
+          "persistence": 20.9
+        },
+        "storage": {
+          "used_bytes": 7111084,
+          "cap_bytes": 50000000000,
+          "reserve_bytes": 64000000,
+          "free_bytes": 477886963712,
+          "recording_allowed": true,
+          "protected_segments": 20
+        },
+        "now": 1794111920.6378176,
+        "frame_age_seconds": 4.9
+      },
+      "learning": {
+        "counts": {},
+        "episodes": {
+          "eating": 0,
+          "drinking": 0,
+          "litter_activity": 0,
+          "other_activity": 0,
+          "no_cat": 0
+        },
+        "jobs": [],
+        "models": [],
+        "datasets": [],
+        "config": {
+          "enabled": true,
+          "continuous": true,
+          "training": false,
+          "dataset_cap_gb": 20,
+          "review_minutes": 5,
+          "daily_decisions": 10,
+          "summary_hour": 9,
+          "telegram_enabled": false,
+          "telegram_chat_id": "",
+          "telegram_evidence": true,
+          "gpu_reserve_mib": 2048,
+          "training_free_mib": 8192,
+          "ollama_url": "http://127.0.0.1:11434",
+          "ollama_model": "qwen3.5:9b",
+          "active_model": null,
+          "previous_model": null,
+          "calibration_id": "ae3fccee868143a98d99334718d66c65"
+        },
+        "worker": {
+          "message": "Collecting evidence and preparing decisions",
+          "state": "running",
+          "updated": 1794111919.4712837
+        },
+        "storage": {},
+        "cloud_default": "disabled; approval per batch",
+        "training_ready": false,
+        "labels": [
+          "eating",
+          "drinking",
+          "litter_activity",
+          "other_activity",
+          "no_cat",
+          "litter_digging",
+          "litter_elimination_posture",
+          "litter_covering",
+          "sniffing_inspecting",
+          "grooming",
+          "moving",
+          "stationary",
+          "unclear"
+        ],
+        "inference": {
+          "message": "Collect confirmed examples to train the first local model",
+          "state": "waiting"
+        },
+        "gpu": {
+          "free_mib": 5448.0,
+          "updated": 1794111917.6079094
+        },
+        "review_only": false,
+        "heavy_worker": {
+          "message": "Local Qwen is ready; preparing behavior proposals for review.",
+          "state": "running",
+          "updated": 1794111917.627192
+        },
+        "training_progress": {},
+        "telegram_configured": false,
+        "cloud_configured": true,
+        "prepared_dataset_available": false,
+        "archive": {
+          "investigations": 1,
+          "groups": 0,
+          "group_reviews": 0
+        }
+      }
+    },
+    "browser": {
+      "checked_at": "2026-11-08T04:24:22.435Z",
+      "browser": "native Windows Edge",
+      "today": {
+        "badge": "Monitoring continuously",
+        "decisions": "0",
+        "trainingChecked": false,
+        "labelingChecked": true,
+        "error": null
+      },
+      "counts": {},
+      "archive": {
+        "investigations": 1,
+        "groups": 0,
+        "group_reviews": 0
+      },
+      "legacy_import_available": false,
+      "mobile_fits": true,
+      "javascript_errors": [],
+      "calibration_modified": false,
+      "review_submitted": false
+    }
+  },
+  "browser_open_request": {
+    "url": "http://127.0.0.1:8765/#today",
+    "result": "queued"
+  },
+  "failures_and_recovery": [
+    "Staging validation initially expected explicit zero counters; empty stores return an empty counts object. Corrected before any live data move.",
+    "PowerShell byte-summary error occurred after safe directory moves. Both inventories were independently compared before handoff continued.",
+    "Continuation initially nested the parsed inventory arrays; corrected without changing archive contents.",
+    "Optional stop attempt for a slow archive check found that the diagnostic container had already completed successfully; no container was stopped by that attempt."
+  ],
+  "validation_boundary": "Native capture, browser state, file-preserving archive moves and both archived databases were checked. No new behavior classification result or real accuracy improvement is established; no training or cloud requests were started."
+}

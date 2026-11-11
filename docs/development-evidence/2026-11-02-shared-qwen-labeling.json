@@ -1,0 +1,53 @@
+{
+  "checked_at": "2026-11-02T19:39:01.698442+00:00",
+  "model": "qwen3.5:9b",
+  "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+  "ollama_url": "http://127.0.0.1:11434",
+  "gpu_residency": {
+    "ready": true,
+    "message": "GPU model resident",
+    "checked_at": 1793648329.260504,
+    "model": "qwen3.5:9b",
+    "models": [
+      {
+        "name": "qwen3.5:9b",
+        "model": "qwen3.5:9b",
+        "size": 5763005151,
+        "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen35",
+          "families": [
+            "qwen35"
+          ],
+          "parameter_size": "9.7B",
+          "quantization_level": "Q4_K_M"
+        },
+        "expires_at": "2319-02-12T19:26:03.500760339Z",
+        "size_vram": 5763005151,
+        "context_length": 16384
+      }
+    ]
+  },
+  "continuous": true,
+  "counts": {
+    "clips": 3476,
+    "suggestions": 1,
+    "reviewed": 0
+  },
+  "before": {
+    "camera": "connected",
+    "detector": "ready",
+    "frames_analyzed": 1016,
+    "capture_gaps": 0
+  },
+  "after": {
+    "camera": "connected",
+    "detector": "ready",
+    "frames_analyzed": 1121,
+    "capture_gaps": 0,
+    "frame_age_seconds": 8.4,
+    "detector_lag_seconds": 5.1
+  }
+}

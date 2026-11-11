@@ -1,0 +1,5 @@
+# Small offline patch over the verified live learning image; no dependency changes.
+ARG BASE_IMAGE=localhost/cat-watch:0.5.2
+FROM ${BASE_IMAGE}
+COPY catwatch/learning/training.py catwatch/learning/worker.py /opt/cat-watch/catwatch/learning/
+LABEL org.opencontainers.image.version="0.5.3" cat-watch.patch="shared-gpu-memory"

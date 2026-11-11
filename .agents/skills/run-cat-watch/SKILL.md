@@ -5,39 +5,29 @@ description: Start or reuse this project's local cat-watch app, verify camera an
 
 # Run cat-watch
 
-Use the existing Windows Podman deployment. Source lives in RHEL/WSL; the
-dashboard and camera credentials belong to Windows. Read the repository's
-`scripts/cat-watch.ps1` and Run section in `README.md` if deployment details have
-changed. Resolve paths from this checkout, including when called from a subfolder.
+Use the rootless RHEL Podman deployment introduced on 9 November 2026. Active
+data are in `/home/alex/.local/share/cat-watch/data`; the old Windows deployment
+and its data are rollback copies. Read `docs/rhel-runtime.md` and the current
+journal if recovery or migration details matter.
 
 ## Start and verify
 
-Run the bundled [ensure-running.ps1](scripts/ensure-running.ps1) through Windows
-PowerShell. From the repository root in WSL:
+Run [ensure-running.ps1](scripts/ensure-running.ps1) through Windows PowerShell,
+using its Windows/UNC path. The helper starts or reuses `cat-watch.service` in
+RHEL and supplies DPAPI camera credentials through stdin into private runtime
+memory. It waits up to 180 seconds for camera readiness. A setup-only preview
+is also a valid ready state when no investigation is active.
 
-```bash
-cat_skill_script=$(wslpath -w "$PWD/.agents/skills/run-cat-watch/scripts/ensure-running.ps1")
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$cat_skill_script"
-```
+Do not start `podman-machine-default`, its old cat-watch container or the legacy
+analysis controller. Do not rebuild, reset data or change calibration merely to
+launch the app. Use targeted diagnostics for a failed start instead of a restart
+loop. Never print credentials or recorder process arguments.
 
-The helper uses the project's existing deployment functions. It reuses a running
-container, resumes a stopped one and supplies its camera credentials over stdin,
-or calls the project's Start action when no container exists. It waits up to
-180 seconds for camera and detector readiness. Run long calls with short tool
-yields and provide progress while initialization continues.
-
-If the existing `podman-machine-default` is stopped, start that machine with
-Windows `podman.exe machine start podman-machine-default`, then retry once.
-Before invoking native executables from a custom PowerShell command, restore
-`$env:PATHEXT = [Environment]::GetEnvironmentVariable('PATHEXT','Machine')`.
-Locate Podman at `%LOCALAPPDATA%\Programs\Podman\podman.exe`, falling back to
-`Get-Command podman.exe`. Use connection `podman-machine-default-root`.
-
-Do not rebuild images, recreate containers, provision a machine, or change host
-settings merely to launch the app. If recovery needs those actions, report the
-specific failure and follow the user's existing authorization and host permission
-policy. Do not print credentials, authenticated RTSP URLs, or recorder process
-arguments. A failed startup should lead to targeted diagnostics, not a restart loop.
+Quiet mode follows the Windows console display state: on/dimmed/unknown/stale
+means quiet; only a fresh off state permits heavy work. Preserve the separate
+training pause in both modes. Check `/api/health` performance state and
+`/api/learning/status` alongside camera, detector, frame age and recording reserve.
+See `docs/rhel-runtime.md` for service and display-watcher recovery.
 
 ## Open the internal browser
 
@@ -59,8 +49,9 @@ requires `camera: connected` and `detector: ready`; also check `calibrated`, fra
 age, and `storage.recording_allowed`. If uncalibrated, direct the user to
 Camera & settings to draw the three areas. Do not silently modify calibration.
 
-## Investigation descriptions
+## Recording authorization
 
-The approved workflow defers heavy analysis until capture ends. Do not start Cosmos merely to open the app. The Windows analysis controller checks available VRAM once, starts or reuses the pinned project model when admitted, and unloads only services it started. Insufficient VRAM leaves work queued until explicit Retry analysis.
-
-When no investigation is active, camera `preview` with `preparation: true` is the expected ready state; no detector or recording should be running. Require the user to draw or confirm the fresh calibration before a new investigation. Never start an investigation merely to obtain a preview.
+Resume an existing authorized continuous session using its saved confirmed
+calibration. When no investigation is active, preview with `preparation: true`
+is the expected ready state. Require fresh calibration confirmation before a
+new investigation; do not start recording merely to obtain a preview.

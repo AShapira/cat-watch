@@ -1,0 +1,15 @@
+{
+  "checked_at": "2026-11-03T04:10:58.124068+00:00",
+  "state": "waiting_for_exact_batch_approval",
+  "manifest_fingerprint": "564f58a07e60d9117254be7819b64526ffb5bf8438d37e8473f145bb94c861de",
+  "clips": 10,
+  "frame_positions": 160,
+  "jpeg_bytes_per_complete_pass": 7465399,
+  "all_frame_hashes_verified": true,
+  "budget_usd": 20.0,
+  "cloud_requests_in_ledger": 0,
+  "auto_review_rejected": true,
+  "rejection_reason": "Exact private-media batch requires user approval; bounded budget and key setup did not satisfy automatic review.",
+  "models_access_verified": true,
+  "recording_restarted": false
+}

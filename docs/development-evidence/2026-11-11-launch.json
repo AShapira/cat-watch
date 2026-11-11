@@ -1,0 +1,23 @@
+{
+  "checked_utc": "2026-11-11T04:22:54.096645+00:00",
+  "requested_state": "stopped",
+  "service": "ActiveState=inactive\nSubState=dead",
+  "running_cat_watch_containers": [],
+  "dashboard_listening": false,
+  "runtime_credential_present": false,
+  "data_directory_present": true,
+  "launch_findings": {
+    "database_quick_checks": {
+      "catwatch.sqlite3": "ok",
+      "learning/agent.sqlite3": "ok"
+    },
+    "credential_file_initially_missing": true,
+    "camera_rtsp_port_reachable": true,
+    "authentication_rejected_after_two_user_entries": true,
+    "unverified_dpapi_credential_retained_separately": true,
+    "review_dashboard_windows_http": 200,
+    "training_locked_during_attempts": true,
+    "quiet_mode_screen_on_observed": true
+  },
+  "outcome": "User requested stopping the app while restoring the camera account. Recorder, temporary review dashboard and display/startup helpers stopped; saved data retained."
+}

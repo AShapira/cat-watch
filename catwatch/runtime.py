@@ -20,6 +20,8 @@ class Runtime:
     def __init__(self, store, credential=None):
         self.store = store
         self.credential = credential
+        from .performance import PerformancePolicy
+        self.performance = PerformancePolicy()
         self.retention = Retention(store)
         self.stop = threading.Event()
         self.thread = None
@@ -35,7 +37,9 @@ class Runtime:
         self.media = store.root / "media"
         self.media.mkdir(exist_ok=True)
         self.segment_queue = queue.Queue(maxsize=24)
-        self.frame_queue = queue.Queue(maxsize=4)
+        # One five-second source segment contains about ten detector samples.
+        # Keep that bounded burst while the GPU worker spaces out execution.
+        self.frame_queue = queue.Queue(maxsize=10)
         self.workers = []
         self.gpu_lock = threading.Lock()
         self.state.update(motion_analysis='idle', video_description='deferred until investigation ends',
@@ -77,6 +81,7 @@ class Runtime:
         os.environ["YOLO_CONFIG_DIR"] = "/tmp/catwatch-yolo"
         Path(os.environ["YOLO_CONFIG_DIR"]).mkdir(exist_ok=True)
         import torch
+        torch.set_num_threads(2)
         from ultralytics import YOLO, settings
         settings.update({"sync": False})
         session = self.store.investigation()
@@ -98,7 +103,7 @@ class Runtime:
             self.store.queue_completed_motions()
             control = self.store.analysis_status()
             kind = control.get('allowed_kind')
-            if kind in workers and self.analysis_ready():
+            if kind in workers and not self.performance.quiet() and self.analysis_ready():
                 workers[kind].run_one()
             else:
                 self.stop.wait(1)
@@ -149,12 +154,16 @@ class Runtime:
         if self.credential is None:
             self.state.update(camera="stopped", message="Camera credentials were not supplied")
             return
-        # Recover only exact generated leftovers. Unregistered segments are incomplete evidence.
+        # Preserve generated leftovers; they may contain the final seconds before
+        # shutdown even when they never reached the recording manifest.
         known = {s["path"] for s in self.store.segments()}
         recovering_capture = bool(self.store.investigation() and self.store.investigation()['active'])
         for path in self.media.iterdir():
             if recovering_capture and MEDIA_NAME.fullmatch(path.name) and str(path.relative_to(self.store.root)) not in known and not path.is_symlink():
-                path.unlink(missing_ok=True)
+                recovery = self.store.root / 'recovery-media'
+                recovery.mkdir(exist_ok=True)
+                if not (recovery/path.name).exists():
+                    path.rename(recovery/path.name)
         while not self.stop.is_set():
             session = self.store.investigation()
             if not session or self.investigation_capture_finished():
@@ -216,7 +225,8 @@ class Runtime:
                 now = time.monotonic()
                 if now - last_quota >= 2:
                     last_quota = now
-                    self.store.queue_completed_motions()
+                    if not (getattr(self, 'learning', None) and self.learning.config()['continuous']):
+                        self.store.queue_completed_motions()
                     if not self.retention.maintain():
                         self.state.update(camera="paused", message="Storage limit reached; recording paused")
                         return
@@ -370,6 +380,7 @@ class Runtime:
 
     def detector_worker(self):
         capture_identity = None
+        last_inference = 0.
         while not self.stop.is_set():
             try:
                 stamp,frame,capture_id = self.frame_queue.get(timeout=.5)
@@ -378,12 +389,17 @@ class Runtime:
                     self.release_detector()
                 continue
             try:
+                # Sample in wall time too: a backlog must never cause a GPU burst.
+                interval = 1 / self.performance.status()['detector_fps']
+                if self.stop.wait(max(0., interval-(time.monotonic()-last_inference))):
+                    break
                 if not hasattr(self,'model'):
                     self.load_model()
                 if capture_identity != capture_id:
                     self.tracker.interrupt()
                     self.last_sample = None
                     capture_identity = capture_id
+                last_inference = time.monotonic()
                 self.detect(frame,stamp)
             except Exception:
                 self.state['detector'] = 'failed frame; retrying'

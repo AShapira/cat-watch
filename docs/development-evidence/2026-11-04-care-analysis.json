@@ -1,0 +1,91 @@
+{
+  "updated_at": "2026-11-04T08:42:45.954568+00:00",
+  "states": {
+    "complete": 100
+  },
+  "clips": 100,
+  "valid_proposals": 100,
+  "model_counts": {
+    "Sol": {
+      "annotations": 100,
+      "clips_with_label": {
+        "other_activity": 46,
+        "unclear": 71,
+        "no_cat": 24,
+        "eating": 1,
+        "litter_activity": 1
+      },
+      "source_groups_with_label": {
+        "other_activity": 37,
+        "unclear": 48,
+        "no_cat": 19,
+        "eating": 1,
+        "litter_activity": 1
+      }
+    },
+    "saved_Qwen": {
+      "annotations": 80,
+      "clips_with_label": {
+        "eating": 50,
+        "no_cat": 22,
+        "litter_activity": 7,
+        "other_activity": 8
+      },
+      "source_groups_with_label": {
+        "eating": 35,
+        "no_cat": 19,
+        "litter_activity": 5,
+        "other_activity": 8
+      }
+    }
+  },
+  "paired_local_proposals": 80,
+  "paired_model_counts": {
+    "Sol": {
+      "other_activity": 39,
+      "unclear": 53,
+      "no_cat": 23,
+      "eating": 1,
+      "litter_activity": 1
+    },
+    "saved_Qwen": {
+      "eating": 50,
+      "no_cat": 22,
+      "litter_activity": 7,
+      "other_activity": 8
+    }
+  },
+  "same_coarse_label_set": 20,
+  "duration_agreement_with_sol_excluding_sol_unclear": 0.5483,
+  "comparison_reference_seconds": 308.563,
+  "training_labels_created_by_runner": 0,
+  "independent_accuracy_reference_clips": 0,
+  "campaign_inference_estimate_usd": 2.743841,
+  "campaign_conservative_accounted_usd": 10.10146,
+  "all_authorized_batches": {
+    "budget_usd": 20.0,
+    "inference_estimate_usd": 3.425171,
+    "conservative_accounted_usd": 12.12121,
+    "remaining_authorized_usd": 7.87879,
+    "unknown_or_in_flight": 0,
+    "cloud_requests": 100,
+    "note": "Token-rate estimate, not an invoice. Conservative accounting includes a token-count allowance and highest cache-write input rates; unknown outcomes retain full reservations."
+  },
+  "tokens": {
+    "input_tokens": 980996,
+    "output_tokens": 29150,
+    "counted_input_tokens": 980996,
+    "cached_tokens": 0,
+    "cache_write_tokens": 980696,
+    "reasoning_tokens": 12815
+  },
+  "candidate_care_source_groups": {
+    "litter_activity": 1
+  },
+  "limitations": [
+    "Model agreement is not accuracy.",
+    "Saved Qwen proposals used earlier sampling and may not match the 32-frame Sol protocol.",
+    "Source groups and clips are not confirmed independent positive episodes.",
+    "Reasoning tokens are already part of output tokens."
+  ]
+}

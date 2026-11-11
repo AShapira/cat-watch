@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-11-04T08:40:02.705Z",
+  "browser": "native Windows Edge",
+  "review": {
+    "title": "Cat-watch · Care review",
+    "stats": "0 / 100 reviewed · 100 Sol proposals ready · Training suspended",
+    "visibleCards": 100,
+    "videoReady": 4,
+    "videoTime": 1.1543,
+    "cropWidth": 510,
+    "cropHeight": 489,
+    "message": "Review the proposal, then accept or edit."
+  },
+  "mobile_fits": true,
+  "javascript_errors": [],
+  "private_images_inspected": false,
+  "screenshots_taken": false,
+  "labels_modified": false
+}

@@ -1,0 +1,20 @@
+{
+    "checked_at":  "2026-11-03T04:09:41.9554193Z",
+    "operation":  "GET model metadata only",
+    "private_media_sent":  false,
+    "inference_requests":  0,
+    "models":  [
+                   {
+                       "requested_model":  "gpt-6.1-sol",
+                       "returned_model":  "gpt-6.1-sol",
+                       "http_status":  200,
+                       "available":  true
+                   },
+                   {
+                       "requested_model":  "gpt-6-astra",
+                       "returned_model":  "gpt-6-astra",
+                       "http_status":  200,
+                       "available":  true
+                   }
+               ]
+}

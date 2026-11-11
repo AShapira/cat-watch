@@ -1,0 +1,11 @@
+{
+  "model": "qwen3.5:9b",
+  "quantization": "Q4_K_M",
+  "model_digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+  "ollama_version": "0.34.0",
+  "image": "docker.io/ollama/ollama@sha256:684d8674b4315fa18f4f0e973a118ec2652ed96f67563277839985175858e0ba",
+  "context": 16384,
+  "max_output": 8192,
+  "public_port": 11434,
+  "backend_port": 11435
+}

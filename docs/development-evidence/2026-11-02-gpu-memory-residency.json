@@ -1,0 +1,1682 @@
+{
+  "started": "2026-11-02T20:14:48.909440+00:00",
+  "finished": "2026-11-02T20:19:01.595066+00:00",
+  "poll_target_seconds": 1,
+  "before_service": "MainPID=63703\nNRestarts=0\nActiveEnterTimestampMonotonic=2423871850",
+  "after_service": "MainPID=63703\nNRestarts=0\nActiveEnterTimestampMonotonic=2423871850",
+  "runtime_unchanged": true,
+  "all_samples_fully_gpu_resident": true,
+  "samples": [
+    {
+      "stamp": "2026-11-02T20:14:48.909440+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4611,
+      "frame_age": 5.4
+    },
+    {
+      "stamp": "2026-11-02T20:14:49.924470+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4611,
+      "frame_age": 6.4
+    },
+    {
+      "stamp": "2026-11-02T20:14:50.934949+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4611,
+      "frame_age": 7.4
+    },
+    {
+      "stamp": "2026-11-02T20:14:51.947823+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4620,
+      "frame_age": 2.6
+    },
+    {
+      "stamp": "2026-11-02T20:14:52.965630+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4620,
+      "frame_age": 3.7
+    },
+    {
+      "stamp": "2026-11-02T20:14:53.985619+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4620,
+      "frame_age": 4.7
+    },
+    {
+      "stamp": "2026-11-02T20:14:54.995529+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4620,
+      "frame_age": 5.7
+    },
+    {
+      "stamp": "2026-11-02T20:14:56.009312+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4620,
+      "frame_age": 6.8
+    },
+    {
+      "stamp": "2026-11-02T20:14:57.096230+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4620,
+      "frame_age": 7.8
+    },
+    {
+      "stamp": "2026-11-02T20:14:58.107142+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4623,
+      "frame_age": 5.1
+    },
+    {
+      "stamp": "2026-11-02T20:14:59.118979+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4627,
+      "frame_age": 6.1
+    },
+    {
+      "stamp": "2026-11-02T20:15:00.131032+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4627,
+      "frame_age": 7.2
+    },
+    {
+      "stamp": "2026-11-02T20:15:01.186027+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4627,
+      "frame_age": 8.2
+    },
+    {
+      "stamp": "2026-11-02T20:15:02.195958+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4627,
+      "frame_age": 9.2
+    },
+    {
+      "stamp": "2026-11-02T20:15:03.207322+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4627,
+      "frame_age": 10.2
+    },
+    {
+      "stamp": "2026-11-02T20:15:04.219604+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 4627,
+      "frame_age": 11.7
+    },
+    {
+      "stamp": "2026-11-02T20:15:05.655387+00:00",
+      "gpu_resident": true,
+      "camera": "api_unavailable"
+    },
+    {
+      "stamp": "2026-11-02T20:15:06.657778+00:00",
+      "gpu_resident": true,
+      "camera": "api_unavailable"
+    },
+    {
+      "stamp": "2026-11-02T20:15:07.659674+00:00",
+      "gpu_resident": true,
+      "camera": "api_unavailable"
+    },
+    {
+      "stamp": "2026-11-02T20:15:08.661954+00:00",
+      "gpu_resident": true,
+      "camera": "api_unavailable"
+    },
+    {
+      "stamp": "2026-11-02T20:15:09.663931+00:00",
+      "gpu_resident": true,
+      "camera": "api_unavailable"
+    },
+    {
+      "stamp": "2026-11-02T20:15:10.665810+00:00",
+      "gpu_resident": true,
+      "camera": "api_unavailable"
+    },
+    {
+      "stamp": "2026-11-02T20:15:11.667614+00:00",
+      "gpu_resident": true,
+      "camera": "api_unavailable"
+    },
+    {
+      "stamp": "2026-11-02T20:15:12.670265+00:00",
+      "gpu_resident": true,
+      "camera": "api_unavailable"
+    },
+    {
+      "stamp": "2026-11-02T20:15:13.672739+00:00",
+      "gpu_resident": true,
+      "camera": "api_unavailable"
+    },
+    {
+      "stamp": "2026-11-02T20:15:14.674834+00:00",
+      "gpu_resident": true,
+      "camera": "api_unavailable"
+    },
+    {
+      "stamp": "2026-11-02T20:15:15.676826+00:00",
+      "gpu_resident": true,
+      "camera": "api_unavailable"
+    },
+    {
+      "stamp": "2026-11-02T20:15:16.678634+00:00",
+      "gpu_resident": true,
+      "camera": "api_unavailable"
+    },
+    {
+      "stamp": "2026-11-02T20:15:17.680424+00:00",
+      "gpu_resident": true,
+      "camera": "api_unavailable"
+    },
+    {
+      "stamp": "2026-11-02T20:15:18.682564+00:00",
+      "gpu_resident": true,
+      "camera": "api_unavailable"
+    },
+    {
+      "stamp": "2026-11-02T20:15:19.684426+00:00",
+      "gpu_resident": true,
+      "camera": "api_unavailable"
+    },
+    {
+      "stamp": "2026-11-02T20:15:20.686323+00:00",
+      "gpu_resident": true,
+      "camera": "stopped",
+      "frames": 0,
+      "frame_age": null
+    },
+    {
+      "stamp": "2026-11-02T20:15:21.701318+00:00",
+      "gpu_resident": true,
+      "camera": "stopped",
+      "frames": 0,
+      "frame_age": null
+    },
+    {
+      "stamp": "2026-11-02T20:15:22.717283+00:00",
+      "gpu_resident": true,
+      "camera": "stopped",
+      "frames": 0,
+      "frame_age": null
+    },
+    {
+      "stamp": "2026-11-02T20:15:23.736789+00:00",
+      "gpu_resident": true,
+      "camera": "stopped",
+      "frames": 0,
+      "frame_age": null
+    },
+    {
+      "stamp": "2026-11-02T20:15:24.750994+00:00",
+      "gpu_resident": true,
+      "camera": "stopped",
+      "frames": 0,
+      "frame_age": null
+    },
+    {
+      "stamp": "2026-11-02T20:15:25.765738+00:00",
+      "gpu_resident": true,
+      "camera": "stopped",
+      "frames": 0,
+      "frame_age": null
+    },
+    {
+      "stamp": "2026-11-02T20:15:26.777608+00:00",
+      "gpu_resident": true,
+      "camera": "stopped",
+      "frames": 0,
+      "frame_age": null
+    },
+    {
+      "stamp": "2026-11-02T20:15:27.787239+00:00",
+      "gpu_resident": true,
+      "camera": "stopped",
+      "frames": 0,
+      "frame_age": null
+    },
+    {
+      "stamp": "2026-11-02T20:15:28.985315+00:00",
+      "gpu_resident": true,
+      "camera": "connecting",
+      "frames": 0,
+      "frame_age": null
+    },
+    {
+      "stamp": "2026-11-02T20:15:29.999590+00:00",
+      "gpu_resident": true,
+      "camera": "connecting",
+      "frames": 0,
+      "frame_age": null
+    },
+    {
+      "stamp": "2026-11-02T20:15:31.016554+00:00",
+      "gpu_resident": true,
+      "camera": "connecting",
+      "frames": 0,
+      "frame_age": null
+    },
+    {
+      "stamp": "2026-11-02T20:15:32.035500+00:00",
+      "gpu_resident": true,
+      "camera": "connecting",
+      "frames": 0,
+      "frame_age": null
+    },
+    {
+      "stamp": "2026-11-02T20:15:33.051297+00:00",
+      "gpu_resident": true,
+      "camera": "connecting",
+      "frames": 0,
+      "frame_age": null
+    },
+    {
+      "stamp": "2026-11-02T20:15:34.066754+00:00",
+      "gpu_resident": true,
+      "camera": "connecting",
+      "frames": 0,
+      "frame_age": null
+    },
+    {
+      "stamp": "2026-11-02T20:15:35.082461+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 0,
+      "frame_age": 4.6
+    },
+    {
+      "stamp": "2026-11-02T20:15:36.094964+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 0,
+      "frame_age": 2.2
+    },
+    {
+      "stamp": "2026-11-02T20:15:37.105276+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 0,
+      "frame_age": 3.2
+    },
+    {
+      "stamp": "2026-11-02T20:15:38.116578+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 0,
+      "frame_age": 4.2
+    },
+    {
+      "stamp": "2026-11-02T20:15:39.162281+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 0,
+      "frame_age": 5.3
+    },
+    {
+      "stamp": "2026-11-02T20:15:40.252119+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 0,
+      "frame_age": 6.3
+    },
+    {
+      "stamp": "2026-11-02T20:15:41.299775+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 0,
+      "frame_age": 7.6
+    },
+    {
+      "stamp": "2026-11-02T20:15:42.581770+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 0,
+      "frame_age": 2.7
+    },
+    {
+      "stamp": "2026-11-02T20:15:43.592116+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 0,
+      "frame_age": 3.8
+    },
+    {
+      "stamp": "2026-11-02T20:15:44.603598+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 0,
+      "frame_age": 4.8
+    },
+    {
+      "stamp": "2026-11-02T20:15:45.613822+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 0,
+      "frame_age": 5.8
+    },
+    {
+      "stamp": "2026-11-02T20:15:46.625919+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 0,
+      "frame_age": 6.8
+    },
+    {
+      "stamp": "2026-11-02T20:15:47.638419+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 0,
+      "frame_age": 7.8
+    },
+    {
+      "stamp": "2026-11-02T20:15:48.648674+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 0,
+      "frame_age": 8.9
+    },
+    {
+      "stamp": "2026-11-02T20:15:49.720965+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 0,
+      "frame_age": 6.1
+    },
+    {
+      "stamp": "2026-11-02T20:15:50.731021+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 5,
+      "frame_age": 7.1
+    },
+    {
+      "stamp": "2026-11-02T20:15:51.742218+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 5,
+      "frame_age": 8.2
+    },
+    {
+      "stamp": "2026-11-02T20:15:52.754290+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 5,
+      "frame_age": 9.2
+    },
+    {
+      "stamp": "2026-11-02T20:15:53.767007+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 5,
+      "frame_age": 10.2
+    },
+    {
+      "stamp": "2026-11-02T20:15:54.777320+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 5,
+      "frame_age": 11.2
+    },
+    {
+      "stamp": "2026-11-02T20:15:55.786370+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 5,
+      "frame_age": 12.3
+    },
+    {
+      "stamp": "2026-11-02T20:15:56.941292+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 19,
+      "frame_age": 3.1
+    },
+    {
+      "stamp": "2026-11-02T20:15:57.969863+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 23,
+      "frame_age": 4.1
+    },
+    {
+      "stamp": "2026-11-02T20:15:58.985971+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 23,
+      "frame_age": 5.1
+    },
+    {
+      "stamp": "2026-11-02T20:15:59.996799+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 23,
+      "frame_age": 6.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:01.007173+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 23,
+      "frame_age": 7.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:02.018092+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 23,
+      "frame_age": 8.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:03.028236+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 25,
+      "frame_age": 5.9
+    },
+    {
+      "stamp": "2026-11-02T20:16:04.049617+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 33,
+      "frame_age": 4.3
+    },
+    {
+      "stamp": "2026-11-02T20:16:05.097852+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 33,
+      "frame_age": 5.4
+    },
+    {
+      "stamp": "2026-11-02T20:16:06.159110+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 33,
+      "frame_age": 6.4
+    },
+    {
+      "stamp": "2026-11-02T20:16:07.168892+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 33,
+      "frame_age": 7.4
+    },
+    {
+      "stamp": "2026-11-02T20:16:08.178397+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 33,
+      "frame_age": 8.4
+    },
+    {
+      "stamp": "2026-11-02T20:16:09.188282+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 33,
+      "frame_age": 9.7
+    },
+    {
+      "stamp": "2026-11-02T20:16:10.527159+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 40,
+      "frame_age": 7.0
+    },
+    {
+      "stamp": "2026-11-02T20:16:11.539158+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 40,
+      "frame_age": 8.0
+    },
+    {
+      "stamp": "2026-11-02T20:16:12.550501+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 40,
+      "frame_age": 9.0
+    },
+    {
+      "stamp": "2026-11-02T20:16:13.563240+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 40,
+      "frame_age": 10.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:14.576624+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 40,
+      "frame_age": 11.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:15.588258+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 40,
+      "frame_age": 12.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:16.598476+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 40,
+      "frame_age": 13.2
+    },
+    {
+      "stamp": "2026-11-02T20:16:17.759581+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 55,
+      "frame_age": 4.0
+    },
+    {
+      "stamp": "2026-11-02T20:16:18.773960+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 58,
+      "frame_age": 5.0
+    },
+    {
+      "stamp": "2026-11-02T20:16:19.784937+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 58,
+      "frame_age": 6.0
+    },
+    {
+      "stamp": "2026-11-02T20:16:20.795981+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 58,
+      "frame_age": 7.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:21.806739+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 58,
+      "frame_age": 8.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:22.817542+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 58,
+      "frame_age": 9.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:23.847621+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 58,
+      "frame_age": 5.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:25.085657+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 64,
+      "frame_age": 5.6
+    },
+    {
+      "stamp": "2026-11-02T20:16:26.101082+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 64,
+      "frame_age": 6.6
+    },
+    {
+      "stamp": "2026-11-02T20:16:27.113171+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 64,
+      "frame_age": 7.6
+    },
+    {
+      "stamp": "2026-11-02T20:16:28.127379+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 64,
+      "frame_age": 8.6
+    },
+    {
+      "stamp": "2026-11-02T20:16:29.165475+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 64,
+      "frame_age": 9.6
+    },
+    {
+      "stamp": "2026-11-02T20:16:30.176150+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 64,
+      "frame_age": 10.8
+    },
+    {
+      "stamp": "2026-11-02T20:16:31.377312+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 80,
+      "frame_age": 1.6
+    },
+    {
+      "stamp": "2026-11-02T20:16:32.390282+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 82,
+      "frame_age": 2.6
+    },
+    {
+      "stamp": "2026-11-02T20:16:33.400247+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 82,
+      "frame_age": 3.6
+    },
+    {
+      "stamp": "2026-11-02T20:16:34.414188+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 82,
+      "frame_age": 4.6
+    },
+    {
+      "stamp": "2026-11-02T20:16:35.426388+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 82,
+      "frame_age": 5.6
+    },
+    {
+      "stamp": "2026-11-02T20:16:36.443177+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 82,
+      "frame_age": 6.6
+    },
+    {
+      "stamp": "2026-11-02T20:16:37.454342+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 82,
+      "frame_age": 7.9
+    },
+    {
+      "stamp": "2026-11-02T20:16:38.704572+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 89,
+      "frame_age": 5.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:39.716449+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 89,
+      "frame_age": 6.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:40.726937+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 89,
+      "frame_age": 7.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:41.739558+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 89,
+      "frame_age": 8.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:42.753954+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 89,
+      "frame_age": 9.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:43.764639+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 89,
+      "frame_age": 10.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:44.775896+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 89,
+      "frame_age": 10.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:45.809220+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 106,
+      "frame_age": 1.9
+    },
+    {
+      "stamp": "2026-11-02T20:16:46.828666+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 108,
+      "frame_age": 3.0
+    },
+    {
+      "stamp": "2026-11-02T20:16:47.874787+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 108,
+      "frame_age": 4.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:48.987796+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 108,
+      "frame_age": 5.2
+    },
+    {
+      "stamp": "2026-11-02T20:16:50.089828+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 108,
+      "frame_age": 6.3
+    },
+    {
+      "stamp": "2026-11-02T20:16:51.183116+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 108,
+      "frame_age": 7.9
+    },
+    {
+      "stamp": "2026-11-02T20:16:52.762899+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 119,
+      "frame_age": 3.1
+    },
+    {
+      "stamp": "2026-11-02T20:16:53.815058+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 119,
+      "frame_age": 4.2
+    },
+    {
+      "stamp": "2026-11-02T20:16:54.910284+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 119,
+      "frame_age": 5.3
+    },
+    {
+      "stamp": "2026-11-02T20:16:56.013774+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 119,
+      "frame_age": 6.4
+    },
+    {
+      "stamp": "2026-11-02T20:16:57.097029+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 119,
+      "frame_age": 7.5
+    },
+    {
+      "stamp": "2026-11-02T20:16:58.144499+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 119,
+      "frame_age": 8.7
+    },
+    {
+      "stamp": "2026-11-02T20:16:59.424740+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 127,
+      "frame_age": 5.6
+    },
+    {
+      "stamp": "2026-11-02T20:17:00.434602+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 127,
+      "frame_age": 6.6
+    },
+    {
+      "stamp": "2026-11-02T20:17:01.445387+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 127,
+      "frame_age": 7.6
+    },
+    {
+      "stamp": "2026-11-02T20:17:02.456891+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 127,
+      "frame_age": 8.6
+    },
+    {
+      "stamp": "2026-11-02T20:17:03.467146+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 127,
+      "frame_age": 9.6
+    },
+    {
+      "stamp": "2026-11-02T20:17:04.476719+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 127,
+      "frame_age": 10.6
+    },
+    {
+      "stamp": "2026-11-02T20:17:05.488132+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 127,
+      "frame_age": 11.6
+    },
+    {
+      "stamp": "2026-11-02T20:17:06.500111+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 142,
+      "frame_age": 3.0
+    },
+    {
+      "stamp": "2026-11-02T20:17:07.550383+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 144,
+      "frame_age": 4.1
+    },
+    {
+      "stamp": "2026-11-02T20:17:08.634247+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 144,
+      "frame_age": 5.1
+    },
+    {
+      "stamp": "2026-11-02T20:17:09.708885+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 144,
+      "frame_age": 6.1
+    },
+    {
+      "stamp": "2026-11-02T20:17:10.719628+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 144,
+      "frame_age": 7.1
+    },
+    {
+      "stamp": "2026-11-02T20:17:11.730145+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 144,
+      "frame_age": 8.2
+    },
+    {
+      "stamp": "2026-11-02T20:17:12.739131+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 149,
+      "frame_age": 4.9
+    },
+    {
+      "stamp": "2026-11-02T20:17:13.753821+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 156,
+      "frame_age": 3.8
+    },
+    {
+      "stamp": "2026-11-02T20:17:14.765412+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 156,
+      "frame_age": 4.8
+    },
+    {
+      "stamp": "2026-11-02T20:17:15.782359+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 156,
+      "frame_age": 5.8
+    },
+    {
+      "stamp": "2026-11-02T20:17:16.792769+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 156,
+      "frame_age": 6.8
+    },
+    {
+      "stamp": "2026-11-02T20:17:17.803728+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 156,
+      "frame_age": 7.9
+    },
+    {
+      "stamp": "2026-11-02T20:17:18.846456+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 156,
+      "frame_age": 9.4
+    },
+    {
+      "stamp": "2026-11-02T20:17:20.357124+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 163,
+      "frame_age": 6.6
+    },
+    {
+      "stamp": "2026-11-02T20:17:21.369224+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 163,
+      "frame_age": 7.6
+    },
+    {
+      "stamp": "2026-11-02T20:17:22.381731+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 163,
+      "frame_age": 8.6
+    },
+    {
+      "stamp": "2026-11-02T20:17:23.391965+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 163,
+      "frame_age": 9.6
+    },
+    {
+      "stamp": "2026-11-02T20:17:24.406551+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 163,
+      "frame_age": 10.6
+    },
+    {
+      "stamp": "2026-11-02T20:17:25.416873+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 163,
+      "frame_age": 11.7
+    },
+    {
+      "stamp": "2026-11-02T20:17:26.426771+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 163,
+      "frame_age": 12.8
+    },
+    {
+      "stamp": "2026-11-02T20:17:27.539969+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 174,
+      "frame_age": 3.5
+    },
+    {
+      "stamp": "2026-11-02T20:17:28.552237+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 178,
+      "frame_age": 4.5
+    },
+    {
+      "stamp": "2026-11-02T20:17:29.562722+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 178,
+      "frame_age": 5.5
+    },
+    {
+      "stamp": "2026-11-02T20:17:30.572269+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 178,
+      "frame_age": 6.5
+    },
+    {
+      "stamp": "2026-11-02T20:17:31.583330+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 178,
+      "frame_age": 7.5
+    },
+    {
+      "stamp": "2026-11-02T20:17:32.595244+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 178,
+      "frame_age": 8.5
+    },
+    {
+      "stamp": "2026-11-02T20:17:33.605332+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 178,
+      "frame_age": 8.5
+    },
+    {
+      "stamp": "2026-11-02T20:17:34.623913+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 189,
+      "frame_age": 4.8
+    },
+    {
+      "stamp": "2026-11-02T20:17:35.715553+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 189,
+      "frame_age": 5.9
+    },
+    {
+      "stamp": "2026-11-02T20:17:36.779446+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 189,
+      "frame_age": 6.9
+    },
+    {
+      "stamp": "2026-11-02T20:17:37.791678+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 189,
+      "frame_age": 7.9
+    },
+    {
+      "stamp": "2026-11-02T20:17:38.802479+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 189,
+      "frame_age": 9.7
+    },
+    {
+      "stamp": "2026-11-02T20:17:40.638314+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 189,
+      "frame_age": 10.8
+    },
+    {
+      "stamp": "2026-11-02T20:17:41.769831+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 194,
+      "frame_age": 2.1
+    },
+    {
+      "stamp": "2026-11-02T20:17:42.828431+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 199,
+      "frame_age": 3.1
+    },
+    {
+      "stamp": "2026-11-02T20:17:43.862098+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 199,
+      "frame_age": 4.2
+    },
+    {
+      "stamp": "2026-11-02T20:17:44.924936+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 199,
+      "frame_age": 5.2
+    },
+    {
+      "stamp": "2026-11-02T20:17:45.952189+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 199,
+      "frame_age": 6.2
+    },
+    {
+      "stamp": "2026-11-02T20:17:46.963408+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 199,
+      "frame_age": 7.3
+    },
+    {
+      "stamp": "2026-11-02T20:17:47.993401+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 199,
+      "frame_age": 8.3
+    },
+    {
+      "stamp": "2026-11-02T20:17:49.004031+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 199,
+      "frame_age": 9.5
+    },
+    {
+      "stamp": "2026-11-02T20:17:50.217499+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 207,
+      "frame_age": 6.2
+    },
+    {
+      "stamp": "2026-11-02T20:17:51.244370+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 207,
+      "frame_age": 7.2
+    },
+    {
+      "stamp": "2026-11-02T20:17:52.257755+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 207,
+      "frame_age": 8.2
+    },
+    {
+      "stamp": "2026-11-02T20:17:53.268131+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 207,
+      "frame_age": 9.2
+    },
+    {
+      "stamp": "2026-11-02T20:17:54.277798+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 207,
+      "frame_age": 10.2
+    },
+    {
+      "stamp": "2026-11-02T20:17:55.288121+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 207,
+      "frame_age": 11.3
+    },
+    {
+      "stamp": "2026-11-02T20:17:56.299118+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 207,
+      "frame_age": 12.4
+    },
+    {
+      "stamp": "2026-11-02T20:17:57.444777+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 218,
+      "frame_age": 4.2
+    },
+    {
+      "stamp": "2026-11-02T20:17:58.470617+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 223,
+      "frame_age": 4.7
+    },
+    {
+      "stamp": "2026-11-02T20:17:59.481014+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 223,
+      "frame_age": 5.7
+    },
+    {
+      "stamp": "2026-11-02T20:18:00.493386+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 223,
+      "frame_age": 6.7
+    },
+    {
+      "stamp": "2026-11-02T20:18:01.503573+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 223,
+      "frame_age": 7.7
+    },
+    {
+      "stamp": "2026-11-02T20:18:02.513049+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 223,
+      "frame_age": 8.7
+    },
+    {
+      "stamp": "2026-11-02T20:18:03.524160+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 223,
+      "frame_age": 9.8
+    },
+    {
+      "stamp": "2026-11-02T20:18:04.571302+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 232,
+      "frame_age": 4.9
+    },
+    {
+      "stamp": "2026-11-02T20:18:05.589513+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 233,
+      "frame_age": 5.9
+    },
+    {
+      "stamp": "2026-11-02T20:18:06.599140+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 233,
+      "frame_age": 6.9
+    },
+    {
+      "stamp": "2026-11-02T20:18:07.609210+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 233,
+      "frame_age": 7.9
+    },
+    {
+      "stamp": "2026-11-02T20:18:08.620319+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 233,
+      "frame_age": 8.9
+    },
+    {
+      "stamp": "2026-11-02T20:18:09.630844+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 233,
+      "frame_age": 9.9
+    },
+    {
+      "stamp": "2026-11-02T20:18:10.643204+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 234,
+      "frame_age": 9.3
+    },
+    {
+      "stamp": "2026-11-02T20:18:11.661412+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 241,
+      "frame_age": 1.8
+    },
+    {
+      "stamp": "2026-11-02T20:18:12.686279+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 246,
+      "frame_age": 2.8
+    },
+    {
+      "stamp": "2026-11-02T20:18:13.696780+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 246,
+      "frame_age": 3.9
+    },
+    {
+      "stamp": "2026-11-02T20:18:14.708152+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 246,
+      "frame_age": 4.9
+    },
+    {
+      "stamp": "2026-11-02T20:18:15.788906+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 246,
+      "frame_age": 6.0
+    },
+    {
+      "stamp": "2026-11-02T20:18:16.850979+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 246,
+      "frame_age": 7.0
+    },
+    {
+      "stamp": "2026-11-02T20:18:17.865954+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 246,
+      "frame_age": 8.2
+    },
+    {
+      "stamp": "2026-11-02T20:18:19.010314+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 251,
+      "frame_age": 5.4
+    },
+    {
+      "stamp": "2026-11-02T20:18:20.043857+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 253,
+      "frame_age": 6.4
+    },
+    {
+      "stamp": "2026-11-02T20:18:21.055124+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 253,
+      "frame_age": 7.4
+    },
+    {
+      "stamp": "2026-11-02T20:18:22.067246+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 253,
+      "frame_age": 8.4
+    },
+    {
+      "stamp": "2026-11-02T20:18:23.078500+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 253,
+      "frame_age": 9.4
+    },
+    {
+      "stamp": "2026-11-02T20:18:24.088144+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 253,
+      "frame_age": 10.4
+    },
+    {
+      "stamp": "2026-11-02T20:18:25.098119+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 253,
+      "frame_age": 11.5
+    },
+    {
+      "stamp": "2026-11-02T20:18:26.173394+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 266,
+      "frame_age": 2.8
+    },
+    {
+      "stamp": "2026-11-02T20:18:27.188660+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 271,
+      "frame_age": 3.3
+    },
+    {
+      "stamp": "2026-11-02T20:18:28.199252+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 271,
+      "frame_age": 4.3
+    },
+    {
+      "stamp": "2026-11-02T20:18:29.209257+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 271,
+      "frame_age": 5.3
+    },
+    {
+      "stamp": "2026-11-02T20:18:30.220519+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 271,
+      "frame_age": 6.3
+    },
+    {
+      "stamp": "2026-11-02T20:18:31.231906+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 271,
+      "frame_age": 7.3
+    },
+    {
+      "stamp": "2026-11-02T20:18:32.241525+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 272,
+      "frame_age": 4.8
+    },
+    {
+      "stamp": "2026-11-02T20:18:33.478364+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 279,
+      "frame_age": 3.7
+    },
+    {
+      "stamp": "2026-11-02T20:18:34.492037+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 279,
+      "frame_age": 4.7
+    },
+    {
+      "stamp": "2026-11-02T20:18:35.508390+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 279,
+      "frame_age": 5.7
+    },
+    {
+      "stamp": "2026-11-02T20:18:36.525403+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 279,
+      "frame_age": 6.7
+    },
+    {
+      "stamp": "2026-11-02T20:18:37.538796+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 279,
+      "frame_age": 7.8
+    },
+    {
+      "stamp": "2026-11-02T20:18:38.569894+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 279,
+      "frame_age": 8.8
+    },
+    {
+      "stamp": "2026-11-02T20:18:39.645148+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 286,
+      "frame_age": 5.7
+    },
+    {
+      "stamp": "2026-11-02T20:18:40.741652+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 287,
+      "frame_age": 6.7
+    },
+    {
+      "stamp": "2026-11-02T20:18:41.810781+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 287,
+      "frame_age": 7.8
+    },
+    {
+      "stamp": "2026-11-02T20:18:42.871143+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 287,
+      "frame_age": 8.8
+    },
+    {
+      "stamp": "2026-11-02T20:18:43.881865+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 287,
+      "frame_age": 9.8
+    },
+    {
+      "stamp": "2026-11-02T20:18:44.891368+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 287,
+      "frame_age": 10.8
+    },
+    {
+      "stamp": "2026-11-02T20:18:45.904495+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 288,
+      "frame_age": 10.2
+    },
+    {
+      "stamp": "2026-11-02T20:18:46.926381+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 302,
+      "frame_age": 3.2
+    },
+    {
+      "stamp": "2026-11-02T20:18:47.951607+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 302,
+      "frame_age": 4.2
+    },
+    {
+      "stamp": "2026-11-02T20:18:48.966419+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 302,
+      "frame_age": 5.3
+    },
+    {
+      "stamp": "2026-11-02T20:18:49.980240+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 302,
+      "frame_age": 6.3
+    },
+    {
+      "stamp": "2026-11-02T20:18:50.992901+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 302,
+      "frame_age": 7.3
+    },
+    {
+      "stamp": "2026-11-02T20:18:52.002983+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 302,
+      "frame_age": 8.3
+    },
+    {
+      "stamp": "2026-11-02T20:18:53.013078+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 305,
+      "frame_age": 6.0
+    },
+    {
+      "stamp": "2026-11-02T20:18:54.023952+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 313,
+      "frame_age": 4.3
+    },
+    {
+      "stamp": "2026-11-02T20:18:55.035974+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 313,
+      "frame_age": 5.4
+    },
+    {
+      "stamp": "2026-11-02T20:18:56.075327+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 313,
+      "frame_age": 6.4
+    },
+    {
+      "stamp": "2026-11-02T20:18:57.127354+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 313,
+      "frame_age": 7.4
+    },
+    {
+      "stamp": "2026-11-02T20:18:58.137837+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 313,
+      "frame_age": 8.4
+    },
+    {
+      "stamp": "2026-11-02T20:18:59.148023+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 313,
+      "frame_age": 9.9
+    },
+    {
+      "stamp": "2026-11-02T20:19:00.583959+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 321,
+      "frame_age": 6.5
+    },
+    {
+      "stamp": "2026-11-02T20:19:01.595066+00:00",
+      "gpu_resident": true,
+      "camera": "connected",
+      "frames": 321,
+      "frame_age": 7.6
+    }
+  ]
+}

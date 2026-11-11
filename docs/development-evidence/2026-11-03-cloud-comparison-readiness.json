@@ -1,0 +1,25 @@
+{
+    "checked_at":  "2026-11-03T04:00:40.3099192Z",
+    "camera":  "connected",
+    "detector":  "ready",
+    "frames_analyzed":  45725,
+    "continuous":  true,
+    "training":  true,
+    "counts":  {
+                   "clips":  4306,
+                   "suggestions":  2023,
+                   "reviewed":  10
+               },
+    "live_image_id":  "540a4e088dd95c017766509195324f951e88e0c611048e9fd4a6fce291d5610f",
+    "live_started_at":  "2026-11-02 22:15:18.705300547 +0200 IST",
+    "cloud_credential_saved":  false,
+    "qwen":  [
+                 {
+                     "context_length":  16384,
+                     "name":  "qwen3.5:9b",
+                     "digest":  "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+                     "size":  5763005151,
+                     "size_vram":  5763005151
+                 }
+             ]
+}

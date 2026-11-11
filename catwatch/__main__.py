@@ -48,16 +48,27 @@ def main():
         uvicorn.run(create_app(store, runtime, run_worker=False), host='127.0.0.1',
                     port=8765, access_log=False, log_level='warning')
         return
-    # Credentials arrive via podman exec stdin into this UID-restricted local socket.
-    with socket.socket(socket.AF_UNIX) as server:
-        server.bind(SOCKET)
-        os.chmod(SOCKET, 0o600)
-        server.listen(1)
-        server.settimeout(120)
-        client, _ = server.accept()
-        with client, client.makefile("rb") as stream:
-            credential = json.loads(stream.readline(16384))
-    os.unlink(SOCKET)
+    if '--credential-file' in sys.argv:
+        credential_path = Path(sys.argv[sys.argv.index('--credential-file')+1])
+        info = credential_path.stat()
+        if info.st_mode & 0o077 or info.st_uid != os.getuid() or info.st_size > 16384:
+            raise RuntimeError('Credential file must be private to the runtime user')
+        credential = json.loads(credential_path.read_text())
+    else:
+        # Legacy handoff through a UID-restricted local socket.
+        with socket.socket(socket.AF_UNIX) as server:
+            server.bind(SOCKET)
+            os.chmod(SOCKET, 0o600)
+            server.listen(1)
+            server.settimeout(120)
+            client, _ = server.accept()
+            with client, client.makefile("rb") as stream:
+                credential = json.loads(stream.readline(16384))
+        os.unlink(SOCKET)
+    services = credential.pop('services', {})
+    for key, environment in [('telegram_token', 'CATWATCH_TELEGRAM_TOKEN'), ('openai_api_key', 'CATWATCH_OPENAI_API_KEY')]:
+        if services.get(key):
+            os.environ[environment] = services[key]
     import uvicorn
     from .web import create_app
     store = Store(root)

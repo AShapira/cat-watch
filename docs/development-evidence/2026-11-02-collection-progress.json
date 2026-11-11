@@ -1,0 +1,47 @@
+{
+    "container":  "running unhealthy",
+    "samples":  [
+                    {
+                        "at":  "2026-11-02T09:43:48.1727445Z",
+                        "response_ms":  285,
+                        "frames":  193,
+                        "frame_age":  11.0,
+                        "camera":  "connected",
+                        "detector":  "ready",
+                        "capture_gaps":  0,
+                        "dropped_frames":  135,
+                        "timing":  {
+                                       "inference":  17.4,
+                                       "persistence":  31.0
+                                   }
+                    },
+                    {
+                        "at":  "2026-11-02T09:44:08.7430232Z",
+                        "response_ms":  5547,
+                        "frames":  214,
+                        "frame_age":  11.8,
+                        "camera":  "connected",
+                        "detector":  "ready",
+                        "capture_gaps":  0,
+                        "dropped_frames":  150,
+                        "timing":  {
+                                       "inference":  19.2,
+                                       "persistence":  25.9
+                                   }
+                    },
+                    {
+                        "at":  "2026-11-02T09:44:29.1376507Z",
+                        "response_ms":  5392,
+                        "frames":  239,
+                        "frame_age":  11.8,
+                        "camera":  "connected",
+                        "detector":  "ready",
+                        "capture_gaps":  0,
+                        "dropped_frames":  163,
+                        "timing":  {
+                                       "inference":  19.4,
+                                       "persistence":  27.2
+                                   }
+                    }
+                ]
+}

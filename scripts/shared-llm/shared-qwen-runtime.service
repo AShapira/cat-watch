@@ -1,0 +1,16 @@
+# Owned by catwatch-shared-llm
+[Unit]
+Description=Shared local Qwen GPU runtime
+StartLimitIntervalSec=300
+StartLimitBurst=3
+
+[Service]
+Type=simple
+ExecStart=%h/.local/share/catwatch-shared-llm/runtime.sh
+ExecStop=/usr/bin/podman stop --time 20 shared-qwen-runtime
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=30
+
+[Install]
+WantedBy=default.target

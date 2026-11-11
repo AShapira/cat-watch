@@ -1,0 +1,47 @@
+{
+    "container":  "running healthy",
+    "samples":  [
+                    {
+                        "at":  "2026-11-02T09:49:35.4725865Z",
+                        "response_ms":  77,
+                        "frames":  70,
+                        "frame_age":  5.3,
+                        "camera":  "connected",
+                        "detector":  "ready",
+                        "capture_gaps":  0,
+                        "dropped_frames":  26,
+                        "timing":  {
+                                       "inference":  17.6,
+                                       "persistence":  25.1
+                                   }
+                    },
+                    {
+                        "at":  "2026-11-02T09:49:50.5062152Z",
+                        "response_ms":  11,
+                        "frames":  97,
+                        "frame_age":  4.4,
+                        "camera":  "connected",
+                        "detector":  "ready",
+                        "capture_gaps":  0,
+                        "dropped_frames":  29,
+                        "timing":  {
+                                       "inference":  20.0,
+                                       "persistence":  71.8
+                                   }
+                    },
+                    {
+                        "at":  "2026-11-02T09:50:05.5226035Z",
+                        "response_ms":  12,
+                        "frames":  123,
+                        "frame_age":  5.5,
+                        "camera":  "connected",
+                        "detector":  "ready",
+                        "capture_gaps":  0,
+                        "dropped_frames":  29,
+                        "timing":  {
+                                       "inference":  22.5,
+                                       "persistence":  33.5
+                                   }
+                    }
+                ]
+}

@@ -1,18 +1,22 @@
 # Native Windows PowerShell 5.1+. RHEL supplies source only.
 [CmdletBinding()]
 param(
-    [ValidateSet('Check','Build','Start','Stop','Status','Logs')][string]$Action = 'Status',
+    [ValidateSet('Check','Build','Start','Resume','Stop','Status','Logs')][string]$Action = 'Status',
     [string]$DataRoot = 'C:\Alex\data\tapo-cat-monitor',
     [string]$Machine = 'podman-machine-default',
-    [string]$Connection = 'podman-machine-default-root'
+    [string]$Connection = 'podman-machine-default-root',
+    [string]$Image = 'localhost/cat-watch:0.5.3',
+    [switch]$LegacyAnalysis
 )
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+if ($Action -in @('Start','Resume') -and (Test-Path (Join-Path $DataRoot 'rhel-runtime\deployment.json'))) {
+    throw 'Cat-watch has migrated to RHEL. Use scripts/start-rhel.ps1; the Windows deployment is retained for rollback only.'
+}
 $env:PATHEXT = [Environment]::GetEnvironmentVariable('PATHEXT','Machine')
 $OutputEncoding = New-Object System.Text.UTF8Encoding($false)
 $Podman = Join-Path $env:LOCALAPPDATA 'Programs\Podman\podman.exe'
 if (!(Test-Path $Podman)) { $Podman = (Get-Command podman.exe -ErrorAction Stop).Source }
-$Image = 'localhost/cat-watch:0.4.0'
 $Container = 'cat-watch'
 $AppData = Join-Path $DataRoot 'cat-watch'
 $SourceRoot = Split-Path $PSScriptRoot -Parent
@@ -58,9 +62,15 @@ switch ($Action) {
         Invoke-Podman @('--connection',$Connection,'build','--network=host','-t',$Image,'-f',(Join-Path $SourceRoot 'Containerfile'),$SourceRoot)
         Invoke-Podman @('--connection',$Connection,'image','inspect',$Image,'--format','{{.Id}}')
     }
-    'Start' {
+    { $_ -in @('Start','Resume') } {
         $existing = Invoke-Podman @('--connection',$Connection,'ps','-a','--filter',"name=^$Container$",'--format','{{.Names}}')
-        if ($existing) { throw 'cat-watch already exists. Use Status or Stop before Start.' }
+        if ($existing -and $Action -eq 'Start') { throw 'cat-watch already exists. Use Resume, or the learning upgrade helper.' }
+        if (!$existing -and $Action -eq 'Resume') { throw 'No existing deployment to resume.' }
+        if ($Action -eq 'Resume') {
+            $info = Invoke-Podman @('--connection',$Connection,'inspect',$Container) | ConvertFrom-Json
+            if ($info[0].Config.Labels.app -ne 'cat-watch') { throw 'Unexpected container label.' }
+            if ($info[0].State.Running) { throw 'Deployment is already running; use Status.' }
+        }
         if (!(Test-Path $DataRoot)) { throw 'Foundation storage folder missing.' }
         New-Item -ItemType Directory -Path $AppData -Force | Out-Null
         # Marker confines recovery and retention to this application-owned subtree.
@@ -71,8 +81,31 @@ switch ($Action) {
         }
         $camera = Get-Content (Join-Path $DataRoot 'camera.json') -Raw | ConvertFrom-Json
         $credential = Import-Clixml $CredentialFile
-        $inputJson = @{ ip=$camera.ip; username=$credential.UserName; password=$credential.GetNetworkCredential().Password } | ConvertTo-Json -Compress
-        Invoke-Podman @('--connection',$Connection,'run','-d','--name',$Container,'--label','app=cat-watch','--network=host','--device','nvidia.com/gpu=all','--cap-drop=all','--security-opt=no-new-privileges','--log-driver=k8s-file','--log-opt=max-size=2mb','--health-cmd','python -m catwatch --health','--health-interval','30s','--health-start-period','120s','--mount',"type=bind,source=$AppData,target=/data",$Image) | Out-Null
+        $services = @{}
+        foreach ($entry in @(@('telegram_token','telegram.credential.xml'),@('openai_api_key','openai.credential.xml'))) {
+            $secretPath = Join-Path $env:LOCALAPPDATA ('TapoCatMonitor\'+$entry[1])
+            if (Test-Path $secretPath) {
+                $secret = Import-Clixml $secretPath
+                $services[$entry[0]] = $secret.GetNetworkCredential().Password
+            }
+        }
+        $inputJson = @{ ip=$camera.ip; username=$credential.UserName; password=$credential.GetNetworkCredential().Password; services=$services } | ConvertTo-Json -Compress
+        $services=$null; $secret=$null
+        if ($Action -eq 'Resume') {
+            Invoke-Podman @('--connection',$Connection,'start',$Container) | Out-Null
+        } else {
+            $mounts = @('--mount',"type=bind,source=$AppData,target=/data")
+            $prepared = Join-Path $DataRoot 'cat-watch-dataset'
+            if (Test-Path (Join-Path $prepared '.cat-watch-dataset')) {
+                $mounts += @('--mount',"type=bind,source=$prepared,target=/legacy-dataset,readonly")
+            }
+            $policy = Join-Path $DataRoot 'cloud-model-policy.json'
+            if (Test-Path $policy) {
+                $mounts += @('--mount',"type=bind,source=$policy,target=/cloud-model-policy.json,readonly",'--env','CATWATCH_CLOUD_POLICY_FILE=/cloud-model-policy.json')
+            }
+            $arguments = @('--connection',$Connection,'run','-d','--name',$Container,'--label','app=cat-watch','--network=host','--device','nvidia.com/gpu=all','--cap-drop=all','--security-opt=no-new-privileges','--log-driver=k8s-file','--log-opt=max-size=2mb','--health-cmd','python -m catwatch --health','--health-interval','30s','--health-start-period','120s') + $mounts + @($Image)
+            Invoke-Podman $arguments | Out-Null
+        }
         # Transfer through exec stdin to a UID-restricted Unix socket, never CLI metadata.
         $previous = $ErrorActionPreference
         $ErrorActionPreference = 'Continue'
@@ -90,7 +123,9 @@ switch ($Action) {
             Start-Sleep -Seconds 2
         }
         if (!$ready) { throw 'Windows camera/GPU readiness check failed. Inspect Status and Logs; deployment is not accepted.' }
-        Start-Process powershell.exe -WindowStyle Hidden -ArgumentList @('-NoProfile','-ExecutionPolicy','Bypass','-File',('"'+(Join-Path $PSScriptRoot 'analysis-controller.ps1')+'"'),'-DataRoot',('"'+$DataRoot+'"')) | Out-Null
+        if ($LegacyAnalysis) {
+            Start-Process powershell.exe -WindowStyle Hidden -ArgumentList @('-NoProfile','-ExecutionPolicy','Bypass','-File',('"'+(Join-Path $PSScriptRoot 'analysis-controller.ps1')+'"'),'-DataRoot',('"'+$DataRoot+'"')) | Out-Null
+        }
         Write-Output 'Dashboard: http://127.0.0.1:8765'
         $health | ConvertTo-Json -Depth 5
     }

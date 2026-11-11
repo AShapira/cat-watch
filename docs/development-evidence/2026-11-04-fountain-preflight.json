@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-11-04T10:33:08.173999+00:00",
+  "fingerprint": "900e180e988c5a13d1fe59e00f86d9e7b32c62c893bbb25e0f60a20af91fd4e4",
+  "clips": 100,
+  "images_verified": 3400,
+  "distinct_focus_times_per_clip": 32,
+  "prior_upload_overlaps": 0,
+  "previous_accounted_usd": 12.12121,
+  "maximum_new_exposure_usd": 7.536,
+  "maximum_combined_exposure_usd": 19.65721,
+  "days": {
+    "2026-11-04": 17,
+    "2026-11-03": 37,
+    "2026-11-02": 23,
+    "2026-09-26": 2,
+    "2026-09-24": 1,
+    "2026-09-23": 1,
+    "2026-09-22": 1,
+    "2026-09-16": 1,
+    "2026-09-15": 7,
+    "2026-09-14": 10
+  },
+  "source_groups": 85,
+  "candidate_visit_groups": 100,
+  "fountain_cat_detection_clips": 99,
+  "state": "prepared-awaiting-exact-approval",
+  "new_cloud_requests": 0
+}

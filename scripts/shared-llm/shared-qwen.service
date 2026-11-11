@@ -1,0 +1,19 @@
+# Owned by catwatch-shared-llm
+[Unit]
+Description=Shared Qwen local API and GPU residency supervisor
+Wants=shared-qwen-runtime.service
+After=shared-qwen-runtime.service
+StartLimitIntervalSec=300
+StartLimitBurst=3
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -u %h/.local/share/catwatch-shared-llm/gateway.py
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=15
+NoNewPrivileges=true
+UMask=0077
+
+[Install]
+WantedBy=default.target

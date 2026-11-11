@@ -1,0 +1,363 @@
+{
+  "checked_at": "2026-11-08T18:29:38.3283486Z",
+  "policy_application": {
+    "container_id": "a47c11717ce1aeaf2afeb9e1474406aa56cded8660182f0ef5d49b0d39a32fed",
+    "container_started_at": "2026-11-08T06:22:51.449285399+02:00",
+    "image_id": "540a4e088dd95c017766509195324f951e88e0c611048e9fd4a6fce291d5610f",
+    "result": {
+      "checked_at": "2026-11-08T18:26:40.498250+00:00",
+      "policy": "independent-areas-v1",
+      "implementation": "online-extraction-queue",
+      "session_id": 1,
+      "polygons_sha256": "8e67ff27b74627255e1fcbc0985f23bcddf583fac7c77149486a0c7e016bbfa9",
+      "policy_file_sha256": "28d340e427c4bc397a8da9676a5233173248e7f19e2484978c444a06bf05efad",
+      "expected_regions_2560x1440": [
+        {
+          "areas": [
+            "eating_pad"
+          ],
+          "box": [
+            1257,
+            483,
+            1551,
+            776
+          ]
+        },
+        {
+          "areas": [
+            "litter_box"
+          ],
+          "box": [
+            1668,
+            309,
+            2032,
+            623
+          ]
+        },
+        {
+          "areas": [
+            "water_fountain"
+          ],
+          "box": [
+            1180,
+            400,
+            1360,
+            602
+          ]
+        }
+      ],
+      "action": "apply",
+      "classification_crop_overrides": {
+        "water_fountain": {
+          "polygon": [
+            [
+              0.4724809305504384,
+              0.33059148790712845
+            ],
+            [
+              0.5384623015863271,
+              0.3077032820858037
+            ],
+            [
+              0.5344390472548705,
+              0.3706458480944467
+            ],
+            [
+              0.47569953401560366,
+              0.40354764396260095
+            ]
+          ],
+          "source_size": [
+            2560,
+            1440
+          ],
+          "box": [
+            1180,
+            400,
+            1360,
+            602
+          ]
+        }
+      },
+      "counts": {
+        "clips": 1062,
+        "predictions": 763,
+        "revisions": 0,
+        "models": 0,
+        "datasets": 0
+      },
+      "bridge_already_present": true,
+      "running_extractions": 0,
+      "backup": "learning/backups/before-independent-crops-20261108T182640575342Z.sqlite3",
+      "existing_job_boundary": 1673,
+      "pending_extractions_split": 0,
+      "pending_fountain_crops_tightened": 0,
+      "applied_at": "2026-11-08T18:26:42.050689+00:00",
+      "existing_clip_history_unchanged": true
+    }
+  },
+  "source_validation": {
+    "focused_tests_passed": 40,
+    "command": ".venv/bin/python -m pytest -q tests/test_classification_crops.py tests/test_learning.py tests/test_teacher_recovery.py",
+    "offline_image": "2408cfc5d226f8e95e8a834b8e342a4412d2d9196f4a1a44641731116452da20",
+    "offline_tag": "localhost/cat-watch:0.5.5",
+    "deployed": false,
+    "native_fixture": {
+      "fixture": "synthetic native classification override",
+      "old_crop": [
+        1125,
+        374,
+        1463,
+        651
+      ],
+      "new_crop": [
+        1180,
+        400,
+        1360,
+        602
+      ],
+      "native_samples": 2,
+      "neighbor_region_excluded": true,
+      "source_preserved": true,
+      "behavior_accuracy_tested": false
+    }
+  },
+  "live_tight_clips": 10,
+  "live_bridges": [
+    "catwatch_independent_classification_crops",
+    "catwatch_fountain_classification_crop"
+  ],
+  "preview_collection": {
+    "policy_applied_at": "2026-11-08T18:26:42.050689+00:00",
+    "windows": [
+      [
+        1794162408,
+        1794162416
+      ],
+      [
+        1794162420,
+        1794162428
+      ],
+      [
+        1794162432,
+        1794162440
+      ]
+    ],
+    "jobs": [
+      {
+        "id": 1674,
+        "state": "complete",
+        "attempts": 1,
+        "result": "{\"clips\":[\"8b9dfbf3fe7659028f6d3e9ec6a4f9b68b97d95894498b8efef97ea7255c4fe6\"]}",
+        "error": null
+      },
+      {
+        "id": 1675,
+        "state": "complete",
+        "attempts": 1,
+        "result": "{\"clips\":[\"abe8acd25778958dbebccc6254f3a8da98d31515b6e3c1f92ea44edbb6f9c5a9\"]}",
+        "error": null
+      },
+      {
+        "id": 1676,
+        "state": "complete",
+        "attempts": 1,
+        "result": "{\"clips\":[\"6c9622f320fc17d5b358a7794bcf81391ec4441c103dc956f810076f7e059727\"]}",
+        "error": null
+      }
+    ],
+    "ids": [
+      "8b9dfbf3fe7659028f6d3e9ec6a4f9b68b97d95894498b8efef97ea7255c4fe6",
+      "abe8acd25778958dbebccc6254f3a8da98d31515b6e3c1f92ea44edbb6f9c5a9",
+      "6c9622f320fc17d5b358a7794bcf81391ec4441c103dc956f810076f7e059727"
+    ]
+  },
+  "queue_priority": {
+    "started_at": "2026-11-08T18:28:00.243871+00:00",
+    "ids": [
+      "8b9dfbf3fe7659028f6d3e9ec6a4f9b68b97d95894498b8efef97ea7255c4fe6",
+      "abe8acd25778958dbebccc6254f3a8da98d31515b6e3c1f92ea44edbb6f9c5a9",
+      "6c9622f320fc17d5b358a7794bcf81391ec4441c103dc956f810076f7e059727"
+    ],
+    "restored": true,
+    "defer_until": 1794163080.2438867,
+    "final_jobs": [
+      {
+        "id": 1677,
+        "state": "complete",
+        "attempts": 1,
+        "next_at": 1794162492.1513498
+      },
+      {
+        "id": 1678,
+        "state": "complete",
+        "attempts": 1,
+        "next_at": 1794162500.4286087
+      },
+      {
+        "id": 1687,
+        "state": "complete",
+        "attempts": 1,
+        "next_at": 1794162508.121827
+      }
+    ],
+    "restored_count": 87,
+    "finished_at": "2026-11-08T18:28:31.949268+00:00"
+  },
+  "deferred_jobs": 87,
+  "settings_unchanged": true,
+  "exports": [
+    {
+      "clip_id": "8b9dfbf3fe7659028f6d3e9ec6a4f9b68b97d95894498b8efef97ea7255c4fe6",
+      "file": "/home/alex/dev/cat-watch/outputs/tight-fountain-20261108/clip-01.mp4",
+      "source_start_utc": "2026-11-08T18:26:48+00:00",
+      "source_start_local": "2026-11-08T20:26:48+02:00",
+      "duration": 8.0,
+      "shape": [
+        202,
+        180,
+        3
+      ],
+      "frames": 120,
+      "fps": 15.0,
+      "first_frame_mean_absolute_difference": 0.53,
+      "sha256": "640a2bdb8955a88f4d1018119f6638734e8f7b9489daa42ec226a81906dc9d0d",
+      "model_labels": [
+        "no_cat"
+      ],
+      "quality": [
+        "poor_lighting"
+      ],
+      "provenance": {
+        "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "model": "qwen3.5:9b",
+        "prompt_version": "visible-actions-1",
+        "provider": "ollama",
+        "sampling": "16 frames / 8 seconds; native area crops"
+      }
+    },
+    {
+      "clip_id": "abe8acd25778958dbebccc6254f3a8da98d31515b6e3c1f92ea44edbb6f9c5a9",
+      "file": "/home/alex/dev/cat-watch/outputs/tight-fountain-20261108/clip-02.mp4",
+      "source_start_utc": "2026-11-08T18:27:00+00:00",
+      "source_start_local": "2026-11-08T20:27:00+02:00",
+      "duration": 7.933333333333334,
+      "shape": [
+        202,
+        180,
+        3
+      ],
+      "frames": 119,
+      "fps": 15.0,
+      "first_frame_mean_absolute_difference": 0.487,
+      "sha256": "e14207ea7a51c22e33ba9644d91dfe70f28f1085e018f88bc51da0763cb0d621",
+      "model_labels": [
+        "no_cat"
+      ],
+      "quality": [
+        "poor_lighting"
+      ],
+      "provenance": {
+        "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "model": "qwen3.5:9b",
+        "prompt_version": "visible-actions-1",
+        "provider": "ollama",
+        "sampling": "16 frames / 8 seconds; native area crops"
+      }
+    },
+    {
+      "clip_id": "6c9622f320fc17d5b358a7794bcf81391ec4441c103dc956f810076f7e059727",
+      "file": "/home/alex/dev/cat-watch/outputs/tight-fountain-20261108/clip-03.mp4",
+      "source_start_utc": "2026-11-08T18:27:12+00:00",
+      "source_start_local": "2026-11-08T20:27:12+02:00",
+      "duration": 7.933333333333334,
+      "shape": [
+        202,
+        180,
+        3
+      ],
+      "frames": 119,
+      "fps": 15.0,
+      "first_frame_mean_absolute_difference": 0.509,
+      "sha256": "f58bf974798a5c1e579c6e1b3add6933e7cb22ebb188efe17520774da8d8f5cb",
+      "model_labels": [
+        "no_cat"
+      ],
+      "quality": [
+        "poor_lighting"
+      ],
+      "provenance": {
+        "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "model": "qwen3.5:9b",
+        "prompt_version": "visible-actions-1",
+        "provider": "ollama",
+        "sampling": "16 frames / 8 seconds; native area crops"
+      }
+    }
+  ],
+  "review_exposure": {
+    "exposed_at": "2026-11-08T18:29:37.005666+00:00",
+    "reason": "User requested fountain clips together with local model classifications.",
+    "human_reviews_submitted": 0,
+    "clips": [
+      {
+        "clip_id": "8b9dfbf3fe7659028f6d3e9ec6a4f9b68b97d95894498b8efef97ea7255c4fe6",
+        "previous_bucket": "evaluation",
+        "bucket": "audit",
+        "split_unchanged": "test",
+        "version_unchanged": 0,
+        "group_key": "manual-preview:tight-fountain:1794162408"
+      },
+      {
+        "clip_id": "abe8acd25778958dbebccc6254f3a8da98d31515b6e3c1f92ea44edbb6f9c5a9",
+        "previous_bucket": "evaluation",
+        "bucket": "audit",
+        "split_unchanged": "test",
+        "version_unchanged": 0,
+        "group_key": "manual-preview:tight-fountain:1794162420"
+      },
+      {
+        "clip_id": "6c9622f320fc17d5b358a7794bcf81391ec4441c103dc956f810076f7e059727",
+        "previous_bucket": "evaluation",
+        "bucket": "audit",
+        "split_unchanged": "test",
+        "version_unchanged": 0,
+        "group_key": "manual-preview:tight-fountain:1794162432"
+      }
+    ],
+    "training_paused": true,
+    "continuous": true,
+    "training": false
+  },
+  "recording_cutover": {
+    "checked_at": "2026-11-08T18:29:37.646696+00:00",
+    "policy_applied_at": "2026-11-08T18:26:42.050689+00:00",
+    "segments": 13,
+    "first_start": 1794162371.1826568,
+    "last_end": 1794162435.3412497,
+    "max_internal_gap_seconds": 0,
+    "all_files_present": true,
+    "covers_cutover_window": true
+  },
+  "final_monitoring": {
+    "container_id": "a47c11717ce1aeaf2afeb9e1474406aa56cded8660182f0ef5d49b0d39a32fed",
+    "started_at": "2026-11-08T06:22:51.449285399+02:00",
+    "camera": "connected",
+    "detector": "ready",
+    "frames_analyzed": 89898,
+    "capture_gaps": 13,
+    "frame_age_seconds": 6.7,
+    "continuous": true,
+    "classification_enabled": true,
+    "training": false,
+    "pause_training": true,
+    "reviewed": 0
+  },
+  "limitations": [
+    "No positive drinking example was established.",
+    "All three proposals flag poor_lighting.",
+    "The three short successive preview windows are not an independent accuracy sample.",
+    "A tighter crop has less context for approaches outside the fountain.",
+    "Older wide clips and queued labels keep their original input; only pending/new extraction receives the change."
+  ]
+}

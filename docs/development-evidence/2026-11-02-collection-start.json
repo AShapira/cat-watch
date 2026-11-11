@@ -1,0 +1,37 @@
+{
+    "requested_at":  "2026-11-02T09:25:54.3670546Z",
+    "authorization":  "User confirmed existing areas, restored litter-box cover and explicitly requested collection",
+    "session_id":  11,
+    "start":  1793611554.2575808,
+    "initial_deadline":  1793697954.2575808,
+    "calibration_id":  "7d010d102c4c43cd845090183a9b6fea",
+    "reference_frame_stamp":  1793611550.00661,
+    "source_width":  2560,
+    "source_height":  1440,
+    "polygons_preserved":  true,
+    "mask_count":  1,
+    "settings":  {
+                     "motion_fraction":  0.0005,
+                     "motion_seconds":  0.5,
+                     "masks":  [
+                                   [
+                                       0,
+                                       0,
+                                       0.38,
+                                       0.065
+                                   ]
+                               ],
+                     "motion_scope":  "areas",
+                     "motion_fps":  5,
+                     "analysis_mode":  "live",
+                     "crop_comparison":  true,
+                     "duration_seconds":  86400,
+                     "motion_buffer":  0.2,
+                     "crop_context":  0.5,
+                     "detector_model":  "yolo11m",
+                     "description_provider":  "ollama",
+                     "description_model":  "qwen3.5:9b",
+                     "description_url":  "http://host.containers.internal:11434",
+                     "description_timeout":  180
+                 }
+}

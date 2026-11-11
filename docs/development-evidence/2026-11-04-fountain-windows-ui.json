@@ -1,0 +1,22 @@
+{
+  "checked_at": "2026-11-04T10:32:26.272Z",
+  "browser": "native Windows Edge",
+  "review": {
+    "title": "Cat-watch · Care review",
+    "stats": "0 / 100 reviewed · 0 Sol proposals ready · Training suspended",
+    "visibleCards": 100,
+    "videoReady": 4,
+    "videoTime": 1.0266,
+    "cropWidth": 510,
+    "cropHeight": 489,
+    "message": "Sol has not supplied a usable proposal. You can label the video manually.",
+    "batches": 2,
+    "selectedCampaign": "2026-11-04-fountain-100",
+    "sampling": "Sol receives 32 fountain closeups plus two context frames. The outlined area shows the closeup within this context video."
+  },
+  "mobile_fits": true,
+  "javascript_errors": [],
+  "private_images_inspected": false,
+  "screenshots_taken": false,
+  "labels_modified": false
+}

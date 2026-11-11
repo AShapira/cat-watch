@@ -1,0 +1,4 @@
+FROM localhost/cat-watch:0.5.3
+COPY catwatch/learning/comparison.py catwatch/learning/store.py catwatch/learning/campaign.py catwatch/learning/fountain.py catwatch/learning/campaign_ui.py catwatch/learning/campaign.html catwatch/learning/campaign.js /opt/cat-watch/catwatch/learning/
+LABEL cat-watch.purpose="focused-care-candidates-2026-11-04"
+CMD ["python", "-u", "-m", "catwatch.learning.campaign", "report"]

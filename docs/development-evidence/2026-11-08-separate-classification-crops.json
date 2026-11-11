@@ -1,0 +1,566 @@
+{
+  "recorded_at": "2026-11-08T18:10:50.913063+00:00",
+  "active_change": {
+    "container_id": "a47c11717ce1aeaf2afeb9e1474406aa56cded8660182f0ef5d49b0d39a32fed",
+    "container_started_at": "2026-11-08T06:22:51.449285399+02:00",
+    "image_id": "540a4e088dd95c017766509195324f951e88e0c611048e9fd4a6fce291d5610f",
+    "result": {
+      "checked_at": "2026-11-08T18:01:25.984874+00:00",
+      "policy": "independent-areas-v1",
+      "implementation": "online-extraction-queue",
+      "session_id": 1,
+      "polygons_sha256": "8e67ff27b74627255e1fcbc0985f23bcddf583fac7c77149486a0c7e016bbfa9",
+      "policy_file_sha256": "b5bee8c4c1e89b99f7f261eb20bbbc4203abf063ec3b068bf6653850515ce75d",
+      "expected_regions_2560x1440": [
+        {
+          "areas": [
+            "eating_pad"
+          ],
+          "box": [
+            1257,
+            483,
+            1551,
+            776
+          ]
+        },
+        {
+          "areas": [
+            "litter_box"
+          ],
+          "box": [
+            1668,
+            309,
+            2032,
+            623
+          ]
+        },
+        {
+          "areas": [
+            "water_fountain"
+          ],
+          "box": [
+            1125,
+            374,
+            1463,
+            651
+          ]
+        }
+      ],
+      "action": "apply",
+      "counts": {
+        "clips": 886,
+        "predictions": 649,
+        "revisions": 0,
+        "models": 0,
+        "datasets": 0
+      },
+      "bridge_already_present": false,
+      "running_extractions": 1,
+      "backup": "learning/backups/before-independent-crops-20261108T180126058142Z.sqlite3",
+      "existing_job_boundary": 1437,
+      "pending_extractions_split": 56,
+      "applied_at": "2026-11-08T18:01:27.327602+00:00",
+      "existing_clip_history_unchanged": true
+    }
+  },
+  "before": {
+    "checked_at": "2026-11-08T17:52:46.5101756Z",
+    "health": {
+      "camera": "connected",
+      "detector": "ready",
+      "calibrated": true,
+      "last_frame": 1794160354.8547034,
+      "ambiguous_frames": 8,
+      "message": "Monitoring",
+      "gpu": "NVIDIA GeForce RTX 5080",
+      "live_model_loaded": true,
+      "preparation": false,
+      "capture_busy": true,
+      "motion_analysis": "ready",
+      "video_description": "deferred until investigation ends",
+      "detector_comparison": "idle",
+      "frames_analyzed": 86264,
+      "cat_frames": 758,
+      "dropped_detection_frames": 4755,
+      "capture_gaps": 13,
+      "motion_frames": 211657,
+      "source": {
+        "width": 2560,
+        "height": 1440,
+        "fps": 15.69
+      },
+      "motion_lag_seconds": 5.3,
+      "motion_score": 0.0,
+      "area_motion_scores": {
+        "eating_pad": 0.0,
+        "water_fountain": 0.0,
+        "litter_box": 0.0
+      },
+      "motion_queue": 0,
+      "detector_queue": 4,
+      "detection_stamp": 1794160354.8547034,
+      "detector_lag_seconds": 5.8,
+      "detector_timing_ms": {
+        "inference": 46.4,
+        "persistence": 25.0
+      },
+      "storage": {
+        "used_bytes": 4124528256,
+        "cap_bytes": 50000000000,
+        "reserve_bytes": 64000000,
+        "free_bytes": 468908322816,
+        "recording_allowed": true,
+        "protected_segments": 24
+      },
+      "now": 1794160366.1913116,
+      "frame_age_seconds": 11.3
+    },
+    "learning_config": {
+      "enabled": true,
+      "continuous": true,
+      "training": false,
+      "dataset_cap_gb": 20,
+      "review_minutes": 5,
+      "daily_decisions": 10,
+      "summary_hour": 9,
+      "telegram_enabled": false,
+      "telegram_chat_id": "",
+      "telegram_evidence": true,
+      "gpu_reserve_mib": 2048,
+      "training_free_mib": 8192,
+      "ollama_url": "http://127.0.0.1:11434",
+      "ollama_model": "qwen3.5:9b",
+      "active_model": null,
+      "previous_model": null,
+      "calibration_id": "ae3fccee868143a98d99334718d66c65"
+    },
+    "counts": {
+      "clips": 806,
+      "suggestions": 620,
+      "reviewed": 0
+    }
+  },
+  "after": {
+    "checked_at": "2026-11-08T18:10:27.5394000Z",
+    "container_id": "a47c11717ce1aeaf2afeb9e1474406aa56cded8660182f0ef5d49b0d39a32fed",
+    "container_started_at": "2026-11-08T06:22:51.449285399+02:00",
+    "image_id": "540a4e088dd95c017766509195324f951e88e0c611048e9fd4a6fce291d5610f",
+    "health": {
+      "camera": "connected",
+      "detector": "ready",
+      "calibrated": true,
+      "last_frame": 1794161420.5192134,
+      "ambiguous_frames": 27,
+      "message": "Monitoring",
+      "gpu": "NVIDIA GeForce RTX 5080",
+      "live_model_loaded": true,
+      "preparation": false,
+      "capture_busy": true,
+      "motion_analysis": "ready",
+      "video_description": "deferred until investigation ends",
+      "detector_comparison": "idle",
+      "frames_analyzed": 87985,
+      "cat_frames": 1084,
+      "dropped_detection_frames": 5053,
+      "capture_gaps": 13,
+      "motion_frames": 216351,
+      "source": {
+        "width": 2560,
+        "height": 1440,
+        "fps": 15.56
+      },
+      "motion_lag_seconds": 4.4,
+      "motion_score": 0.0,
+      "area_motion_scores": {
+        "eating_pad": 0.0,
+        "water_fountain": 0.0,
+        "litter_box": 0.0
+      },
+      "motion_queue": 0,
+      "detector_queue": 4,
+      "detection_stamp": 1794161420.5192134,
+      "detector_lag_seconds": 5.0,
+      "detector_timing_ms": {
+        "inference": 16.7,
+        "persistence": 22.9
+      },
+      "storage": {
+        "used_bytes": 4257726582,
+        "cap_bytes": 50000000000,
+        "reserve_bytes": 64000000,
+        "free_bytes": 468225003520,
+        "recording_allowed": true,
+        "protected_segments": 24
+      },
+      "now": 1794161427.3082376,
+      "frame_age_seconds": 6.8
+    },
+    "learning": {
+      "counts": {
+        "clips": 1022,
+        "suggestions": 694,
+        "reviewed": 0
+      },
+      "episodes": {
+        "eating": 0,
+        "drinking": 0,
+        "litter_activity": 0,
+        "other_activity": 0,
+        "no_cat": 0
+      },
+      "jobs": [
+        {
+          "kind": "extract",
+          "state": "complete",
+          "count": 522
+        },
+        {
+          "kind": "extract",
+          "state": "failed",
+          "count": 51
+        },
+        {
+          "kind": "extract",
+          "state": "queued",
+          "count": 37
+        },
+        {
+          "kind": "extract",
+          "state": "running",
+          "count": 1
+        },
+        {
+          "kind": "label",
+          "state": "complete",
+          "count": 694
+        },
+        {
+          "kind": "label",
+          "state": "failed",
+          "count": 183
+        },
+        {
+          "kind": "label",
+          "state": "queued",
+          "count": 145
+        }
+      ],
+      "models": [],
+      "datasets": [],
+      "config": {
+        "enabled": true,
+        "continuous": true,
+        "training": false,
+        "dataset_cap_gb": 20,
+        "review_minutes": 5,
+        "daily_decisions": 10,
+        "summary_hour": 9,
+        "telegram_enabled": false,
+        "telegram_chat_id": "",
+        "telegram_evidence": true,
+        "gpu_reserve_mib": 2048,
+        "training_free_mib": 8192,
+        "ollama_url": "http://127.0.0.1:11434",
+        "ollama_model": "qwen3.5:9b",
+        "active_model": null,
+        "previous_model": null,
+        "calibration_id": "ae3fccee868143a98d99334718d66c65"
+      },
+      "worker": {
+        "message": "Collecting evidence and preparing decisions",
+        "state": "running",
+        "updated": 1794161424.0577967
+      },
+      "storage": {
+        "additions_allowed": true,
+        "cap_bytes": 20000000000,
+        "free_bytes": 468225527808,
+        "used_bytes": 1470307403
+      },
+      "cloud_default": "disabled; approval per batch",
+      "training_ready": false,
+      "labels": [
+        "eating",
+        "drinking",
+        "litter_activity",
+        "other_activity",
+        "no_cat",
+        "litter_digging",
+        "litter_elimination_posture",
+        "litter_covering",
+        "sniffing_inspecting",
+        "grooming",
+        "moving",
+        "stationary",
+        "unclear"
+      ],
+      "inference": {
+        "message": "Collect confirmed examples to train the first local model",
+        "state": "waiting"
+      },
+      "gpu": {
+        "free_mib": 5315.0,
+        "updated": 1794161420.8031418
+      },
+      "review_only": false,
+      "heavy_worker": {
+        "message": "Local Qwen is ready; preparing behavior proposals for review.",
+        "state": "running",
+        "updated": 1794161420.8221655
+      },
+      "training_progress": {},
+      "telegram_configured": false,
+      "cloud_configured": true,
+      "prepared_dataset_available": false,
+      "archive": {
+        "investigations": 1,
+        "groups": 37,
+        "group_reviews": 0
+      }
+    }
+  },
+  "recording_continuity": {
+    "container_unchanged": true,
+    "start_time_unchanged": true,
+    "capture_gaps_before": 13,
+    "capture_gaps_after": 13,
+    "monitoring_stopped": false,
+    "segment_window": {
+      "checked_at": "2026-11-08T18:06:50.192944+00:00",
+      "policy_applied_at": "2026-11-08T18:01:27.327602+00:00",
+      "segments": 13,
+      "first_start": 1794160855.1829166,
+      "last_end": 1794160921.1995187,
+      "max_internal_gap_seconds": 0,
+      "all_files_present": true,
+      "covers_cutover_window": true
+    }
+  },
+  "source_patch": {
+    "image": "localhost/cat-watch:0.5.4",
+    "image_id": "78d6d5052145bbcb56b5572c78a7f11d455cd31a896a5ac9f8995d6fe22ff53c",
+    "running_recorder_replaced": false,
+    "native_fixture": {
+      "fixture": "synthetic-review.mp4",
+      "independent_crops": [
+        {
+          "areas": [
+            "eating_pad"
+          ],
+          "crop": [
+            172,
+            66,
+            214,
+            107
+          ],
+          "crop_policy": "independent-areas-v1"
+        },
+        {
+          "areas": [
+            "litter_box"
+          ],
+          "crop": [
+            229,
+            42,
+            280,
+            86
+          ],
+          "crop_policy": "independent-areas-v1"
+        },
+        {
+          "areas": [
+            "water_fountain"
+          ],
+          "crop": [
+            154,
+            51,
+            202,
+            90
+          ],
+          "crop_policy": "independent-areas-v1"
+        }
+      ],
+      "shared_source_video": true,
+      "native_pixel_samples": "passed",
+      "detector_crop_merging": "unchanged",
+      "behavior_accuracy_tested": false
+    },
+    "tests": [
+      {
+        "command": ".venv/bin/python -m pytest -q tests/test_classification_crops.py tests/test_learning.py tests/test_focused_qwen.py tests/test_teacher_recovery.py",
+        "passed": 49
+      },
+      {
+        "command": ".venv/bin/python -m pytest -q tests/test_classification_crops.py tests/test_teacher_recovery.py",
+        "passed": 9,
+        "reason": "After limiting bridge retirement to patched worker startup"
+      }
+    ]
+  },
+  "live_crops": {
+    "checked_at": "2026-11-08T18:09:20.640471+00:00",
+    "policy": {
+      "checked_at": "2026-11-08T18:01:25.984874+00:00",
+      "policy": "independent-areas-v1",
+      "implementation": "online-extraction-queue",
+      "session_id": 1,
+      "polygons_sha256": "8e67ff27b74627255e1fcbc0985f23bcddf583fac7c77149486a0c7e016bbfa9",
+      "policy_file_sha256": "b5bee8c4c1e89b99f7f261eb20bbbc4203abf063ec3b068bf6653850515ce75d",
+      "expected_regions_2560x1440": [
+        {
+          "areas": [
+            "eating_pad"
+          ],
+          "box": [
+            1257,
+            483,
+            1551,
+            776
+          ]
+        },
+        {
+          "areas": [
+            "litter_box"
+          ],
+          "box": [
+            1668,
+            309,
+            2032,
+            623
+          ]
+        },
+        {
+          "areas": [
+            "water_fountain"
+          ],
+          "box": [
+            1125,
+            374,
+            1463,
+            651
+          ]
+        }
+      ],
+      "action": "apply",
+      "counts": {
+        "clips": 886,
+        "predictions": 649,
+        "revisions": 0,
+        "models": 0,
+        "datasets": 0
+      },
+      "bridge_already_present": false,
+      "running_extractions": 1,
+      "backup": "learning/backups/before-independent-crops-20261108T180126058142Z.sqlite3",
+      "existing_job_boundary": 1437,
+      "pending_extractions_split": 56,
+      "applied_at": "2026-11-08T18:01:27.327602+00:00",
+      "existing_clip_history_unchanged": true
+    },
+    "clips_since_apply": {
+      "water_fountain": 10,
+      "litter_box": 57,
+      "eating_pad": 56,
+      "eating_pad+water_fountain": 1
+    },
+    "fountain_extraction_states": {
+      "queued": 47,
+      "running": 1,
+      "complete": 10,
+      "failed": 0
+    },
+    "selected": {
+      "water_fountain": {
+        "id": "4ec98862b35feb5ad028064838a9e9a52a12d3bb3ae8182f441de31401805e33",
+        "created": 1794161356.0868142,
+        "areas": [
+          "water_fountain"
+        ],
+        "crop": [
+          1125,
+          374,
+          1463,
+          651
+        ],
+        "video_hash": "a09678bf7f10cb50c0884b192566a69ed224d531603a606979ec68a94602e0d0",
+        "group_key": "visit:30",
+        "proposal_ready": false,
+        "sample_shapes": [
+          [
+            277,
+            338,
+            3
+          ],
+          [
+            277,
+            338,
+            3
+          ]
+        ]
+      },
+      "litter_box": {
+        "id": "efc69099a41cb711ad7082e35b8f1ddc54dc9c5f4b35f62148efbf524d99ae4c",
+        "created": 1794161298.8826315,
+        "areas": [
+          "litter_box"
+        ],
+        "crop": [
+          1668,
+          309,
+          2032,
+          623
+        ],
+        "video_hash": "3a3197006e4059b0cf0718d5cb6bbdab66e1fbaa3e8cecd6a687d8880dff0359",
+        "group_key": "visit:34",
+        "proposal_ready": false,
+        "sample_shapes": [
+          [
+            314,
+            364,
+            3
+          ],
+          [
+            314,
+            364,
+            3
+          ]
+        ]
+      },
+      "eating_pad": {
+        "id": "9b0db16e30eb38ae4bb72b496db19c5a4e5d9da4df9e84e6256010d27e599ab1",
+        "created": 1794161298.8345747,
+        "areas": [
+          "eating_pad"
+        ],
+        "crop": [
+          1257,
+          483,
+          1551,
+          776
+        ],
+        "video_hash": "3a3197006e4059b0cf0718d5cb6bbdab66e1fbaa3e8cecd6a687d8880dff0359",
+        "group_key": "visit:34",
+        "proposal_ready": false,
+        "sample_shapes": [
+          [
+            293,
+            294,
+            3
+          ],
+          [
+            293,
+            294,
+            3
+          ]
+        ]
+      }
+    },
+    "bridge_present": true,
+    "training": false,
+    "pause_training": true
+  },
+  "validation_boundary": "Fixture and real crop plumbing are checked separately. No drinking-accuracy improvement is established. Historical manifests and human review fields were unchanged in the apply transaction.",
+  "failures_and_recovery": [
+    "The initial read-only plan could not import catwatch from a script under /tmp; setting PYTHONPATH=/opt/cat-watch fixed the import before application."
+  ]
+}

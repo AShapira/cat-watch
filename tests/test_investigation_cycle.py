@@ -150,14 +150,14 @@ def test_explicit_reanalysis_of_protected_session_can_run(tmp_path):
 
 def test_slow_detector_keeps_newest_frames_and_balances_queue(tmp_path):
     runtime=Runtime(Store(tmp_path))
-    for stamp in range(10):runtime.queue_detection_frame((stamp,None,'capture'))
-    assert runtime.frame_queue.qsize()==4
+    for stamp in range(16):runtime.queue_detection_frame((stamp,None,'capture'))
+    assert runtime.frame_queue.qsize()==10
     assert runtime.state['dropped_detection_frames']==6
     stamps=[]
     while not runtime.frame_queue.empty():
         stamps.append(runtime.frame_queue.get_nowait()[0]);runtime.frame_queue.task_done()
     runtime.frame_queue.join()
-    assert stamps==[6,7,8,9]
+    assert stamps==list(range(6,16))
 
 
 def test_detection_persists_coverage_and_gap_audit_with_visits(tmp_path):

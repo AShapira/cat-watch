@@ -1,0 +1,102 @@
+{
+  "checked_at": "2026-11-08T04:04:45.8281437Z",
+  "user_report": "White paper added behind the fountain; user requested area editing.",
+  "database_preflight": {
+    "checked_at": "2026-11-08T04:04:24.773215+00:00",
+    "preserved_files": [
+      {
+        "name": "catwatch.sqlite3",
+        "bytes": 3171119104
+      },
+      {
+        "name": "catwatch.sqlite3-journal",
+        "bytes": 12824
+      }
+    ],
+    "recovered_copy_integrity_check": [
+      "ok"
+    ],
+    "latest_session": {
+      "id": 11,
+      "start": 1793611554.2575808,
+      "deadline": 1794195067.1326594,
+      "stop": 1794108728.083947
+    },
+    "pause_settings": {
+      "enabled": false,
+      "continuous": false,
+      "training": false,
+      "telegram_enabled": false,
+      "pause_training": true
+    },
+    "last_segment_media_validation": "not performed; still required before recording resumes"
+  },
+  "startup": {
+    "podman_machine": "podman-machine-default",
+    "machine_started": true,
+    "deployment_action": "Resume existing cat-watch without LegacyAnalysis",
+    "recording_started": false,
+    "analysis_controller_started": false
+  },
+  "live": {
+    "checked_at": "2026-11-08T04:04:45.8281437Z",
+    "dashboard": "http://127.0.0.1:8765/#setup",
+    "health": {
+      "camera": "preview",
+      "detector": "stopped",
+      "calibrated": true,
+      "last_frame": 1794110680.193884,
+      "ambiguous_frames": 0,
+      "message": "Setup preview only; no recording or heavy analysis",
+      "gpu": null,
+      "live_model_loaded": false,
+      "preparation": true,
+      "capture_busy": false,
+      "motion_analysis": "idle",
+      "video_description": "deferred until investigation ends",
+      "detector_comparison": "idle",
+      "frames_analyzed": 0,
+      "cat_frames": 0,
+      "dropped_detection_frames": 0,
+      "capture_gaps": 0,
+      "motion_frames": 0,
+      "source": {
+        "width": 2560,
+        "height": 1440
+      },
+      "motion_lag_seconds": null,
+      "storage": {},
+      "now": 1794110681.2168794,
+      "frame_age_seconds": 1.0
+    },
+    "calibration": {
+      "frame_stamp": 1794110680.193884,
+      "width": 2560,
+      "id": "ae3fccee868143a98d99334718d66c65",
+      "height": 1440,
+      "confirmed": false
+    },
+    "pause_settings": {
+      "continuous": false,
+      "training": false,
+      "telegram_enabled": false,
+      "enabled": false
+    },
+    "counts": {
+      "clips": 14442,
+      "suggestions": 11581,
+      "reviewed": 11
+    }
+  },
+  "browser": {
+    "requested_url": "http://127.0.0.1:8765/#setup",
+    "result": "queued",
+    "visibility_verified": false
+  },
+  "calibration": {
+    "fresh_image_prepared": true,
+    "polygons_changed_by_agent": false,
+    "confirmation_submitted_by_agent": false
+  },
+  "validation_boundary": "Integrity check applies to a recovered copy. Live app opened the original archive normally; no original full integrity or final-media validation, browser interaction check, or behavior-accuracy test was performed."
+}

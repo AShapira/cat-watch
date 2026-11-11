@@ -1,0 +1,51 @@
+{
+  "checked_at": "2026-11-04T08:39:59.626428+00:00",
+  "fingerprint": "361d88afd5d08a2d332f679abc823c8b734858753a1978f62cf9e0c7113e39e0",
+  "attempted_clips": 100,
+  "states": {
+    "complete": 100
+  },
+  "request_models": {
+    "gpt-6.1-sol": 100
+  },
+  "independent_cost_checks": 100,
+  "totals": {
+    "budget_usd": 20.0,
+    "inference_estimate_usd": 3.425171,
+    "conservative_accounted_usd": 12.12121,
+    "remaining_authorized_usd": 7.87879,
+    "unknown_or_in_flight": 0,
+    "cloud_requests": 100,
+    "note": "Token-rate estimate, not an invoice. Conservative accounting includes a token-count allowance and highest cache-write input rates; unknown outcomes retain full reservations."
+  },
+  "selected_human_reviews": 0,
+  "all_human_reviews": 10,
+  "models": 0,
+  "datasets": 0,
+  "training": false,
+  "assisted_pool": {
+    "created_at": "2026-11-04T08:19:34.417555+00:00",
+    "clips": 4564,
+    "partition_keys": 4725,
+    "previous_splits": {
+      "train": 1004,
+      "validation": 1686,
+      "test": 1874
+    },
+    "day_keys": [
+      "day:2026-09-15",
+      "day:2026-09-14",
+      "day:2026-11-02",
+      "day:2026-11-03",
+      "day:2026-11-04"
+    ]
+  },
+  "recording_during_run": {
+    "from_epoch": 1793780380.1410158,
+    "registered_segments": 244,
+    "last_registered_end": 1793781594.81762,
+    "last_segment_age_seconds": 4.86,
+    "maximum_internal_gap_seconds": 0.329,
+    "segments_with_existing_files": 244
+  }
+}

@@ -1,0 +1,12 @@
+{
+    "applied_at":  "2026-11-02T09:48:33.4957820Z",
+    "image":  "localhost/cat-watch:0.5.2",
+    "image_id":  "1a50a36141c6a0f13ccbd0855588968d2eaa4a5f0236dca83e4173ace3c3f1a7",
+    "previous_container":  "cat-watch-before-collection-fix-20261102T094816Z",
+    "previous_image":  "localhost/cat-watch:0.5.1",
+    "backup":  "C:\\Alex\\data\\tapo-cat-monitor\\collection-repair-20261102T094816Z",
+    "database_files":  2,
+    "recent_media_files":  104,
+    "checksums_verified":  true,
+    "reason":  "Bound diagnostics cleanup and keep storage scans outside the database lock"
+}

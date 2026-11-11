@@ -1,0 +1,77 @@
+{
+  "checked_at": "2026-11-03T04:16:10.995902+00:00",
+  "authorization": "2026-11-03-pro-credit-comparison",
+  "totals": {
+    "budget_usd": 20.0,
+    "inference_estimate_usd": 0.592158,
+    "conservative_accounted_usd": 2.01975,
+    "remaining_authorized_usd": 17.98025,
+    "unknown_or_in_flight": 0,
+    "cloud_requests": 15,
+    "note": "Token-rate estimate, not an invoice. Conservative accounting includes a token-count allowance and highest cache-write input rates; unknown outcomes retain full reservations."
+  },
+  "clips": 10,
+  "human_reference_clips": 1,
+  "models": {
+    "qwen3.5:9b": {
+      "attempts": 10,
+      "valid": 9,
+      "inference_estimate_usd": 0.0,
+      "mean_seconds": 3.179,
+      "human_reference_seconds": 5.954,
+      "human_label_agreement": 1.0,
+      "valid_output_reference_coverage": 1.0,
+      "independent_reference_seconds": 0.0,
+      "independent_label_agreement": null
+    },
+    "gpt-6.1-sol": {
+      "attempts": 10,
+      "valid": 10,
+      "inference_estimate_usd": 0.133618,
+      "mean_seconds": 7.841,
+      "human_reference_seconds": 5.954,
+      "human_label_agreement": 1.0,
+      "valid_output_reference_coverage": 1.0,
+      "independent_reference_seconds": 0.0,
+      "independent_label_agreement": null
+    },
+    "gpt-6-astra": {
+      "attempts": 5,
+      "valid": 5,
+      "inference_estimate_usd": 0.45854,
+      "mean_seconds": 20.933,
+      "human_reference_seconds": 0.0,
+      "human_label_agreement": null,
+      "valid_output_reference_coverage": null,
+      "independent_reference_seconds": 0.0,
+      "independent_label_agreement": null
+    }
+  },
+  "matched_three_model_subset": {
+    "clips": 5,
+    "models": {
+      "qwen3.5:9b": {
+        "human_reference_seconds": 0.0,
+        "human_label_agreement": null,
+        "valid_output_reference_coverage": null,
+        "independent_reference_seconds": 0.0,
+        "independent_label_agreement": null
+      },
+      "gpt-6.1-sol": {
+        "human_reference_seconds": 0.0,
+        "human_label_agreement": null,
+        "valid_output_reference_coverage": null,
+        "independent_reference_seconds": 0.0,
+        "independent_label_agreement": null
+      },
+      "gpt-6-astra": {
+        "human_reference_seconds": 0.0,
+        "human_label_agreement": null,
+        "valid_output_reference_coverage": null,
+        "independent_reference_seconds": 0.0,
+        "independent_label_agreement": null
+      }
+    }
+  },
+  "note": "Historical initial estimate before cache-write rate correction; conservative budget accounting already included those rates."
+}

@@ -1,0 +1,427 @@
+{
+  "purpose": "RHEL restart and investigation of persistent 45 percent Task Manager CPU reading",
+  "restart": {
+    "requested_at": "2026-11-08T03:47:25.8454072Z",
+    "distribution": "RHEL10",
+    "state": "completed",
+    "previous_services_stopped_cleanly": true,
+    "previous_systemd_start": "Mon 2026-11-02 20:54:57 IST",
+    "terminate_requested_at": "2026-11-08T03:47:29.0317045Z",
+    "terminated_at": "2026-11-08T03:47:29.0899272Z",
+    "started_at": "2026-11-08T03:47:41.7038190Z",
+    "new_systemd_start": "Sun 2026-11-08 05:47:31 IST",
+    "rke2_state": "activating",
+    "shared_qwen_states": [
+      "active",
+      "active"
+    ],
+    "cockpit_socket_state": "active",
+    "checked_at": "2026-11-08T03:49:13.0420390Z",
+    "cockpit_http_status": "200",
+    "running_catwatch_containers": [],
+    "completed_at": "2026-11-08T03:49:18.6110583Z"
+  },
+  "service_check": {
+    "checked_at": "2026-11-08T03:55:26Z",
+    "rke2-server": "active",
+    "cockpit.socket": "active",
+    "shared-qwen.service": "active",
+    "shared-qwen-runtime.service": "active"
+  },
+  "initial_windows_sample": {
+    "start": "2026-11-08T03:52:38.4301795Z",
+    "end": "2026-11-08T03:52:56.5318692Z",
+    "samples_per_counter": 10,
+    "summary": {
+      "processor(_total)\\% processor time": {
+        "min": 9.68,
+        "mean": 11.92,
+        "max": 15.99
+      },
+      "processor information(_total)\\% processor utility": {
+        "min": 14.22,
+        "mean": 17.44,
+        "max": 23.38
+      },
+      "hyper-v hypervisor logical processor(_total)\\% total run time": {
+        "min": 11.53,
+        "mean": 14.06,
+        "max": 18.77
+      },
+      "hyper-v hypervisor logical processor(_total)\\% guest run time": {
+        "min": 9.4,
+        "mean": 11.64,
+        "max": 15.94
+      },
+      "hyper-v hypervisor logical processor(_total)\\% hypervisor run time": {
+        "min": 2.13,
+        "mean": 2.42,
+        "max": 2.82
+      },
+      "hyper-v hypervisor root virtual processor(_total)\\% total run time": {
+        "min": 9.06,
+        "mean": 11.07,
+        "max": 14.69
+      },
+      "hyper-v hypervisor virtual processor(_total)\\% total run time": {
+        "min": 2.62,
+        "mean": 3.19,
+        "max": 4.47
+      }
+    }
+  },
+  "followup_windows_sample": {
+    "checked_at": "2026-11-08T03:55:08.9517314Z",
+    "physical_used_gib": 38.08,
+    "task_manager": [
+      {
+        "Id": 39100,
+        "started_utc": "2026-11-08T03:54:47.4469541Z",
+        "Responding": true
+      }
+    ],
+    "samples": [
+      {
+        "at": "2026-11-08T03:54:54.7043545Z",
+        "counter": "processor(_total)\\% processor time",
+        "value": 10.88,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:54:54.7043545Z",
+        "counter": "processor information(_total)\\% processor utility",
+        "value": 15.585,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:54:54.7043545Z",
+        "counter": "hyper-v hypervisor logical processor(_total)\\% total run time",
+        "value": 12.604,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:54:54.7043545Z",
+        "counter": "hyper-v hypervisor virtual processor(_total)\\% total run time",
+        "value": 3.167,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:54:54.7043545Z",
+        "counter": "process v2(vmmemwsl:28528)\\% processor time",
+        "value": 102.527,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:54:56.7112079Z",
+        "counter": "processor(_total)\\% processor time",
+        "value": 11.132,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:54:56.7112079Z",
+        "counter": "processor information(_total)\\% processor utility",
+        "value": 15.651,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:54:56.7112079Z",
+        "counter": "hyper-v hypervisor logical processor(_total)\\% total run time",
+        "value": 12.554,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:54:56.7112079Z",
+        "counter": "hyper-v hypervisor virtual processor(_total)\\% total run time",
+        "value": 2.775,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:54:56.7112079Z",
+        "counter": "process v2(vmmemwsl:28528)\\% processor time",
+        "value": 108.223,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:54:58.7256485Z",
+        "counter": "processor(_total)\\% processor time",
+        "value": 9.758,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:54:58.7256485Z",
+        "counter": "processor information(_total)\\% processor utility",
+        "value": 14.595,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:54:58.7256485Z",
+        "counter": "hyper-v hypervisor logical processor(_total)\\% total run time",
+        "value": 11.748,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:54:58.7256485Z",
+        "counter": "hyper-v hypervisor virtual processor(_total)\\% total run time",
+        "value": 2.55,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:54:58.7256485Z",
+        "counter": "process v2(vmmemwsl:28528)\\% processor time",
+        "value": 104.713,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:00.7382696Z",
+        "counter": "processor(_total)\\% processor time",
+        "value": 10.914,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:00.7382696Z",
+        "counter": "processor information(_total)\\% processor utility",
+        "value": 15.239,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:00.7382696Z",
+        "counter": "hyper-v hypervisor logical processor(_total)\\% total run time",
+        "value": 12.217,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:00.7382696Z",
+        "counter": "hyper-v hypervisor virtual processor(_total)\\% total run time",
+        "value": 3.087,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:00.7382696Z",
+        "counter": "process v2(vmmemwsl:28528)\\% processor time",
+        "value": 110.242,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:02.7707285Z",
+        "counter": "processor(_total)\\% processor time",
+        "value": 17.301,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:02.7707285Z",
+        "counter": "processor information(_total)\\% processor utility",
+        "value": 25.144,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:02.7707285Z",
+        "counter": "hyper-v hypervisor logical processor(_total)\\% total run time",
+        "value": 20.094,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:02.7707285Z",
+        "counter": "hyper-v hypervisor virtual processor(_total)\\% total run time",
+        "value": 4.39,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:02.7707285Z",
+        "counter": "process v2(vmmemwsl:28528)\\% processor time",
+        "value": 159.136,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:04.7775101Z",
+        "counter": "processor(_total)\\% processor time",
+        "value": 16.154,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:04.7775101Z",
+        "counter": "processor information(_total)\\% processor utility",
+        "value": 21.793,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:04.7775101Z",
+        "counter": "hyper-v hypervisor logical processor(_total)\\% total run time",
+        "value": 17.477,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:04.7775101Z",
+        "counter": "hyper-v hypervisor virtual processor(_total)\\% total run time",
+        "value": 4.196,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:04.7775101Z",
+        "counter": "process v2(vmmemwsl:28528)\\% processor time",
+        "value": 168.18,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:06.7899927Z",
+        "counter": "processor(_total)\\% processor time",
+        "value": 9.82,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:06.7899927Z",
+        "counter": "processor information(_total)\\% processor utility",
+        "value": 14.899,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:06.7899927Z",
+        "counter": "hyper-v hypervisor logical processor(_total)\\% total run time",
+        "value": 11.986,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:06.7899927Z",
+        "counter": "hyper-v hypervisor virtual processor(_total)\\% total run time",
+        "value": 2.761,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:06.7899927Z",
+        "counter": "process v2(vmmemwsl:28528)\\% processor time",
+        "value": 83.852,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:08.7955496Z",
+        "counter": "processor(_total)\\% processor time",
+        "value": 10.815,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:08.7955496Z",
+        "counter": "processor information(_total)\\% processor utility",
+        "value": 14.726,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:08.7955496Z",
+        "counter": "hyper-v hypervisor logical processor(_total)\\% total run time",
+        "value": 11.843,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:08.7955496Z",
+        "counter": "hyper-v hypervisor virtual processor(_total)\\% total run time",
+        "value": 2.453,
+        "status": 0
+      },
+      {
+        "at": "2026-11-08T03:55:08.7955496Z",
+        "counter": "process v2(vmmemwsl:28528)\\% processor time",
+        "value": 86.478,
+        "status": 0
+      }
+    ]
+  },
+  "followup_summary": {
+    "processor(_total)\\% processor time": {
+      "minimum": 9.758,
+      "mean": 12.097,
+      "maximum": 17.301
+    },
+    "processor information(_total)\\% processor utility": {
+      "minimum": 14.595,
+      "mean": 17.204,
+      "maximum": 25.144
+    },
+    "hyper-v hypervisor logical processor(_total)\\% total run time": {
+      "minimum": 11.748,
+      "mean": 13.815,
+      "maximum": 20.094
+    },
+    "hyper-v hypervisor virtual processor(_total)\\% total run time": {
+      "minimum": 2.453,
+      "mean": 3.172,
+      "maximum": 4.39
+    },
+    "process v2(vmmemwsl:28528)\\% processor time": {
+      "minimum": 83.852,
+      "mean": 115.419,
+      "maximum": 168.18
+    }
+  },
+  "linux_sample": {
+    "logical_cpus": 28,
+    "sample_seconds": 20,
+    "total_cpu_percent": 3.236,
+    "cpu_components_percent": {
+      "user": 0.357,
+      "nice": 0.0,
+      "system": 1.465,
+      "idle": 96.732,
+      "iowait": 0.032,
+      "irq": 0.0,
+      "softirq": 1.414,
+      "steal": 0.0
+    },
+    "top_cpu": [
+      {
+        "pid": 861,
+        "name": "codex",
+        "cpu_percent_of_wsl": 0.396
+      },
+      {
+        "pid": 5930,
+        "name": "kube-apiserver",
+        "cpu_percent_of_wsl": 0.151
+      },
+      {
+        "pid": 797,
+        "name": "kubelet",
+        "cpu_percent_of_wsl": 0.089
+      },
+      {
+        "pid": 5110,
+        "name": "etcd",
+        "cpu_percent_of_wsl": 0.08
+      },
+      {
+        "pid": 7059,
+        "name": "kube-controller",
+        "cpu_percent_of_wsl": 0.067
+      },
+      {
+        "pid": 599,
+        "name": "containerd",
+        "cpu_percent_of_wsl": 0.06
+      },
+      {
+        "pid": 7792,
+        "name": "calico-node",
+        "cpu_percent_of_wsl": 0.043
+      },
+      {
+        "pid": 4834,
+        "name": "kube-scheduler",
+        "cpu_percent_of_wsl": 0.016
+      },
+      {
+        "pid": 7,
+        "name": "init",
+        "cpu_percent_of_wsl": 0.014
+      },
+      {
+        "pid": 430,
+        "name": "rke2",
+        "cpu_percent_of_wsl": 0.014
+      }
+    ]
+  },
+  "user_observations": {
+    "update_speed": "User selected Normal, High, or Low rather than Paused",
+    "after_rhel_restart": "Still the same 45 percent",
+    "after_task_manager_reopen": "It now changes and is lower"
+  },
+  "conclusion": "Persistent 45 percent was a stale Task Manager display; exact internal refresh failure is not established.",
+  "reference": "https://learn.microsoft.com/en-us/windows-server/administration/performance-tuning/role/hyper-v-server/configuration"
+}

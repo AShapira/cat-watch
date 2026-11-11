@@ -29,3 +29,15 @@ records installed Python versions, and `/opt/models/SHA256SUMS` records its mode
 checksum. Consult installed package metadata and upstream licenses before
 redistributing a built container. This source publication does not publish a
 prebuilt container image or model-weight archive.
+
+## VideoMAE behavior backbone
+
+The learning image includes `MCG-NJU/videomae-base-finetuned-kinetics`, revision
+`488eb9a0565f257b32866000305c8178965eb9f6`, under **CC BY-NC 4.0**. Its noncommercial
+restriction applies to the pretrained weights and derived use; the project's MIT
+license does not replace it. Attribution: VideoMAE authors / MCG-NJU. See the
+[checkpoint card](https://huggingface.co/MCG-NJU/videomae-base-finetuned-kinetics/tree/488eb9a0565f257b32866000305c8178965eb9f6)
+and [license](https://creativecommons.org/licenses/by-nc/4.0/).
+`scripts/install-learning-model.py` verifies the weights and writes provenance
+and file hashes into the image. Transformers and Safetensors retain their
+respective upstream licenses. The learning requirements are pinned separately.

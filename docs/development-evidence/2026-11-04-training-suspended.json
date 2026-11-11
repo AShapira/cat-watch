@@ -1,0 +1,64 @@
+{
+    "checked_at":  "2026-11-04T04:11:29.2563420Z",
+    "previous_training":  true,
+    "training":  false,
+    "continuous":  true,
+    "camera":  "connected",
+    "detector":  "ready",
+    "frames":  181948,
+    "counts":  {
+                   "clips":  6038,
+                   "suggestions":  4757,
+                   "reviewed":  10
+               },
+    "episodes":  {
+                     "eating":  2,
+                     "drinking":  0,
+                     "litter_activity":  0,
+                     "other_activity":  2,
+                     "no_cat":  2
+                 },
+    "training_ready":  false,
+    "gpu":  {
+                "free_mib":  5471.0,
+                "updated":  1793765481.2541306
+            },
+    "models_count":  0,
+    "jobs":  [
+                 {
+                     "kind":  "extract",
+                     "state":  "complete",
+                     "count":  3086
+                 },
+                 {
+                     "kind":  "extract",
+                     "state":  "failed",
+                     "count":  275
+                 },
+                 {
+                     "kind":  "extract",
+                     "state":  "queued",
+                     "count":  191
+                 },
+                 {
+                     "kind":  "import",
+                     "state":  "complete",
+                     "count":  1
+                 },
+                 {
+                     "kind":  "label",
+                     "state":  "complete",
+                     "count":  4757
+                 },
+                 {
+                     "kind":  "label",
+                     "state":  "failed",
+                     "count":  1265
+                 },
+                 {
+                     "kind":  "label",
+                     "state":  "queued",
+                     "count":  16
+                 }
+             ]
+}

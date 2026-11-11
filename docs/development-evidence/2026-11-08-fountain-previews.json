@@ -1,0 +1,153 @@
+{
+  "checked_at": "2026-11-08T18:20:08.7706186Z",
+  "scope": "Three local model-assisted previews of newly separated fountain crops; no human labels submitted.",
+  "queue": {
+    "started_at": "2026-11-08T18:18:47.195284+00:00",
+    "finished_at": "2026-11-08T18:19:18.722758+00:00",
+    "prioritized": 3,
+    "temporarily_deferred": 138,
+    "restored": true,
+    "restored_count": 138,
+    "settings_unchanged": true
+  },
+  "model": {
+    "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+    "model": "qwen3.5:9b",
+    "prompt_version": "visible-actions-1",
+    "provider": "ollama",
+    "sampling": "16 frames / 8 seconds; native area crops"
+  },
+  "exports": [
+    {
+      "clip_id": "c23dddc10e01dd8d9880b1ed88d5a84adcc04fe8b7677ad9e30703e9ae6fc9d8",
+      "file": "/home/alex/dev/cat-watch/outputs/fountain-review-20261108/clip-01.mp4",
+      "source_start_utc": "2026-11-08T17:57:47.565830+00:00",
+      "source_start_local": "2026-11-08T19:57:47.565830+02:00",
+      "duration": 7.733333333333333,
+      "shape": [
+        278,
+        338,
+        3
+      ],
+      "frames": 116,
+      "fps": 15.0,
+      "first_frame_mean_absolute_difference": 0.923,
+      "sha256": "b8d8634e2532325e6c608b0ae60c554d98db4a5b4151078feadb43bf75b8b9ca"
+    },
+    {
+      "clip_id": "409a7e5ef6682eb786d84f2fd25f44528e7655b1dbb75821238e7372bedb6d32",
+      "file": "/home/alex/dev/cat-watch/outputs/fountain-review-20261108/clip-02.mp4",
+      "source_start_utc": "2026-11-08T17:58:17.036878+00:00",
+      "source_start_local": "2026-11-08T19:58:17.036878+02:00",
+      "duration": 8.0,
+      "shape": [
+        278,
+        338,
+        3
+      ],
+      "frames": 120,
+      "fps": 15.0,
+      "first_frame_mean_absolute_difference": 1.089,
+      "sha256": "50fa9eacdbc70bf483e8e5accca8aa1ea5d76f6963994708c6b709c2c247596c"
+    },
+    {
+      "clip_id": "42aa6b9a30365671f6b7d54beec11e9d88f1fa3a19fa373f09c8a7de4ae570d6",
+      "file": "/home/alex/dev/cat-watch/outputs/fountain-review-20261108/clip-03.mp4",
+      "source_start_utc": "2026-11-08T18:05:21+00:00",
+      "source_start_local": "2026-11-08T20:05:21+02:00",
+      "duration": 7.933333333333334,
+      "shape": [
+        278,
+        338,
+        3
+      ],
+      "frames": 119,
+      "fps": 15.0,
+      "first_frame_mean_absolute_difference": 1.04,
+      "sha256": "1dd2103c423cc42a69ad3fead110d2f259b3a14811885c27a0db7c5f82cf4dea"
+    }
+  ],
+  "model_labels": [
+    {
+      "clip_id": "c23dddc10e01dd8d9880b1ed88d5a84adcc04fe8b7677ad9e30703e9ae6fc9d8",
+      "labels": [
+        "eating"
+      ],
+      "quality": [
+        "poor_lighting"
+      ]
+    },
+    {
+      "clip_id": "409a7e5ef6682eb786d84f2fd25f44528e7655b1dbb75821238e7372bedb6d32",
+      "labels": [
+        "eating"
+      ],
+      "quality": [
+        "poor_lighting"
+      ]
+    },
+    {
+      "clip_id": "42aa6b9a30365671f6b7d54beec11e9d88f1fa3a19fa373f09c8a7de4ae570d6",
+      "labels": [
+        "no_cat"
+      ],
+      "quality": [
+        "poor_lighting"
+      ]
+    }
+  ],
+  "review_exposure": {
+    "exposed_at": "2026-11-08T18:20:03.632055+00:00",
+    "reason": "User requested fountain clips together with local model classifications.",
+    "human_reviews_submitted": 0,
+    "clips": [
+      {
+        "clip_id": "c23dddc10e01dd8d9880b1ed88d5a84adcc04fe8b7677ad9e30703e9ae6fc9d8",
+        "previous_bucket": "evaluation",
+        "bucket": "audit",
+        "split_unchanged": "test",
+        "version_unchanged": 0,
+        "group_key": "visit:28"
+      },
+      {
+        "clip_id": "409a7e5ef6682eb786d84f2fd25f44528e7655b1dbb75821238e7372bedb6d32",
+        "previous_bucket": "evaluation",
+        "bucket": "audit",
+        "split_unchanged": "test",
+        "version_unchanged": 0,
+        "group_key": "motion:1:45"
+      },
+      {
+        "clip_id": "42aa6b9a30365671f6b7d54beec11e9d88f1fa3a19fa373f09c8a7de4ae570d6",
+        "previous_bucket": "evaluation",
+        "bucket": "audit",
+        "split_unchanged": "test",
+        "version_unchanged": 0,
+        "group_key": "audit:1993512"
+      }
+    ],
+    "training_paused": true,
+    "continuous": true,
+    "training": false
+  },
+  "monitoring": {
+    "container_id": "a47c11717ce1aeaf2afeb9e1474406aa56cded8660182f0ef5d49b0d39a32fed",
+    "started_at": "2026-11-08T06:22:51.449285399+02:00",
+    "camera": "connected",
+    "detector": "ready",
+    "frames_analyzed": 88976,
+    "capture_gaps": 13,
+    "frame_age_seconds": 8.6,
+    "continuous": true,
+    "training": false,
+    "pause_training": true,
+    "reviewed": 0
+  },
+  "limitations": [
+    "Three model suggestions are not an accuracy estimate.",
+    "No positive drinking example was established in this selection.",
+    "Neighboring food bowls remain visible within the fountain context margin.",
+    "The two cat-containing samples are temporally close and may belong to one visit.",
+    "Selected previews are model-assisted; overlapping related clips require exposure screening before independent evaluation."
+  ]
+}

@@ -1,0 +1,12 @@
+{
+    "applied_at":  "2026-11-02T09:40:27.9752695Z",
+    "image":  "localhost/cat-watch:0.5.1",
+    "image_id":  "50031cad1825ffb4d212e2b06916f5d242c153dccd0fef81c4c720ab0dbb7dda",
+    "previous_container":  "cat-watch-before-collection-fix-20261102T093949Z",
+    "previous_image":  "localhost/cat-watch:0.5.0",
+    "backup":  "C:\\Alex\\data\\tapo-cat-monitor\\collection-repair-20261102T093949Z",
+    "database_files":  3,
+    "recent_media_files":  0,
+    "checksums_verified":  true,
+    "reason":  "Bound diagnostics cleanup to prevent protected archive scans blocking collection"
+}

@@ -1,0 +1,6 @@
+# Local, pinned cached artifact; migration does not download models or packages.
+FROM localhost/cat-watch:0.5.5
+COPY catwatch /opt/cat-watch/catwatch
+ENV OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 \
+    OPENCV_FFMPEG_CAPTURE_OPTIONS="threads;2" CATWATCH_TRAINING_PAUSED=1
+LABEL app=cat-watch version=0.6.1 org.opencontainers.image.version=0.6.1

@@ -1,0 +1,40 @@
+{
+  "created_at": "2026-11-04T04:34:16.707998+00:00",
+  "expires_at_utc": "2026-11-05T04:34:16.708014+00:00",
+  "fingerprint": "361d88afd5d08a2d332f679abc823c8b734858753a1978f62cf9e0c7113e39e0",
+  "clips": 100,
+  "frames": 3200,
+  "source_groups": 63,
+  "areas": {
+    "water_fountain": 68,
+    "litter_box": 32
+  },
+  "days": {
+    "2026-11-04": 15,
+    "2026-11-03": 46,
+    "2026-11-02": 34,
+    "2026-09-15": 2,
+    "2026-09-14": 3
+  },
+  "duration_seconds": {
+    "min": 5.95859375,
+    "max": 8.0
+  },
+  "median_sharpness_min": 19.03,
+  "new_cloud_requests": 0,
+  "new_api_cost_usd": 0,
+  "cloud_upload_state": "blocked_pending_exact_manifest_approval",
+  "prior_totals": {
+    "budget_usd": 20.0,
+    "inference_estimate_usd": 0.68133,
+    "conservative_accounted_usd": 2.01975,
+    "remaining_authorized_usd": 17.98025,
+    "unknown_or_in_flight": 0,
+    "cloud_requests": 0,
+    "note": "Token-rate estimate, not an invoice. Conservative accounting includes a token-count allowance and highest cache-write input rates; unknown outcomes retain full reservations."
+  },
+  "fixture_tests_passed": 22,
+  "fixture_browser": "passed",
+  "native_windows_browser": "passed",
+  "review_image_id": "37c09115d0a1c7376c77ba2fa284eb9179abafc53ad0b99f98f077dce5e4710a"
+}

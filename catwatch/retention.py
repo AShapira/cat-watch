@@ -1,4 +1,5 @@
 """Quota enforcement is confined to generated media in the owned data directory."""
+import os
 import re
 import shutil
 import time
@@ -10,14 +11,33 @@ class Retention:
     def __init__(self, store, reserve_bytes=64_000_000, disk_floor=256_000_000):
         self.store = store
         self.reserve = reserve_bytes
-        self.disk_floor = disk_floor
+        self.disk_floor = max(disk_floor, int(os.environ.get('CATWATCH_DISK_FLOOR_BYTES', str(disk_floor))))
         self.leases = {}
         self.last = {}
+        self.deleted_bytes = 0
 
     def usage(self):
-        return sum(p.stat().st_size for p in self.store.root.rglob("*") if p.is_file() and not p.is_symlink())
+        # Reuse directory-entry metadata on the Windows mount and do not descend
+        # into the independently budgeted learning tree or follow symlinks.
+        total, pending = 0, [self.store.root]
+        while pending:
+            folder = pending.pop()
+            with os.scandir(folder) as entries:
+                for entry in entries:
+                    if folder == self.store.root and entry.name == 'learning':
+                        continue
+                    try:
+                        if entry.is_dir(follow_symlinks=False):
+                            pending.append(entry.path)
+                        elif entry.is_file(follow_symlinks=False):
+                            total += entry.stat(follow_symlinks=False).st_size
+                    except FileNotFoundError:
+                        # A completed temporary file can disappear during a scan.
+                        continue
+        return total
 
     def delete(self, segment):
+        self.deleted_bytes = 0
         path = self.store.root / segment["path"]
         if path.parent != self.store.root / "media" or not MEDIA_NAME.fullmatch(path.name) or path.is_symlink():
             raise ValueError("Refusing to remove an unowned media path")
@@ -26,15 +46,25 @@ class Retention:
         if pinned or self.leases.get(segment["id"], 0):
             return False
         try:
+            try:
+                removed_size = path.stat().st_size
+            except FileNotFoundError:
+                removed_size = 0
             path.unlink(missing_ok=True)
         except OSError:
             return False
         with self.store.db() as db:
             db.execute("DELETE FROM segments WHERE id=?", (segment["id"],))
+        self.deleted_bytes = removed_size
         return True
 
     def maintain(self, now=None):
         now = time.time() if now is None else now
+        # File enumeration can take seconds over the Windows mount. Readers and
+        # detector persistence must remain available while it runs. The recording
+        # reserve covers the bounded active segment during this point-in-time scan.
+        used = self.usage()
+        continuous = bool(getattr(self, 'learning', None) and self.learning.config()['continuous'])
         with self.store.lock:
             config = self.store.config()
             cap = int(config["storage_cap_gb"] * 1_000_000_000)
@@ -60,15 +90,15 @@ class Retention:
                 # Recent segments are protected; older parts of a long open visit can expire.
                 if segment["end"] >= cutoff:
                     protected.add(segment["id"])
-                if not segment["retained"] and segment["id"] not in protected:
-                    self.delete(segment)
-            used = self.usage()
+                if not segment["retained"] and segment["id"] not in protected and (not continuous or segment['end'] < now-86400):
+                    if self.delete(segment):
+                        used = max(0, used-self.deleted_bytes)
             free = shutil.disk_usage(self.store.root).free
             for segment in self.store.segments():
                 if used + self.reserve <= cap and free >= self.disk_floor + self.reserve:
                     break
                 if segment["id"] not in protected and self.delete(segment):
-                    used = self.usage()
+                    used = max(0, used-self.deleted_bytes)
                     free = shutil.disk_usage(self.store.root).free
             ok = used + self.reserve <= cap and free >= self.disk_floor + self.reserve
             self.last = {"used_bytes": used, "cap_bytes": cap, "reserve_bytes": self.reserve,

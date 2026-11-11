@@ -1,0 +1,92 @@
+{
+    "checked_at":  "2026-11-02T19:50:54.1091091Z",
+    "startup":  {
+                    "wake_to_run":  false,
+                    "name":  "SharedLocalQwen",
+                    "action":  "-d RHEL10 -u alex --exec /usr/bin/systemctl --user start shared-qwen.service",
+                    "start_when_available":  false,
+                    "run_level":  "Limited",
+                    "state":  "Ready",
+                    "last_result":  0
+                },
+    "shared_service":  {
+                           "ready":  true,
+                           "message":  "GPU model resident",
+                           "checked_at":  1793649045.1981068,
+                           "model":  "qwen3.5:9b",
+                           "models":  [
+                                          {
+                                              "name":  "qwen3.5:9b",
+                                              "model":  "qwen3.5:9b",
+                                              "size":  5763005151,
+                                              "digest":  "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+                                              "details":  {
+                                                              "parent_model":  "",
+                                                              "format":  "gguf",
+                                                              "family":  "qwen35",
+                                                              "families":  [
+                                                                               "qwen35"
+                                                                           ],
+                                                              "parameter_size":  "9.7B",
+                                                              "quantization_level":  "Q4_K_M"
+                                                          },
+                                              "expires_at":  "2319-02-12T19:37:56.577500587Z",
+                                              "size_vram":  5763005151,
+                                              "context_length":  16384
+                                          }
+                                      ]
+                       },
+    "camera":  {
+                   "detector_lag_seconds":  4.7,
+                   "capture_gaps":  0,
+                   "frames_analyzed":  2251,
+                   "detector":  "ready",
+                   "frame_age_seconds":  9.7,
+                   "status":  "connected"
+               },
+    "learning":  {
+                     "review_queue_items":  10,
+                     "review_queue_visible_proposals":  8,
+                     "ollama_url":  "http://127.0.0.1:11434",
+                     "training_enabled":  false,
+                     "continuous":  true,
+                     "training_ready":  false,
+                     "gpu":  {
+                                 "free_mib":  14599.0,
+                                 "updated":  1793649049.3266308
+                             },
+                     "counts":  {
+                                    "clips":  3562,
+                                    "suggestions":  20,
+                                    "reviewed":  0
+                                },
+                     "heavy_worker":  {
+                                          "state":  "running",
+                                          "message":  "Local Qwen is connected; recent behavior proposals are available for review.",
+                                          "updated":  1793648560.8614974,
+                                          "evidence":  "Verified recent saved local prediction and GPU service health"
+                                      }
+                 },
+    "worker":  {
+                   "jobs":  {
+                                "complete":  20,
+                                "failed":  4,
+                                "queued":  3537,
+                                "running":  1
+                            },
+                   "generic_errors":  [
+                                          "Local model unavailable or response invalid; review remains available"
+                                      ],
+                   "latest_prediction_age_seconds":  17.9,
+                   "provenance":  {
+                                      "digest":  "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+                                      "model":  "qwen3.5:9b",
+                                      "prompt_version":  "visible-actions-1",
+                                      "provider":  "ollama",
+                                      "sampling":  "16 frames / 8 seconds; native area crops"
+                                  },
+                   "interval_count":  1,
+                   "monitor_session":  11
+               },
+    "gpu":  "NVIDIA GeForce RTX 5080, 16303, 9442, 6536, 0"
+}

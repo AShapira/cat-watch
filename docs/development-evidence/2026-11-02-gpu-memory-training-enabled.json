@@ -1,0 +1,38 @@
+{
+  "enabled_at": "2026-11-02T20:17:32.352878+00:00",
+  "training_enabled": true,
+  "threshold_mib": 8192,
+  "reserve_mib": 2048,
+  "before_counts": {
+    "clips": 3712,
+    "suggestions": 101,
+    "reviewed": 0
+  },
+  "before_camera_frames": 178,
+  "qwen_digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+  "verified_at": "2026-11-02T20:18:48.558844+00:00",
+  "after_counts": {
+    "clips": 3720,
+    "suggestions": 102,
+    "reviewed": 0
+  },
+  "after_camera": {
+    "camera": "connected",
+    "detector": "ready",
+    "frames_analyzed": 302,
+    "frame_age_seconds": 4.8,
+    "capture_gaps": 0,
+    "detector_lag_seconds": 3.2
+  },
+  "gpu": {
+    "free_mib": 6344.0,
+    "updated": 1793650726.1168208
+  },
+  "training_ready": false,
+  "training_jobs": [],
+  "heavy_worker": {
+    "message": "Local Qwen is ready; preparing behavior proposals for review.",
+    "state": "running",
+    "updated": 1793650726.1429453
+  }
+}

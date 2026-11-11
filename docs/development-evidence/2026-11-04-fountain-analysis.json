@@ -1,0 +1,93 @@
+{
+  "updated_at": "2026-11-04T11:05:06.088181+00:00",
+  "states": {
+    "complete": 97,
+    "invalid": 3
+  },
+  "clips": 100,
+  "valid_proposals": 97,
+  "model_counts": {
+    "Sol": {
+      "annotations": 97,
+      "clips_with_label": {
+        "unclear": 96,
+        "other_activity": 41,
+        "no_cat": 4
+      },
+      "source_groups_with_label": {
+        "unclear": 81,
+        "other_activity": 36,
+        "no_cat": 4
+      }
+    },
+    "saved_Qwen": {
+      "annotations": 84,
+      "clips_with_label": {
+        "eating": 78,
+        "other_activity": 18,
+        "no_cat": 1
+      },
+      "source_groups_with_label": {
+        "eating": 68,
+        "other_activity": 16,
+        "no_cat": 1
+      }
+    }
+  },
+  "paired_local_proposals": 84,
+  "paired_model_counts": {
+    "Sol": {
+      "unclear": 83,
+      "other_activity": 35,
+      "no_cat": 3
+    },
+    "saved_Qwen": {
+      "eating": 78,
+      "other_activity": 18,
+      "no_cat": 1
+    }
+  },
+  "same_coarse_label_set": 1,
+  "duration_agreement_with_sol_excluding_sol_unclear": 0.4537,
+  "comparison_reference_seconds": 123.635,
+  "training_labels_created_by_runner": 0,
+  "independent_accuracy_reference_clips": 0,
+  "campaign_inference_estimate_usd": 1.61777,
+  "campaign_conservative_accounted_usd": 5.64283,
+  "all_authorized_batches": {
+    "budget_usd": 20.0,
+    "inference_estimate_usd": 5.042941,
+    "conservative_accounted_usd": 17.76404,
+    "remaining_authorized_usd": 2.23596,
+    "unknown_or_in_flight": 0,
+    "cloud_requests": 100,
+    "note": "Token-rate estimate, not an invoice. Conservative accounting includes a token-count allowance and highest cache-write input rates; unknown outcomes retain full reservations."
+  },
+  "tokens": {
+    "input_tokens": 536661,
+    "output_tokens": 27622,
+    "counted_input_tokens": 536661,
+    "cached_tokens": 0,
+    "cache_write_tokens": 536361,
+    "reasoning_tokens": 11872
+  },
+  "candidate_care_source_groups": {},
+  "limitations": [
+    "Model agreement is not accuracy.",
+    "Saved Qwen proposals used earlier sampling and may not match the 32-frame Sol protocol.",
+    "Source groups and clips are not confirmed independent positive episodes.",
+    "Reasoning tokens are already part of output tokens."
+  ],
+  "suggested_first_review_clip_ids": [
+    "53eb171bbede5ed892f91d7c2175b317f6e34f3705986c9f750b198ac2e01edb",
+    "d091e1793870f73ae1d95a28d7d6cb5a646b538d731f6497f9112090ed54d869",
+    "5c4d8d7555b74b1c40e9f600e27ee8074736f313ff0369c9aace5a0fdd14c863",
+    "e4f8c04316842c9d227ea8fc9c69a1a3dc63f3c39486901f49defef774ec389b",
+    "d2406c0749fcddcf89692693b3343fc46a732fd22835c16f1c45ba06d53cfdf6",
+    "c4d2c8022622f04664fe3f4a710a90259675851638a5f41d2a8a2f02da7cd93b",
+    "e5ffe9ee517037b23cf4ba4c9a6323ffc3be586b6ec3b1b2f1ecd63f0b85c3c2",
+    "7a2cc58595754d11bdda149a2c99ff87efc63184b9222d1f036d33d50aca7fdd",
+    "6bb8844e5ca3bd0bfd8852043e838fc7f81f45b48a064966bad0fad318027249",
+    "4e8c62d9855482a485a02766f32eadf7fda111408ac62199ed8fac5ab66b7f44"
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "checked_at": "2026-11-03T03:59:26.076331+00:00",
+  "authorization": "2026-11-03-pro-credit-comparison",
+  "totals": {
+    "budget_usd": 20.0,
+    "inference_estimate_usd": 0.0,
+    "conservative_accounted_usd": 0.0,
+    "remaining_authorized_usd": 20.0,
+    "unknown_or_in_flight": 0,
+    "cloud_requests": 0,
+    "note": "Token-rate estimate, not an invoice. Conservative accounting includes a token-count allowance and highest cache-write input rates; unknown outcomes retain full reservations."
+  },
+  "clips": 10,
+  "human_reference_clips": 1,
+  "models": {
+    "qwen3.5:9b": {
+      "attempts": 10,
+      "valid": 9,
+      "inference_estimate_usd": 0.0,
+      "mean_seconds": 3.179,
+      "human_reference_seconds": 5.954,
+      "human_label_agreement": 1.0,
+      "valid_output_reference_coverage": 1.0,
+      "independent_reference_seconds": 0.0,
+      "independent_label_agreement": null
+    },
+    "gpt-6.1-sol": {
+      "attempts": 0,
+      "valid": 0,
+      "inference_estimate_usd": 0.0,
+      "mean_seconds": null,
+      "human_reference_seconds": 0.0,
+      "human_label_agreement": null,
+      "valid_output_reference_coverage": null,
+      "independent_reference_seconds": 0.0,
+      "independent_label_agreement": null
+    },
+    "gpt-6-astra": {
+      "attempts": 0,
+      "valid": 0,
+      "inference_estimate_usd": 0.0,
+      "mean_seconds": null,
+      "human_reference_seconds": 0.0,
+      "human_label_agreement": null,
+      "valid_output_reference_coverage": null,
+      "independent_reference_seconds": 0.0,
+      "independent_label_agreement": null
+    }
+  },
+  "matched_three_model_subset": {
+    "clips": 0,
+    "models": {
+      "qwen3.5:9b": {
+        "human_reference_seconds": 0.0,
+        "human_label_agreement": null,
+        "valid_output_reference_coverage": null,
+        "independent_reference_seconds": 0.0,
+        "independent_label_agreement": null
+      },
+      "gpt-6.1-sol": {
+        "human_reference_seconds": 0.0,
+        "human_label_agreement": null,
+        "valid_output_reference_coverage": null,
+        "independent_reference_seconds": 0.0,
+        "independent_label_agreement": null
+      },
+      "gpt-6-astra": {
+        "human_reference_seconds": 0.0,
+        "human_label_agreement": null,
+        "valid_output_reference_coverage": null,
+        "independent_reference_seconds": 0.0,
+        "independent_label_agreement": null
+      }
+    }
+  },
+  "execution_state": "local_baseline_complete_cloud_waiting_for_api_key",
+  "runner_image_id": "860560a68d52d3b5409679043b3e5b61946ada98e58142a5c65a00b9981f3d01",
+  "fixture_tests": {
+    "passed": 42,
+    "seconds": 8.02,
+    "real_model_accuracy_test": false
+  },
+  "selection_limitations": [
+    "Strict 6-second lower bound excluded four human-reviewed exports just under six seconds, as well as five shorter clips.",
+    "The sole selected human reference is assisted, not independent.",
+    "The frozen cohort is for model disagreement inspection; do not infer behavioral accuracy."
+  ]
+}

@@ -1,0 +1,55 @@
+{
+    "checked_at":  "2026-11-04T08:40:02.2002817Z",
+    "camera":  "connected",
+    "detector":  "ready",
+    "frames_analyzed":  207061,
+    "continuous":  true,
+    "training":  false,
+    "counts":  {
+                   "clips":  6470,
+                   "suggestions":  5124,
+                   "reviewed":  10
+               },
+    "live_image_id":  "540a4e088dd95c017766509195324f951e88e0c611048e9fd4a6fce291d5610f",
+    "live_started_at":  "2026-11-02 22:15:18.705300547 +0200 IST",
+    "review_image_id":  "d5c14762724dc37bc8b645dc765e7d5395d9cc2772114f8981fdbbaeb66a5cb7",
+    "review":  {
+                   "clips":  100,
+                   "states":  [
+                                  {
+                                      "state":  "complete",
+                                      "count":  100
+                                  }
+                              ],
+                   "totals":  {
+                                  "budget_usd":  20.0,
+                                  "inference_estimate_usd":  3.425171,
+                                  "conservative_accounted_usd":  12.12121,
+                                  "remaining_authorized_usd":  7.87879,
+                                  "unknown_or_in_flight":  0,
+                                  "cloud_requests":  100,
+                                  "note":  "Token-rate estimate, not an invoice. Conservative accounting includes a token-count allowance and highest cache-write input rates; unknown outcomes retain full reservations."
+                              },
+                   "first_clip_detail_loaded":  true,
+                   "refresh":  {
+                                   "updated":  1793781091.1285987,
+                                   "state":  "ready",
+                                   "candidates":  36,
+                                   "excluded_frozen_source_groups":  63,
+                                   "shared_source_groups":  0,
+                                   "areas":  {
+                                                 "litter_box":  5,
+                                                 "water_fountain":  31
+                                             }
+                               }
+               },
+    "qwen":  [
+                 {
+                     "context_length":  16384,
+                     "name":  "qwen3.5:9b",
+                     "digest":  "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+                     "size":  5763005151,
+                     "size_vram":  5763005151
+                 }
+             ]
+}

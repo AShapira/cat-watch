@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-11-02T19:42:00.469361+00:00",
+  "elapsed_seconds": 1.01,
+  "native_json": true,
+  "openai_tool_call": true,
+  "openai_streaming": true,
+  "keep_alive_zero_overridden": true,
+  "model_after": {
+    "name": "qwen3.5:9b",
+    "model": "qwen3.5:9b",
+    "size": 5763005151,
+    "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen35",
+      "families": [
+        "qwen35"
+      ],
+      "parameter_size": "9.7B",
+      "quantization_level": "Q4_K_M"
+    },
+    "expires_at": "2319-02-12T19:29:17.321726232Z",
+    "size_vram": 5763005151,
+    "context_length": 16384
+  },
+  "note": "Three synthetic local requests. Tool call parsed only; no tool was executed. Not a quality benchmark."
+}

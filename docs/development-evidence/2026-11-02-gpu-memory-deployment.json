@@ -1,0 +1,56 @@
+{
+    "prepared_at":  "2026-11-02T20:15:04.8999146Z",
+    "state":  "deployed-training-still-paused",
+    "image":  "localhost/cat-watch:0.5.3",
+    "image_id":  "540a4e088dd95c017766509195324f951e88e0c611048e9fd4a6fce291d5610f",
+    "previous_image_id":  "1a50a36141c6a0f13ccbd0855588968d2eaa4a5f0236dca83e4173ace3c3f1a7",
+    "previous_container":  "cat-watch-before-gpu-memory-20261102T201504Z",
+    "backup":  "C:\\Alex\\data\\tapo-cat-monitor\\gpu-memory-backup-20261102T201504Z",
+    "backup_scope":  "Quiescent application and learning databases with any sidecars; existing media remain in place",
+    "before":  {
+                   "continuous":  true,
+                   "capture_gaps":  0,
+                   "calibration_id":  "7d010d102c4c43cd845090183a9b6fea",
+                   "counts":  {
+                                  "clips":  3694,
+                                  "suggestions":  94,
+                                  "reviewed":  0
+                              },
+                   "qwen_digest":  "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+                   "frames":  4627
+               },
+    "database_bytes_estimate":  1281589248,
+    "stop_requested_at":  "2026-11-02T20:15:04.9386851Z",
+    "stopped_at":  "2026-11-02T20:15:12.3915647Z",
+    "database_snapshots":  [
+                               {
+                                   "sha256":  "9825b02303f6ef16bfd1c96c32149871fb512113bb9900c015c4840ea3f3d3fb",
+                                   "file":  "catwatch.sqlite3",
+                                   "bytes":  1271062528
+                               },
+                               {
+                                   "sha256":  "20bf14032a620668c920527e07fa919ab0095098ffcea3b69643448299d8d534",
+                                   "file":  "learning\\agent.sqlite3",
+                                   "bytes":  10579968
+                               }
+                           ],
+    "backup_verified_at":  "2026-11-02T20:15:16.5384746Z",
+    "ready_at":  "2026-11-02T20:15:49.7211154Z",
+    "stop_to_ready_seconds":  44.78,
+    "after":  {
+                  "continuous":  true,
+                  "gpu":  {
+                              "free_mib":  6232.0,
+                              "updated":  1793650542.6264515
+                          },
+                  "counts":  {
+                                 "clips":  3698,
+                                 "suggestions":  94,
+                                 "reviewed":  0
+                             },
+                  "detector":  "ready",
+                  "qwen_ready":  true,
+                  "training":  false,
+                  "camera":  "connected"
+              }
+}

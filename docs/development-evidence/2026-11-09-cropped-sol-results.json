@@ -1,0 +1,370 @@
+{
+  "campaign": "2026-11-09-cropped-care-sol",
+  "checked_at": "2026-11-09T04:47:55.074918+00:00",
+  "state": "completed",
+  "authorization_usd": 20,
+  "manifest_fingerprint": "b98904a7bd7615a610e98c70e7866e8d707236dffa0648adfdc22297402b6cf4",
+  "model": "gpt-6.1-sol",
+  "returned_models": [
+    "gpt-6.1-sol"
+  ],
+  "classification_started_at": "2026-11-09T04:45:17.236887+00:00",
+  "classification_finished_at": "2026-11-09T04:47:03.389933+00:00",
+  "summary": {
+    "campaign": "2026-11-09-cropped-care-sol",
+    "updated_at": "2026-11-09T04:47:03.407685+00:00",
+    "model": "gpt-6.1-sol",
+    "states": {
+      "complete": 18
+    },
+    "areas": {
+      "water_fountain": {
+        "clips": 10,
+        "valid": 10,
+        "label_clip_counts": {
+          "moving": 1,
+          "no_cat": 3,
+          "unclear": 8
+        },
+        "quality_clip_counts": {
+          "blur": 2,
+          "occlusion": 8,
+          "truncated_activity": 6,
+          "poor_lighting": 1
+        },
+        "overlap_groups": 5,
+        "sampled_seconds": 79.282
+      },
+      "eating_pad": {
+        "clips": 4,
+        "valid": 4,
+        "label_clip_counts": {
+          "moving": 1,
+          "stationary": 2,
+          "unclear": 4,
+          "other_activity": 1
+        },
+        "quality_clip_counts": {
+          "blur": 1,
+          "occlusion": 4,
+          "truncated_activity": 2
+        },
+        "overlap_groups": 3,
+        "sampled_seconds": 31.372
+      },
+      "litter_box": {
+        "clips": 4,
+        "valid": 4,
+        "label_clip_counts": {
+          "stationary": 2,
+          "moving": 2,
+          "unclear": 2
+        },
+        "quality_clip_counts": {
+          "occlusion": 4,
+          "truncated_activity": 3
+        },
+        "overlap_groups": 1,
+        "sampled_seconds": 29.0
+      }
+    },
+    "totals": {
+      "budget_usd": 20.0,
+      "inference_estimate_usd": 0.204778,
+      "conservative_accounted_usd": 0.69565,
+      "remaining_authorized_usd": 19.30435,
+      "unknown_or_in_flight": 0,
+      "cloud_requests": 18,
+      "note": "Token-rate estimate, not an invoice. Conservative accounting includes a token-count allowance and highest cache-write input rates; unknown outcomes retain full reservations."
+    },
+    "clips": 18,
+    "timestamped_frames": 576,
+    "sampled_seconds": 139.654,
+    "unique_camera_seconds": 135.442,
+    "first_clip_utc": "2026-11-08T18:26:48+00:00",
+    "last_clip_end_utc": "2026-11-09T03:04:44.930369+00:00",
+    "source_groups": 14,
+    "overlap_groups": 6,
+    "paired_qwen_clips": 9,
+    "different_label_sets": 7,
+    "qwen_drinking_comparison": [
+      {
+        "clip_id": "bfe188333bd740cb6f62a70d1595df57ca735a5719770ff772aa93d362a25206",
+        "sol_labels": [
+          "moving",
+          "no_cat",
+          "unclear"
+        ],
+        "qwen_labels": [
+          "drinking",
+          "moving"
+        ]
+      }
+    ],
+    "measured_accuracy": null,
+    "human_reviews_submitted": 0
+  },
+  "preflight": {
+    "checked_at": "2026-11-09T04:45:15.037060+00:00",
+    "clips": 18,
+    "frames": 576,
+    "areas": {
+      "water_fountain": 10,
+      "litter_box": 4,
+      "eating_pad": 4
+    },
+    "source_groups": 14,
+    "episodes": 6,
+    "sampled_seconds": 139.65373024617165,
+    "preview_checks": [
+      {
+        "id": "bfe188333bd740cb6f62a70d1595df57ca735a5719770ff772aa93d362a25206",
+        "shape": [
+          202,
+          180,
+          3
+        ],
+        "frames": 119,
+        "fps": 15.0
+      },
+      {
+        "id": "6f90b03bf2b0da62eebe936fb6541a0793ca44e781da89418f277b68e279d925",
+        "shape": [
+          202,
+          180,
+          3
+        ],
+        "frames": 120,
+        "fps": 15.0
+      },
+      {
+        "id": "d5a1c201adcd748feb88001345b738928143e251598f882203f25f6d2dea1475",
+        "shape": [
+          202,
+          180,
+          3
+        ],
+        "frames": 119,
+        "fps": 15.0
+      },
+      {
+        "id": "aed734d0b9d9ec7e9ef6dbe524ca79b44d18b620fd38dba0fb064590524bc2ba",
+        "shape": [
+          202,
+          180,
+          3
+        ],
+        "frames": 155,
+        "fps": 19.5
+      },
+      {
+        "id": "663a1a196a317b6e04cd3cc1d92b3e02f324e2d9273500e6fe20e4e662462ddf",
+        "shape": [
+          202,
+          180,
+          3
+        ],
+        "frames": 119,
+        "fps": 15.0
+      },
+      {
+        "id": "471748dec79dd5bd8d7db895f690f03c219ce4250702c9811270feb154bdf4d6",
+        "shape": [
+          202,
+          180,
+          3
+        ],
+        "frames": 115,
+        "fps": 15.0
+      },
+      {
+        "id": "09a8be175a3864a27f56c4e27d52dbf40a9a2ab613f55590bd14c2783f0595b6",
+        "shape": [
+          202,
+          180,
+          3
+        ],
+        "frames": 120,
+        "fps": 15.0
+      },
+      {
+        "id": "f50fe62101484fa7c3cbd6c610a437c39d989366f5b08c764c3779635e3ac963",
+        "shape": [
+          202,
+          180,
+          3
+        ],
+        "frames": 118,
+        "fps": 15.0
+      },
+      {
+        "id": "cebd51deb7190d219fdc50b3600552f8bd43d0a7b5e89d0c71ddcfd413ce8856",
+        "shape": [
+          314,
+          364,
+          3
+        ],
+        "frames": 90,
+        "fps": 15.0
+      },
+      {
+        "id": "7a332d15af46c158cb63c2b979f12e9f6a04a0191b6d1e5202eca433a43abdbc",
+        "shape": [
+          314,
+          364,
+          3
+        ],
+        "frames": 119,
+        "fps": 15.0
+      },
+      {
+        "id": "341e40e91af7dad71f532a74ab1b5b02b69a5e5b766175e4f659edcdeb0825b6",
+        "shape": [
+          314,
+          364,
+          3
+        ],
+        "frames": 113,
+        "fps": 15.0
+      },
+      {
+        "id": "820886f39d3381e6f8def0df02f7654dfa24dd003220fa4087dc5fd0589a5d03",
+        "shape": [
+          314,
+          364,
+          3
+        ],
+        "frames": 113,
+        "fps": 15.0
+      },
+      {
+        "id": "76c24889423f64b5946508e3067641b2684ada148bb335ad8f313dea336ba82c",
+        "shape": [
+          294,
+          294,
+          3
+        ],
+        "frames": 119,
+        "fps": 15.0
+      },
+      {
+        "id": "d23db8cfbc066dce19eebc309387c9ea0f0f42897fc8cc09e3f24c54549d2756",
+        "shape": [
+          294,
+          294,
+          3
+        ],
+        "frames": 120,
+        "fps": 15.0
+      },
+      {
+        "id": "1aac551db058362b21f346b0d37efbcd9fb01d42ede698938ed75e191ec716d4",
+        "shape": [
+          294,
+          294,
+          3
+        ],
+        "frames": 113,
+        "fps": 15.0
+      },
+      {
+        "id": "0c3169e6981b62b0c9c22f3f0b5e74e2202fbc10fc8d431ded9da32b0e07bc96",
+        "shape": [
+          294,
+          294,
+          3
+        ],
+        "frames": 119,
+        "fps": 15.053740022432512
+      },
+      {
+        "id": "8b9dfbf3fe7659028f6d3e9ec6a4f9b68b97d95894498b8efef97ea7255c4fe6",
+        "shape": [
+          202,
+          180,
+          3
+        ],
+        "frames": 120,
+        "fps": 15.0
+      },
+      {
+        "id": "ca8a53b07955bec636ced5347acf88e4bbabddd9668b716ed29c04857bf55b60",
+        "shape": [
+          202,
+          180,
+          3
+        ],
+        "frames": 120,
+        "fps": 15.0
+      }
+    ],
+    "unique_jpeg_hashes": 572
+  },
+  "selected_input_caps": {
+    "input": 16384,
+    "output": 2048
+  },
+  "observed_max_tokens": {
+    "input": 5479,
+    "output": 587
+  },
+  "requests": {
+    "classification": 18,
+    "token_count": 18,
+    "automatic_retries": 0,
+    "unknown": 0,
+    "invalid": 0
+  },
+  "source_validation": {
+    "tests_passed": 28,
+    "command": ".venv/bin/python -m pytest -q tests/test_cropped_campaign.py tests/test_comparison.py tests/test_fountain_campaign.py",
+    "source_sha256": {
+      "catwatch/learning/cropped_campaign.py": "30ca6e1b80ffcb32014f676edaebe30020f9d05b1da60cb9b1716ac18840190f",
+      "catwatch/learning/comparison.py": "413f16a9e573b3168a62632bfb17f202bb3eee52bb7ab15fd88b67f633b52fa0",
+      "scripts/run-cropped-sol-campaign.sh": "11b6c11da8ab4b40be10a7c6ddd41528e2c552947accb395c58c7e79f09f9d07",
+      "scripts/run-cropped-sol-cloud.ps1": "84bdc2fb93c006aa9927c6611d3a0e53b81d003e8f9b1dc5bed22a7566ced70b",
+      "scripts/summarize-cropped-sol-campaign.py": "41b2bb2a9e8ccb7a87fda18fda1270b82c2c6b9cffa27e7977e9ecce45d695b8",
+      "tests/test_cropped_campaign.py": "3a9bc2c0901878bf5e1bbedaae69d072b77b4f5e50b83cf070e330605e9dd571"
+    },
+    "ledger_csv_reconciled": true,
+    "gallery_video_links_checked": 18
+  },
+  "monitoring": {
+    "data_root": "/home/alex/.local/share/cat-watch/data",
+    "container": {
+      "id": "83bfe57cf6c37758ad62a7e61161d08dad08b2ec0b0015c1ee68cc65eb25ec57",
+      "image": "eef85ab0c5590d1e093694ad9d2645b2c0c07d3a8e1dd79fe1087c189be7b3d0",
+      "started_at": "2026-11-09T06:39:37.140187274+02:00"
+    },
+    "camera": "connected",
+    "detector": "ready",
+    "performance": {
+      "quiet": false,
+      "display": "off",
+      "reason": "Screen off",
+      "managed": true,
+      "detector_fps": 2,
+      "training_locked": true
+    },
+    "continuous": true,
+    "training": false,
+    "pause_training": true,
+    "review_revisions": 0,
+    "models": 0,
+    "datasets": 0,
+    "runtime_capture_gaps": 0,
+    "frame_age_seconds": 1.3
+  },
+  "report": "outputs/cropped-care-sol-20261109/report.md",
+  "gallery": "outputs/cropped-care-sol-20261109/report.html",
+  "budget_policy": "Unused authorization is not automatically dispatched or renewed.",
+  "limitations": [
+    "Sol outputs are unconfirmed proposals, not accuracy measurements.",
+    "Source-group counts include connected and fragmented views of the same visit.",
+    "A tighter crop can hide head/mouth action; no positive drinking recognition was established.",
+    "Capture times are recorder estimates; per-frame intervals follow encoded cadence.",
+    "Current runtime capture-gap counters reset on restart and do not establish overnight continuity."
+  ],
+  "automation_id": "run-cropped-cat-activity-sol-batch",
+  "automation_deleted_after_completion": true
+}

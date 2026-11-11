@@ -1,0 +1,82 @@
+{
+  "purpose": "User-requested pause for project redesign",
+  "stop": {
+    "stop_requested_at": "2026-11-08T03:33:10.1183656Z",
+    "data_preserved": true,
+    "shared_qwen_unchanged": true,
+    "stopped_at": "2026-11-08T03:34:12.1253239Z",
+    "containers": [
+      {
+        "name": "cat-watch",
+        "id": "4086e93883a8a8add341703b4ccc02792a04470314e1bf279a3e2194192c41c7",
+        "image": "540a4e088dd95c017766509195324f951e88e0c611048e9fd4a6fce291d5610f",
+        "status": "exited",
+        "exit_code": 137,
+        "finished_at": "2026-11-08T05:34:11.95947866+02:00",
+        "restart_policy": "no"
+      },
+      {
+        "name": "cat-watch-care-review",
+        "id": "eee9f172430bae6d49ed1a51c4dfc0cfa519a56f4a274c637b191ff77a4458cf",
+        "image": "f8c54caca938187e5094a218e447273c881c7340696a596b461ede62b2266316",
+        "status": "exited",
+        "exit_code": 0,
+        "finished_at": "2026-11-08T05:33:11.045962774+02:00",
+        "restart_policy": "unless-stopped"
+      }
+    ]
+  },
+  "saved_state": {
+    "checked_at": "2026-11-08T03:34:47.962560+00:00",
+    "pause_settings": {
+      "enabled": false,
+      "continuous": false,
+      "training": false,
+      "telegram_enabled": false
+    },
+    "counts": {
+      "clips": 14442,
+      "suggestions": 11581,
+      "reviewed": 11
+    },
+    "pause_training": true,
+    "archive_read_error": "attempt to write a readonly database",
+    "project_automations": [
+      {
+        "id": "cat-watch-24-hour-vacation-investigations",
+        "status": "PAUSED"
+      },
+      {
+        "id": "hourly-cat-watch-activity-and-best-cat-image",
+        "status": "PAUSED"
+      },
+      {
+        "id": "review-cat-watch-overnight-data",
+        "status": "PAUSED"
+      }
+    ],
+    "archive_files": [
+      {
+        "name": "catwatch.sqlite3",
+        "size": 3171119104
+      },
+      {
+        "name": "catwatch.sqlite3-journal",
+        "size": 12824
+      }
+    ]
+  },
+  "runtime_verification": {
+    "checked_at": "2026-11-08T03:34:48.2334893Z",
+    "running_project_containers": [],
+    "project_workers": [],
+    "project_listeners": [],
+    "project_scheduled_tasks": []
+  },
+  "limits": [
+    "Recorder exceeded the 60-second graceful stop interval and exited 137.",
+    "Archive read-only access requested a write/recovery; original archive and journal retained without recovery or deletion.",
+    "No recording-tail or archive-integrity validation was performed.",
+    "Shared Qwen service and unrelated services were left running."
+  ]
+}
